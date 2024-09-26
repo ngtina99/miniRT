@@ -82,4 +82,8 @@ typedef struct s_data
 	int		iter;
 }				t_data;
 
+void	ft_color(int iteration, int x, int y, t_data *img);
+double	ft_place(double value, double bottom, double top, double max);
+int	setup_mandelbrot(t_position c, t_data *img);
+
 #endif
