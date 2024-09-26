@@ -8,7 +8,7 @@ RM			= rm -f
 OBJ				= $(SRC:.c=.o)
 LIBFT 			= ./libft/libft.a
 
-INC    			= -I./src
+INC    			= -I./includes
 
 CFLAGS			= -Wall -Wextra -Werror -g
 
@@ -63,9 +63,9 @@ fclean:		clean
 
 re:	fclean all
 
-#ARGS		= Mandelbrot
-#gdb:	all
-#		gdb --args $(NAME) $(ARGS)
+# //ARGS		= Mandelbrot
+# gdb:	all
+# 		gdb --args $(NAME) $(ARGS)
 # valgrind: 	all
 # 			valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./$(NAME) $(ARGS)
 

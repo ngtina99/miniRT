@@ -6,7 +6,7 @@
 /*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 18:29:09 by thuy-ngu          #+#    #+#             */
-/*   Updated: 2024/09/26 18:58:25 by thuy-ngu         ###   ########.fr       */
+/*   Updated: 2024/09/26 20:29:25 by thuy-ngu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -223,18 +223,21 @@ void	setup_struct(t_data *img)
 
 int	main(void)
 {
-	t_data	*img = NULL;
+	t_data	img2;
+	t_data	*img;
 
-	img->arg2 = 0.0;
-	img->arg3 = 0.0;
-	img->set = 1;
+	img2.arg2 = 0.0;
+	img2.arg3 = 0.0;
+	img2.set = 1;
+
+	img = &img2;
 	setup_struct(img);
 	img->mlx_ptr = mlx_init();
 	if (!img->mlx_ptr)
 		print_error(1, img);
 	if (img->set == 1)
 		img->win_ptr = mlx_new_window(img->mlx_ptr, \
-		PIXEL, PIXEL, "Mandelbrot");
+PIXEL, PIXEL, "miniRT");
 	if (!img->win_ptr)
 		print_error(2, img);
 	img->img = mlx_new_image(img->mlx_ptr, PIXEL, PIXEL);
