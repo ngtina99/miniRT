@@ -27,15 +27,16 @@ EOC:="\033[0;0m" #END OF COLOR
 all:		$(NAME)
 			@echo
 			@echo $(PINK) "*KEYBOARD INSTRUCTIONS*" $(EOC) $(RED)
-			@echo "R: shifting color red" $(EOC) $(GREEN)
-			@echo "G: shifting color green" $(EOC) $(BLUE)
-			@echo "B: shifting color blue" $(EOC) $(WHITE)
-			@echo "1-7: changing color scheme" $(EOC) $(YELLOW)
-			@echo "Z, X, I, O: changing image sharpness" $(EOC) $(ORANGE)
-			@echo "W, A, S, D: changing Julia set" $(EOC) $(PINK)
 			@echo
 			@echo $(PURPLE)
 			@echo "✨The program is ready✨" $(EOC)
+
+# @echo "maybe instruct put cylinder" $(EOC) $(GREEN)
+# @echo "maybe instruct put cube" $(EOC) $(BLUE)
+# @echo "maybe instruct put cylinder etc" $(EOC) $(WHITE)
+# @echo "etc" $(EOC) $(YELLOW)
+# @echo "Z, X, I, O: changing image sharpness" $(EOC) $(ORANGE)
+# @echo "W, A, S, D: changing Julia set" $(EOC) $(PINK)
 
 $(LIBFT):
 	$(MAKE) -C ./libft

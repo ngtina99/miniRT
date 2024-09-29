@@ -6,7 +6,7 @@
 /*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 18:29:09 by thuy-ngu          #+#    #+#             */
-/*   Updated: 2024/09/26 20:29:25 by thuy-ngu         ###   ########.fr       */
+/*   Updated: 2024/09/29 16:06:35 by thuy-ngu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,7 @@ void	setup_image(t_data *img)
 		{
 			c.a = ft_place(x + img->m_x, -2 / img->zoom, +2 / img->zoom, PIXEL);
 			c.b = ft_place(y + img->m_y, +2 / img->zoom, -2 / img->zoom, PIXEL);
-			if (img->set == 1)
-				iteration = setup_mandelbrot(c, img);
+			iteration = setup_mandelbrot(c, img);
 			ft_color(iteration, x, y, img);
 		}
 	}
@@ -170,8 +169,7 @@ void	red_scheme(int iteration, int x, int y, t_data *img)
 
 void	ft_color(int iteration, int x, int y, t_data *img)
 {
-	if (img->scheme == 1)
-		red_scheme(iteration, x, y, img);
+	red_scheme(iteration, x, y, img);
 	return ;
 }
 
@@ -209,7 +207,6 @@ void	setup_struct(t_data *img)
 {
 	img->iter = 100;
 	img->zoom = 1;
-	img->scheme = 1;
 	img->colorrange = 0.001;
 	img->red = 1;
 	img->green = 2;
@@ -228,16 +225,13 @@ int	main(void)
 
 	img2.arg2 = 0.0;
 	img2.arg3 = 0.0;
-	img2.set = 1;
 
 	img = &img2;
 	setup_struct(img);
 	img->mlx_ptr = mlx_init();
 	if (!img->mlx_ptr)
 		print_error(1, img);
-	if (img->set == 1)
-		img->win_ptr = mlx_new_window(img->mlx_ptr, \
-PIXEL, PIXEL, "miniRT");
+	img->win_ptr = mlx_new_window(img->mlx_ptr, PIXEL, PIXEL, "miniRT");
 	if (!img->win_ptr)
 		print_error(2, img);
 	img->img = mlx_new_image(img->mlx_ptr, PIXEL, PIXEL);

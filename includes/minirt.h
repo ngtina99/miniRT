@@ -68,8 +68,6 @@ typedef struct s_data
 	int		endian;
 	double	arg2;
 	double	arg3;
-	int		set;
-	int		scheme;
 	double	colorrange;
 	int		red;
 	int		green;
