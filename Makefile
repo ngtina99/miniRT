@@ -12,10 +12,7 @@ INC    			= -I./includes
 
 CFLAGS			= -Wall -Wextra -Werror -g
 
-#MLX_FLAGS =	-Lmlx_linux -lmlx -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz
-MLXFLAGS		= -O3 -Lmlx/ -lmlx -L/usr/lib -Ilmlx -lXext -lX11 -lm -lz
-#MLX_DIR = ./includes/minilibx-linux
-#MLXFLAGS = LDflags += -L$(MLX_DIR) -lmlx -lXext -lX11 -lm
+MLXFLAGS		= -O3 -Lminilibx-linux/ -lmlx -L/usr/lib -Ilmlx -lXext -lX11 -lm -lz
 
 WHITE="\033[1m"
 PURPLE:="\033[1;35m"
