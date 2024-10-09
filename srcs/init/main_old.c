@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   main_old.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 18:29:09 by thuy-ngu          #+#    #+#             */
-/*   Updated: 2024/09/29 16:06:35 by thuy-ngu         ###   ########.fr       */
+/*   Updated: 2024/10/09 19:59:18 by thuy-ngu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,7 @@ int	close_window(t_data *img)
 	mlx_destroy_window(img->mlx_ptr, img->win_ptr);
 	mlx_destroy_display(img->mlx_ptr);
 	free(img->mlx_ptr);
+	free(img);
 	exit(0);
 }
 
@@ -115,13 +116,14 @@ int	close_window_esc(int keycode, t_data *img)
 		mlx_destroy_window(img->mlx_ptr, img->win_ptr);
 		mlx_destroy_display(img->mlx_ptr);
 		free(img->mlx_ptr);
+		free(img);
 		exit(0);
 	}
 	return (0);
 }
 
 
-void	ft_hooks(t_data *img)
+void	setup_hooks(t_data *img)
 {
 	mlx_mouse_hook(img->win_ptr, ft_mousehooks, img);
 	//mlx_key_hook(img->win_ptr, ft_keyhooks, img);//maybe later for keyboard instructs
@@ -195,39 +197,38 @@ int	setup_mandelbrot(t_position c, t_data *img)
 		value.y += c.b;
 		value.a = value.x;
 		value.b = value.y;
-		if ((value.a * value.a) + (value.b * value.b) > ESCAPE_VALUE)
-			return (i);
 		i++;
 	}
 	return (i);
 }
 
 
-void	setup_struct(t_data *img)
+void	setup_struct(t_data **img)
 {
-	img->iter = 100;
-	img->zoom = 1;
-	img->colorrange = 0.001;
-	img->red = 1;
-	img->green = 2;
-	img->blue = 3;
-	img->m_x = 0.0;
-	img->m_y = 0.0;
-	img->offset_x = 0.0;
-	img->offset_y = 0.0;
+	*img = (t_data *)malloc(sizeof(t_data));
+	if (*img == NULL)
+	{
+		// Handle memory allocation failure if necessary
+		return;
+	}
+	(*img)->iter = 100;
+	(*img)->zoom = 1;
+	(*img)->colorrange = 0.001;
+	(*img)->red = 1;
+	(*img)->green = 2;
+	(*img)->blue = 3;
+	(*img)->m_x = 0.0;
+	(*img)->m_y = 0.0;
+	(*img)->offset_x = 0.0;
+	(*img)->offset_y = 0.0;
 }
 
 
 int	main(void)
 {
-	t_data	img2;
-	t_data	*img;
+	t_img	*img = NULL;
 
-	img2.arg2 = 0.0;
-	img2.arg3 = 0.0;
-
-	img = &img2;
-	setup_struct(img);
+	setup_struct(&img);
 	img->mlx_ptr = mlx_init();
 	if (!img->mlx_ptr)
 		print_error(1, img);
@@ -242,5 +243,5 @@ int	main(void)
 	if (!img->addr)
 		print_error(4, img);
 	setup_image(img);
-	ft_hooks(img);
+	setup_hooks(img);
 }

@@ -1,16 +1,26 @@
 #ifndef FRACTOL_H
 # define FRACTOL_H
 
-# define PIXEL 600
-# define ESCAPE_VALUE 4
+# include "../libs/libft/libft.h"
+# include "../libs/minilibx-linux/mlx.h"
+# include <stdlib.h>
+# include <unistd.h>
+# include <stdio.h>
+# include <math.h>
 
-typedef struct s_position
-{
-	double	a;
-	double	b;
-	double	x;
-	double	y;
-}				t_position;	
+# define PIXEL 600
+
+#define PATH_LEN 9
+//COLORCODES
+#define RESET "\033[0m"
+#define RED "\033[31m"
+#define GREEN "\033[32m"
+#define YELLOW "\033[33m"
+#define BLUE "\033[34m"
+#define MAGENTA "\033[35m"
+#define CYAN "\033[36m"
+#define WHITE "\033[37m"
+#define BLACK "\033[30m"
 
 //KEYCODES
 # define SPACE 32
@@ -50,15 +60,18 @@ enum
 	ON_DESTROY = 17
 };
 
-# include "../libs/libft/libft.h"
-# include "../libs/minilibx-linux/mlx.h"
-# include <stdlib.h>
-# include <unistd.h>
-# include <stdio.h>
-# include <math.h>
+// typedef struct s_position// could be usefule maybe later
+// {
+// 	double	a;
+// 	double	b;
+// 	double	x;
+// 	double	y;
+// }				t_position;	
 
-typedef struct s_data 
-{
+// typedef struct	s_data {
+// infos from .rt file
+// }				t_data;
+typedef struct	s_graphic {
 	void	*mlx_ptr;
 	void	*win_ptr;
 	void	*img;
@@ -66,22 +79,6 @@ typedef struct s_data
 	int		bits_per_pixel;
 	int		line_length;
 	int		endian;
-	double	arg2;
-	double	arg3;
-	double	colorrange;
-	int		red;
-	int		green;
-	int		blue;
-	double	m_x;
-	double	m_y;
-	double	zoom;
-	double	offset_x;
-	double	offset_y;
-	int		iter;
-}				t_data;
-
-void	ft_color(int iteration, int x, int y, t_data *img);
-double	ft_place(double value, double bottom, double top, double max);
-int	setup_mandelbrot(t_position c, t_data *img);
+}				t_graphic;
 
 #endif

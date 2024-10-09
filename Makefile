@@ -1,14 +1,13 @@
 NAME		= miniRT
 
 SRC	= $(addprefix srcs/,$(addsuffix .c, $(FILES)))
-
-FILES		= init/main parsing/parser
+FILES		= main init/init.c parsing/parser
 
 CC			= cc 
 RM			= rm -f
 
 OBJ			= $(addprefix $(OBJ_DIR)/,$(SRC:srcs/%.c=%.o))
-OBJ_DIR		= obj
+OBJ_DIR		= objs
 
 LIBFT 			= ./libs/libft/libft.a
 INC    			= -I./includes
@@ -51,7 +50,7 @@ $(OBJ_DIR)/%.o: srcs/%.c
 
 $(NAME): $(LIBFT) $(OBJ)
 	@echo $(BLUE) "*Compiling miniRT*" $(EOC) $(GREEN) 
-	$(CC) $(SRC) $(INC) $(MLXFLAGS) $(LIBFT) $(CFLAGS) -o $(NAME)
+	$(CC) $(SRC) $(INC) $(OPENGLFLAGS) $(MLXFLAGS) $(LIBFT) $(CFLAGS) -o $(NAME)
 
 clean:
 	@echo $(PURPLE) "🧽🧼" $(EOC)
