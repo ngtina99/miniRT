@@ -50,8 +50,8 @@ enum
 	ON_DESTROY = 17
 };
 
-# include "../libft/libft.h"
-# include "../minilibx-linux/mlx.h"
+# include "../libs/libft/libft.h"
+# include "../libs/minilibx-linux/mlx.h"
 # include <stdlib.h>
 # include <unistd.h>
 # include <stdio.h>
