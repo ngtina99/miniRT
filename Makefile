@@ -1,7 +1,8 @@
 NAME		= miniRT
 
 SRC	= $(addprefix srcs/,$(addsuffix .c, $(FILES)))
-FILES		= main parsing/init parsing/parser
+FILES		= main parsing/init_file parsing/parser \
+			  graphic/init_img graphic/setup_hook
 
 CC			= cc 
 RM			= rm -f
@@ -27,7 +28,7 @@ EOC:="\033[0;0m" #END OF COLOR
 
 all:		$(NAME)
 			@echo
-			@echo $(PINK) "*KEYBOARD INSTRUCTIONS*" $(EOC) $(RED)
+			@echo $(PINK) "*SOME INSTRUCTIONS*" $(EOC) $(RED)
 			@echo
 			@echo $(PURPLE)
 			@echo "✨The program is ready✨" $(EOC)
