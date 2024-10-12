@@ -1,7 +1,7 @@
 NAME		= miniRT
 
 SRC	= $(addprefix srcs/,$(addsuffix .c, $(FILES)))
-FILES		= main init/init parsing/parser
+FILES		= main parsing/init parsing/parser
 
 CC			= cc 
 RM			= rm -f
