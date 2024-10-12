@@ -81,4 +81,6 @@ typedef struct	s_graphic {
 	int		endian;
 }				t_graphic;
 
+int	open_rt(int argc, char **argv);
+
 #endif

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thuy-ngu <thuy-ngu@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 18:49:19 by thuy-ngu          #+#    #+#             */
-/*   Updated: 2024/10/09 20:20:11 by thuy-ngu         ###   ########.fr       */
+/*   Updated: 2024/10/13 00:00:16 by thuy-ngu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minirt.h"
+#include "../includes/minirt.h"
 
 // int	main(void)
 // {
@@ -33,10 +33,10 @@
 // 	disp->bpp /= 8;
 // }
 
-void	init_data(t_data *scene)
-{
-	//width, height, scales, other infos from RT FILE
-}
+// void	init_data(t_data *scene)
+// {
+// 	//width, height, scales, other infos from RT FILE
+// }
 
 // void	setup_hooks(t_scene *data)
 // {
@@ -75,11 +75,11 @@ int	main(int argc, char **argv)
 	if (argc != 2)
 	{
 		printf(RED"Error: input number has to be one\n"RESET);
-		return (-1);
+		return (1);
 	}
 	fd = open_rt(argc, argv);
 	if (fd == -1)
-		return (EXIT_FAILURE);	
+		return (1);
 	//data = parse_rt(fd);
 	// if (data == NULL)
 	//  	free_data with some Error\n message and exit;
