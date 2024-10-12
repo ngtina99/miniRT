@@ -68,9 +68,16 @@ fclean:		clean
 re:	fclean all
 
 # gdb:	all
-# 		gdb --args $(NAME) $(ARGS)
+# 		gdb --args ./miniRT example.rt
 
-valgrind: 	all
-			valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./$(NAME)
+#SOMEHOW SURPESS THE ERRORS COMING FROM MLX
+valgrind: all
+		  valgrind --leak-check=full --verbose --suppressions=minilibx.supp ./miniRT example.rt
+
+# all
+# valgrind --leak-check=full --gen-suppressions=all --track-origins=yes ./miniRT example.rt
+
+# all
+# valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./$(NAME)
 
 .PHONY:		all clean fclean re
