@@ -82,7 +82,6 @@ typedef struct	s_graphic {
 }				t_graphic;
 
 int		open_rt(int argc, char **argv);
-void	init_img(t_graphic *img);
-void	setup_hooks(t_graphic *img);
+void	init_mlx(t_graphic *img);
 
 #endif

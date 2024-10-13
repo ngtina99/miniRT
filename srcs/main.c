@@ -6,7 +6,7 @@
 /*   By: thuy-ngu <thuy-ngu@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 18:49:19 by thuy-ngu          #+#    #+#             */
-/*   Updated: 2024/10/13 01:20:26 by thuy-ngu         ###   ########.fr       */
+/*   Updated: 2024/10/13 02:15:24 by thuy-ngu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ int	main(int argc, char **argv)
 	//  	free_data with some Error\n message and exit;
 	//init_data(&data); or in parse_rt if we can set up everything
 	close(fd);
-	init_img(&img);
+	init_mlx(&img);
 	//PUT THIS IN A FUNCTION
 	// img->mlx_ptr = mlx_init();
 	// if (!img->mlx_ptr)

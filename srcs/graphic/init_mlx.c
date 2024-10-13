@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_img.c                                         :+:      :+:    :+:   */
+/*   init_mlx.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: thuy-ngu <thuy-ngu@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,6 +12,27 @@
 
 #include "../../includes/minirt.h"
 
+int	close_window(t_graphic *img)
+{
+	mlx_destroy_image(img->mlx_ptr, img->img);
+	mlx_destroy_window(img->mlx_ptr, img->win_ptr);
+	mlx_destroy_display(img->mlx_ptr);
+	free(img->mlx_ptr);
+	exit(0);
+}
+
+int	close_window_esc(int keycode, t_graphic *img)
+{
+	if (keycode == ESC)
+	{
+		mlx_destroy_image(img->mlx_ptr, img->img);
+		mlx_destroy_window(img->mlx_ptr, img->win_ptr);
+		mlx_destroy_display(img->mlx_ptr);
+		free(img->mlx_ptr);
+		exit(0);
+	}
+	return (0);
+}
 
 void	my_mlx_pixel_put(t_graphic *data, int x, int y, int color)
 {
@@ -21,8 +42,21 @@ void	my_mlx_pixel_put(t_graphic *data, int x, int y, int color)
 	*(unsigned int*)dst = color;
 }
 
-void	init_img(t_graphic *img)
+void	setup_hooks(t_graphic *img)
 {
+	// mlx_mouse_hook(img->win_ptr, ft_mousehooks, img);
+	// mlx_key_hook(img->win_ptr, ft_keyhooks, img);
+	mlx_hook(img->win_ptr, ON_DESTROY, 0, close_window, img);
+	mlx_hook(img->win_ptr, ON_KEYDOWN, 1, close_window_esc, img);
+	mlx_loop(img->mlx_ptr);
+}
+
+void	init_mlx(t_graphic *img)
+{
+	t_graphic *mem_img;
+	mem_img = ft_calloc(sizeof(t_graphic), 1);
+	img = mem_img;
+	//img = malloc(sizeof(t_graphic));
 	img->mlx_ptr = mlx_init();
 	img->win_ptr = mlx_new_window(img->mlx_ptr, 1920, 1080, "Hello world!");
 	img->img = mlx_new_image(img->mlx_ptr, 1920, 1080);
