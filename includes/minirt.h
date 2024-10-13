@@ -8,7 +8,10 @@
 # include <stdio.h>
 # include <math.h>
 
-# define PIXEL 600
+# define WIDTH 1200
+# define HEIGHT 800
+
+# define PIXEL 600//maybe don't need at all
 
 #define PATH_LEN 9
 //COLORCODES
@@ -68,11 +71,6 @@ enum
 // 	double	y;
 // }				t_position;	
 
-typedef struct	s_data {
-
-// put infos from .rt file
-
-}				t_data;
 typedef struct	s_graphic {
 	void	*mlx_ptr;
 	void	*win_ptr;
@@ -83,7 +81,17 @@ typedef struct	s_graphic {
 	int		endian;
 }				t_graphic;
 
+typedef struct	s_data {
+//infos from .rt file
+	int	red;//init to 0
+	int	green;
+	int	blue;
+	t_graphic *img;// I init at init_mlx *search data->img = &img;
+}				t_data;
+
 int		open_rt(int argc, char **argv);
 void	init_mlx(t_data *data);
+void	my_mlx_pixel_put(t_graphic *data, int x, int y, int color);
+void	init_scene(t_data *data);
 
 #endif

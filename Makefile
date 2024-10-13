@@ -2,7 +2,7 @@ NAME		= miniRT
 
 SRC	= $(addprefix srcs/,$(addsuffix .c, $(FILES)))
 FILES		= main parsing/init_file parsing/parser \
-			  graphic/init_mlx
+			  raytracing/init_scene graphic/init_mlx
 
 CC			= cc 
 RM			= rm -f
