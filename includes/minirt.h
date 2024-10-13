@@ -68,9 +68,11 @@ enum
 // 	double	y;
 // }				t_position;	
 
-// typedef struct	s_data {
-// infos from .rt file
-// }				t_data;
+typedef struct	s_data {
+
+// put infos from .rt file
+
+}				t_data;
 typedef struct	s_graphic {
 	void	*mlx_ptr;
 	void	*win_ptr;
@@ -82,6 +84,6 @@ typedef struct	s_graphic {
 }				t_graphic;
 
 int		open_rt(int argc, char **argv);
-void	init_mlx(t_graphic *img);
+void	init_mlx(t_data *data);
 
 #endif
