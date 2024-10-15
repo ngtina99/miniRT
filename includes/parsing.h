@@ -40,23 +40,4 @@ typedef struct s_plane {
     int color[3];       // RGB color [0-255]
 } t_plane;
 
-
-typedef struct s_scene {
-    t_ambient ambient;      // Single ambient light
-    t_camera camera;             // Single camera
-    t_light light;               // Single light
-    
-    t_sphere *spheres;           // Dynamic array of spheres
-    int sphere_count;          // Number of spheres
-	int	sphere_capacity;
-
-    t_plane *planes;             // Dynamic array of planes
-    int plane_count;           // Number of planes
-	int	plane_capacity;
-
-    t_cylinder *cylinders;       // Dynamic array of cylinders
-    int cylinder_count;        // Number of cylinders
-	int	cylinder_capacity;
-} t_scene;
-
 #endif
