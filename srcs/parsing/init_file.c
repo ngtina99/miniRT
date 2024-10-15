@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_file.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thuy-ngu <thuy-ngu@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 18:49:19 by thuy-ngu          #+#    #+#             */
-/*   Updated: 2024/10/13 01:03:20 by thuy-ngu         ###   ########.fr       */
+/*   Updated: 2024/10/15 13:38:21 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ int	open_rt(int argc, char **argv)
 
 	file_name = argv[1];
 	char *full_path = malloc((PATH_LEN) + ft_strlen(file_name) + 1);
+	if (!full_path)
+		return (-1);
 	ft_strcpy(full_path, "./scenes/");
 	ft_strcat(full_path, argv[1]);
 	fd = open(full_path, O_RDONLY);

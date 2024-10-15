@@ -12,7 +12,7 @@
 
 #include "../../includes/minirt.h"
 
-void	init_scene(t_data *data)
+void	init_scene_img(t_data *data)
 {
 	double	x;
 	double	y;

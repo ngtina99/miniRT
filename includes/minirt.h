@@ -1,5 +1,7 @@
-#ifndef FRACTOL_H
-# define FRACTOL_H
+#ifndef MINIRT_H
+# define MINIRT_H
+
+# include "parsing.h"
 
 # include "../libs/libft/libft.h"
 # include "../libs/minilibx-linux/mlx.h"
@@ -71,6 +73,8 @@ enum
 // 	double	y;
 // }				t_position;	
 
+typedef struct s_data t_data;
+
 typedef struct	s_graphic {
 	void	*mlx_ptr;
 	void	*win_ptr;
@@ -79,19 +83,48 @@ typedef struct	s_graphic {
 	int		bits_per_pixel;
 	int		line_length;
 	int		endian;
+	t_data	*data;
 }				t_graphic;
 
-typedef struct	s_data {
-//infos from .rt file
+typedef struct s_data {
+    t_ambient ambient;      // Single ambient light
+    t_camera camera;             // Single camera
+    t_light light;               // Single light
+    
+    t_sphere *spheres;           // Dynamic array of spheres
+    int sphere_count;          // Number of spheres
+	int	sphere_capacity;
+
+    t_plane *planes;             // Dynamic array of planes
+    int plane_count;           // Number of planes
+	int	plane_capacity;
+
+    t_cylinder *cylinders;       // Dynamic array of cylinders
+    int cylinder_count;        // Number of cylinders
+	int	cylinder_capacity;
+
 	int	red;//init to 0
 	int	green;
 	int	blue;
-	t_graphic *img;// I init at init_mlx *search data->img = &img;
-}				t_data;
+
+	t_graphic	*img;
+
+} t_data;
+
+// typedef struct	s_data {
+// //infos from .rt file
+// 	int	red;//init to 0
+// 	int	green;
+// 	int	blue;
+// 	t_graphic *img;// I init at init_mlx *search data->img = &img;
+// }				t_data;
 
 int		open_rt(int argc, char **argv);
 void	init_mlx(t_data *data);
 void	my_mlx_pixel_put(t_graphic *data, int x, int y, int color);
-void	init_scene(t_data *data);
+void	init_scene_img(t_data *data);
+void	initialize_scene(t_data *scene);
+int		parse_scene(t_data *scene, int fd);
+void	free_scene(t_data **scene);
 
 #endif
