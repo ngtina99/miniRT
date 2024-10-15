@@ -1,6 +1,8 @@
 #ifndef PARSING_H
 # define PARSING_H
 
+# define INITIAL_CAPACITY 10 
+
 typedef struct s_ambient {
     float ratio;       // Ambient lighting ratio [0.0, 1.0]
     int color[3];      // RGB color [0-255]
@@ -46,12 +48,15 @@ typedef struct s_scene {
     
     t_sphere *spheres;           // Dynamic array of spheres
     int sphere_count;          // Number of spheres
+	int	sphere_capacity;
 
     t_plane *planes;             // Dynamic array of planes
     int plane_count;           // Number of planes
+	int	plane_capacity;
 
     t_cylinder *cylinders;       // Dynamic array of cylinders
     int cylinder_count;        // Number of cylinders
+	int	cylinder_capacity;
 } t_scene;
 
 #endif

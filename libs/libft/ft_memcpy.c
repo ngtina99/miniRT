@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leanor <leanor@student.42.fr>              +#+  +:+       +#+        */
+/*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 18:51:33 by yioffe            #+#    #+#             */
-/*   Updated: 2024/01/26 12:17:41 by leanor           ###   ########.fr       */
+/*   Updated: 2024/10/15 14:13:49 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	*ft_memcpy(void *dest, const void *src, size_t n)
 
 	p_dest = (unsigned char *) dest;
 	p_src = (unsigned char *) src;
-	if (p_dest == NULL && p_src == NULL)
+	if (p_dest == NULL || p_src == NULL)
 		return (NULL);
 	i = 0;
 	while (i < n)
