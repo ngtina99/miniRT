@@ -1,5 +1,7 @@
-#ifndef FRACTOL_H
-# define FRACTOL_H
+#ifndef MINIRT_H
+# define MINIRT_H
+
+# include "parsing.h"
 
 # include "../libs/libft/libft.h"
 # include "../libs/minilibx-linux/mlx.h"
