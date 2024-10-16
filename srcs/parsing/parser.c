@@ -15,6 +15,7 @@
 // TODO: check uniqueness of capital letter params
 // TODO: check whitespaces handling
 // TODO: check invalid cases (now we return EXIT_SUCCESS a lot with no other cases). add validations that all params are present
+// TODO: think about the case when lines are duplicate. Not sure if needs validation
 
 // Function to add any form (cylinder, plane, sphere) to the array
 int add_form(void **array, int *count, int *capacity, void *new_form, size_t form_size) {
