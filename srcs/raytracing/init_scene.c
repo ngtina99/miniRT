@@ -29,14 +29,14 @@ void	init_scene_img(t_data *data)
 			// OBJECTS IN THE WAY
 			// COLOR
 			// SHADING
-			// ray = make_ray(data, make_v_dir(data, x, y));
-			// ray.inter = closest_inter(data, &ray);
+			// ray = make_ray(data, make_v_dir(data, x, y)); get a direction of the camera
+			// ray.inter = closest_inter(data, &ray); it could be already calculate the color
 			// lights_shadows(data, data->sc, ray.inter);
 			// data->red = 0;//just for test
 			// data->green = 0;//just for test
 			// data->blue = 255;//just for test
 			color_code = (data->red << 16) | (data->green << 8) | data->blue;
-			my_mlx_pixel_put(data->img, x, y, color_code);
+			my_mlx_pixel_put(data->img, x, y, color_code);// just put the calculated color_code here
 		}
 	}
 	//my_mlx_pixel_put(data->img, 5, 5, 0x00FF0000);//just for test
