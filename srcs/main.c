@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
+/*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 18:49:19 by thuy-ngu          #+#    #+#             */
-/*   Updated: 2024/10/15 15:36:48 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/10/22 12:55:46 by thuy-ngu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,15 +164,6 @@ int	main(int argc, char **argv)
 	// img->mlx_ptr = mlx_init();
 	// if (!img->mlx_ptr)
 	// 	print_error(1, img);
-	// if (img->set == 1)
-	// 	img->win_ptr = mlx_new_window(img->mlx_ptr, \
-	// 	PIXEL, PIXEL, "miniRT");
-	// else if (img->set == 2)
-	// 	img->win_ptr = mlx_new_window(img->mlx_ptr, PIXEL, PIXEL, "Julia");
-	// else if (img->set == 3)
-	// 	img->win_ptr = mlx_new_window(img->mlx_ptr, PIXEL, PIXEL, "Tricorn");
-	// if (!img->win_ptr)
-	// 	print_error(2, img);
 	// img->img = mlx_new_image(img->mlx_ptr, PIXEL, PIXEL);
 	// if (!img->img)
 	// 	print_error(3, img);
