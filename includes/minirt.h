@@ -111,6 +111,14 @@ typedef struct s_data {
 
 } t_data;
 
+typedef struct s_vect3d
+{
+	float	x;
+	float	y;
+	float	z;
+}	t_vec3d;
+
+
 // typedef struct	s_data {
 // //infos from .rt file
 // 	int	red;//init to 0
