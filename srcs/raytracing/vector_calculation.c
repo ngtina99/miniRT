@@ -12,6 +12,18 @@
 
 #include "../../includes/minirt.h"
 
+// 1. Sub-problem (Points in 3D Space)
+// Requirement: to represent vectors
+
+// Create a 3D vector struct that support following operations:
+
+// Vector Addition
+// Vector Subtraction
+// Vector Magnitude
+// Dot Product
+// Vector Normalization
+// Vector Multiplication (Multiplying a Vector by a scalar)
+
 int	vector_rendering(t_data *data)
 {
 	int color_code;
