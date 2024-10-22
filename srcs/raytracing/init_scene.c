@@ -35,7 +35,7 @@ void	init_scene_img(t_data *data)
 			// data->red = 0;//just for test
 			// data->green = 0;//just for test
 			// data->blue = 255;//just for test
-			color_code = (data->red << 16) | (data->green << 8) | data->blue;
+			color_code = vector_rendering(data);
 			my_mlx_pixel_put(data->img, x, y, color_code);// just put the calculated color_code here
 		}
 	}
