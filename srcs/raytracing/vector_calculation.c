@@ -12,3 +12,14 @@
 
 #include "../../includes/minirt.h"
 
+int	vector_rendering(t_data *data)
+{
+	int color_code;
+
+			// data->red = 0;//just for test
+			// data->green = 0;//just for test
+			// data->blue = 255;//just for test
+	
+	color_code = (data->red << 16) | (data->green << 8) | data->blue;
+	return(color_code);
+}
