@@ -125,4 +125,8 @@ void	initialize_scene(t_data *scene);
 int		parse_scene(t_data *scene, int fd);
 void	free_scene(t_data **scene);
 int		vector_rendering(t_data *data);
+t_vec3d normalize(t_vec3d v);
+void	ray_trace(t_data *data, int screen_width, int screen_height);
+
+
 #endif
