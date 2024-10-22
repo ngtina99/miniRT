@@ -65,14 +65,6 @@ enum
 	ON_DESTROY = 17
 };
 
-// typedef struct s_position// could be usefule maybe later
-// {
-// 	double	a;
-// 	double	b;
-// 	double	x;
-// 	double	y;
-// }				t_position;	
-
 typedef struct s_data t_data;
 
 typedef struct	s_graphic {

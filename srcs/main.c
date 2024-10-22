@@ -6,7 +6,7 @@
 /*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 18:49:19 by thuy-ngu          #+#    #+#             */
-/*   Updated: 2024/10/22 12:55:46 by thuy-ngu         ###   ########.fr       */
+/*   Updated: 2024/10/22 15:18:36 by thuy-ngu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,7 +167,7 @@ int	main(int argc, char **argv)
 	// img->img = mlx_new_image(img->mlx_ptr, PIXEL, PIXEL);
 	// if (!img->img)
 	// 	print_error(3, img);
-	// img->addr = mlx_get_data_addr(img->img, &img->bits_per_pixel, \
+	// img->addr = mlx_get_data_addr(img->img, &img->bits_per_pixel,
 	// 			&img->line_length, &img->endian);
 	// if (!img->addr)
 	// 	print_error(4, img);
