@@ -28,6 +28,8 @@ int	vector_rendering(t_data *data)
 {
 	int color_code;
 
+	(void)data;
+
 			// data->red = 0;//just for test
 			// data->green = 0;//just for test
 			// data->blue = 255;//just for test

@@ -134,5 +134,5 @@ void	init_scene_img(t_data *data);
 void	initialize_scene(t_data *scene);
 int		parse_scene(t_data *scene, int fd);
 void	free_scene(t_data **scene);
-
+int		vector_rendering(t_data *data);
 #endif
