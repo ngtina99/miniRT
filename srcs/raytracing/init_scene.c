@@ -36,25 +36,7 @@ void	init_scene_img(t_data *data)
 			// data->red = 0;//just for test
 			// data->green = 0;//just for test
 			// data->blue = 255;//just for test
-			// Calculate ray direction based on screen coordinates
-			direction.x = (2.0f * x / WIDTH) - 1.0f;
-			direction.y = (2.0f * y / HEIGHT) - 1.0f;
-			direction.z = -1.0f; // Assume ray goes "forward" in negative Z direction
-
-			// Normalize the direction vector
-			direction = normalize(direction);
-
-			// For now, color all pixels red (set data->red = 255, green and blue to 0)
-			// data->red = 0;
-			// data->green = 0;
-			// data->blue = 0;
-
-			data->red = (int)((direction.x + 1.0f) / 2.0f * 255);
-			data->green = (int)((direction.y + 1.0f) / 2.0f * 255);  // Modulate green based on y-direction
-			data->blue = (int)((direction.z + 1.0f) / 2.0f * 255);   // Modulate blue based on z-direction
-
-			color_code = vector_rendering(data);
-			my_mlx_pixel_put(data->img, x, y, color_code);// just put the calculated color_code here
+			ray_trace(data, (int)x, (int)y, WIDTH, HEIGHT);
 		}
 	}
 	//my_mlx_pixel_put(data->img, 5, 5, 0x00FF0000);//just for test

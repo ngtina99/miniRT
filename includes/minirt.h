@@ -108,6 +108,11 @@ typedef struct s_vect3d
 	float	z;
 }	t_vec3d;
 
+typedef struct s_ray
+{
+    t_vec3d origin;    // Starting point of the ray (camera position)
+    t_vec3d direction; // Direction the ray is traveling
+}   t_ray;
 
 // typedef struct	s_data {
 // //infos from .rt file
@@ -126,7 +131,7 @@ int		parse_scene(t_data *scene, int fd);
 void	free_scene(t_data **scene);
 int		vector_rendering(t_data *data);
 t_vec3d normalize(t_vec3d v);
-void	ray_trace(t_data *data, int screen_width, int screen_height);
+void ray_trace(t_data *data, int x, int y, int screen_width, int screen_height);
 
 
 #endif
