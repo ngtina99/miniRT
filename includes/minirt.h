@@ -13,8 +13,6 @@
 # define WIDTH 1200
 # define HEIGHT 800
 
-# define PIXEL 600//maybe don't need at all
-
 #define PATH_LEN 9
 //COLORCODES
 #define RESET "\033[0m"
