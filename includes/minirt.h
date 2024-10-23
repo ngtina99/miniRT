@@ -132,7 +132,7 @@ typedef struct s_ray
     t_vec3d direction; // Direction the ray is traveling
 }   t_ray;
 
-// typedef struct	s_data {
+// typedef struct	s_data 
 // //infos from .rt file
 // 	int	red;//init to 0
 // 	int	green;
