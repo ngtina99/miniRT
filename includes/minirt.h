@@ -4,11 +4,29 @@
 # include "parsing.h"
 
 # include "../libs/libft/libft.h"
-# include "../libs/minilibx-linux/mlx.h"
 # include <stdlib.h>
 # include <unistd.h>
 # include <stdio.h>
 # include <math.h>
+
+# ifdef __APPLE__
+#  include "../libs/minilibx-mac/mlx.h"
+#  define IS_APPLE 1
+#  define ESC 53
+#  define UP 126
+#  define DOWN 125
+#  define LEFT 123
+#  define RIGHT 124
+# else
+#  include "../libs/minilibx-linux/mlx.h"
+#  define IS_APPLE 0
+#  define ESC 65307
+#  define UP 65362
+#  define DOWN 65364
+#  define LEFT 65361
+#  define RIGHT 65363
+# endif
+
 
 # define WIDTH 1200
 # define HEIGHT 800
@@ -45,11 +63,11 @@
 # define B 98
 # define I 105
 # define O 111
-# define ESC 65307
-# define UP 65364
-# define DOWN 65362
-# define RIGHT 65363
-# define LEFT 65361
+// # define ESC 65307
+// # define UP 65364
+// # define DOWN 65362
+// # define RIGHT 65363
+// # define LEFT 65361
 
 //EVENTCODES
 enum 
@@ -133,5 +151,8 @@ int		vector_rendering(t_data *data);
 t_vec3d normalize(t_vec3d v);
 void ray_trace(t_data *data, int x, int y, int screen_width, int screen_height);
 
+# ifdef __APPLE__
+void		mlx_destroy_display(void *mlx_ptr);
+# endif
 
 #endif
