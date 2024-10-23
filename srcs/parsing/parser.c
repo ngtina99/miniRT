@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 19:49:52 by thuy-ngu          #+#    #+#             */
-/*   Updated: 2024/10/15 15:21:14 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/10/23 17:30:56 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 // TODO: check whitespaces handling
 // TODO: check invalid cases (now we return EXIT_SUCCESS a lot with no other cases). add validations that all params are present
 // TODO: think about the case when lines are duplicate. Not sure if needs validation
+// TODO: mandatory/not mandatory parameters
 
 // Function to add any form (cylinder, plane, sphere) to the array
 int add_form(void **array, int *count, int *capacity, void *new_form, size_t form_size) {

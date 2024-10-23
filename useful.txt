@@ -1,3 +1,4 @@
 1. check in libft and miniRT makfile CFLAGS (I comment out on my own PC, because it is not compatible)
 2. make sure to submit ALL libraries including minilibx
 3. OPENGLFLAGS are only 1 time in makefile
+4. rename my_mlx_pixel_put to for example set_pixel_color

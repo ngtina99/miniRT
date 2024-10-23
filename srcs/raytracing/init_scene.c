@@ -21,6 +21,7 @@ void	init_scene_img(t_data *data)
 	t_vec3d	direction;
 
 	y = -1;
+		
 	while (++y < HEIGHT)
 	{
 		x = -1;

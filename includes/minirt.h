@@ -133,7 +133,7 @@ typedef struct s_ray
 }   t_ray;
 
 // typedef struct	s_data {
-// //infos from .rt file
+// infos from .rt file
 // 	int	red;//init to 0
 // 	int	green;
 // 	int	blue;
