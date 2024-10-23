@@ -16,24 +16,42 @@ LIBFT 			= ./libs/libft/libft.a
 INC    			= -I./includes
 
 #CFLAGS			= -Wall -Wextra -Werror -g
-MLXFLAGS		= -O3 -L libs/minilibx-linux/ -lmlx -L/usr/lib -Ilmlx -lXext -lX11 -lm -lz -lpthread #lpthread maybe we can
+#MLXFLAGS		= -O3 -L libs/minilibx-linux/ -lmlx -L/usr/lib -Ilmlx -lXext -lX11 -lm -lz -lpthread #lpthread maybe we can
+
+# Explicitly set MACOS_CONFIG if on macOS
+UNAME_S := $(shell uname -s)
+ifeq ($(UNAME_S), Darwin)
+	MACOS_CONFIG = 1
+endif
+
+ifdef MACOS_CONFIG
+	MLX_DIR = ./libs/minilibx-mac
+	LDflags += -I$(MLX_DIR)
+	LDflags += -L$(MLX_DIR) -lmlx -framework OpenGL -framework AppKit
+	FLAGS = $(LDflags)
+else
+	MLX_DIR = ./libs/minilibx-linux
+	MLXFLAGS = -O3 -L$(MLX_DIR) -lmlx -lXext -lX11 -lm -lz -lpthread
+	FLAGS = $(MLXFLAGS)
+endif
+
 
 WHITE="\033[1m"
 PURPLE:="\033[1;35m"
 PINK="\033[95m"
 RED="\033[1;91m"
 GREEN:="\033[1;32m"
-BLUE:="\033[1;36m"
+BLUE="\033[1;36m"
 ORANGE="\033[1;38;5;208m"
 YELLOW="\033[1;33m"
 EOC:="\033[0;0m" #END OF COLOR
 
 all:		$(NAME)
-			@echo
-			@echo $(PINK) "*SOME INSTRUCTIONS*" $(EOC) $(RED)
-			@echo
-			@echo $(PURPLE)
-			@echo "✨The program is ready✨" $(EOC)
+	@echo
+	@echo $(PINK) "*SOME INSTRUCTIONS*" $(EOC) $(RED)
+	@echo
+	@echo $(PURPLE)
+	@echo "✨The program is ready✨" $(EOC)
 
 # @echo "maybe instruct put cylinder" $(EOC) $(GREEN)
 # @echo "maybe instruct put cube" $(EOC) $(BLUE)
@@ -53,7 +71,7 @@ $(OBJ_DIR)/%.o: srcs/%.c
 
 $(NAME): $(LIBFT) $(OBJ)
 	@echo $(BLUE) "*Compiling miniRT*" $(EOC) $(GREEN) 
-	$(CC) $(SRC) $(INC) $(OPENGLFLAGS) $(MLXFLAGS) $(LIBFT) $(CFLAGS) -o $(NAME)
+	@$(CC) $(CFLAGS) -o $(NAME) $(OBJ) $(LIBFT) $(FLAGS)
 
 clean:
 	@echo $(PURPLE) "🧽🧼" $(EOC)

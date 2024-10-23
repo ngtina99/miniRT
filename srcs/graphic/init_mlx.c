@@ -16,7 +16,9 @@ int	close_window(t_graphic *img)
 {
 	mlx_destroy_image(img->mlx_ptr, img->img);
 	mlx_destroy_window(img->mlx_ptr, img->win_ptr);
-	mlx_destroy_display(img->mlx_ptr);
+	// TODO: remove before submission
+	if (!IS_APPLE)
+		mlx_destroy_display(img->mlx_ptr);
 	free(img->mlx_ptr);
 	free_scene(&img->data);
 	exit(0);
@@ -28,7 +30,8 @@ int	close_window_esc(int keycode, t_graphic *img)
 	{
 		mlx_destroy_image(img->mlx_ptr, img->img);
 		mlx_destroy_window(img->mlx_ptr, img->win_ptr);
-		mlx_destroy_display(img->mlx_ptr);
+		if (!IS_APPLE)
+			mlx_destroy_display(img->mlx_ptr);
 		free(img->mlx_ptr);
 		free_scene(&img->data);
 		exit(0);
@@ -49,6 +52,7 @@ void	setup_hooks(t_graphic *img)
 	// mlx_mouse_hook(img->win_ptr, ft_mousehooks, img);
 	// mlx_key_hook(img->win_ptr, ft_keyhooks, img);
 	mlx_hook(img->win_ptr, ON_DESTROY, 0, close_window, img);
+	mlx_hook(img->win_ptr, 17, 0, close_window, img);
 	mlx_hook(img->win_ptr, ON_KEYDOWN, 1, close_window_esc, img);
 	mlx_loop(img->mlx_ptr);
 }
