@@ -111,6 +111,7 @@ typedef struct s_data {
     int cylinder_count;        // Number of cylinders
 	int	cylinder_capacity;
 
+	// TODO: we probably won't need this at all
 	int	red;//init to 0
 	int	green;
 	int	blue;
@@ -150,6 +151,7 @@ void	free_scene(t_data **scene);
 int		vector_rendering(t_data *data);
 t_vec3d normalize(t_vec3d v);
 void ray_trace(t_data *data, int x, int y, int screen_width, int screen_height);
+int convert_rgb_to_int(int color[3]);
 
 # ifdef __APPLE__
 void		mlx_destroy_display(void *mlx_ptr);

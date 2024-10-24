@@ -13,6 +13,6 @@
 #include "../../includes/minirt.h"
 
 
-Render the image (call your raytracing function)
+// Render the image (call your raytracing function)
 
-Display the image (put your pixels one by one)
+// Display the image (put your pixels one by one)

@@ -24,19 +24,19 @@
 // Vector Normalization
 // Vector Multiplication (Multiplying a Vector by a scalar)
 
-int	vector_rendering(t_data *data)
-{
-	int color_code;
+// int	vector_rendering(t_data *data)
+// {
+// 	int color_code;
 
-	(void)data;
+// 	(void)data;
 
-			// data->red = 0;//just for test
-			// data->green = 0;//just for test
-			// data->blue = 255;//just for test
+// 			// data->red = 0;//just for test
+// 			// data->green = 0;//just for test
+// 			// data->blue = 255;//just for test
 	
-	color_code = (data->red << 16) | (data->green << 8) | data->blue;
-	return(color_code);
-}
+// 	color_code = (data->red << 16) | (data->green << 8) | data->blue;
+// 	return(color_code);
+// }
 
 
 
@@ -160,11 +160,54 @@ int ray_sphere_intersection(t_sphere sphere, t_vec3d origin, t_vec3d direction, 
         hit_point->y = origin.y + t * direction.y;
         hit_point->z = origin.z + t * direction.z;
 
-        printf("Intersection point: (%f, %f, %f)\n", hit_point->x, hit_point->y, hit_point->z);
+        //printf("Intersection point: (%f, %f, %f)\n", hit_point->x, hit_point->y, hit_point->z);
         return 1; // Intersection occurs
     }
 }
 
+// Function to find the closest intersection with any sphere
+int find_closest_sphere(t_data *data, t_vec3d origin, t_vec3d direction, t_vec3d *closest_hit_point, int *closest_sphere_index)
+{
+    int i = 0;
+    float min_distance = INFINITY; // Initially set the minimum distance to infinity
+    t_vec3d hit_point;
+    int hit = 0;  // Flag to check if any intersection occurs
+
+    // Loop through all spheres in the scene
+    while (i < data->sphere_count)
+    {
+        // Check if the ray intersects the current sphere
+        if (ray_sphere_intersection(data->spheres[i], origin, direction, &hit_point))
+        {
+            // Calculate the distance from the origin to the hit point
+            float distance = sqrtf(
+                (hit_point.x - origin.x) * (hit_point.x - origin.x) +
+                (hit_point.y - origin.y) * (hit_point.y - origin.y) +
+                (hit_point.z - origin.z) * (hit_point.z - origin.z));
+
+            // If this is the closest intersection so far, update the closest sphere
+            if (distance < min_distance)
+            {
+                min_distance = distance;
+                *closest_hit_point = hit_point;
+                *closest_sphere_index = i;
+                hit = 1;  // Mark that an intersection was found
+            }
+        }
+        i++;  // Move to the next sphere
+    }
+    return hit;  // Return whether any intersection was found
+}
+
+int convert_rgb_to_int(int color[3])
+{
+    int red = color[0];   // Red component
+    int green = color[1]; // Green component
+    int blue = color[2];  // Blue component
+    int color_code = (red << 16) | (green << 8) | blue;
+
+    return color_code;
+}
 
 void ray_trace(t_data *data, int x, int y, int screen_width, int screen_height)
 {
@@ -199,24 +242,22 @@ void ray_trace(t_data *data, int x, int y, int screen_width, int screen_height)
 
     direction = normalize(direction);
 
-    // Check if the ray intersects with the sphere
-    t_vec3d hit_point;
-    if (ray_sphere_intersection(data->spheres[0], origin, direction, &hit_point))
+    // Find the closest intersection among all spheres
+    t_vec3d closest_hit_point;
+    int closest_sphere_index;
+    if (find_closest_sphere(data, origin, direction, &closest_hit_point, &closest_sphere_index))
     {
-        printf("here");
-        // Set pixel color to red (for testing)
-        my_mlx_pixel_put(data->img, x, y, 0xFF0000);  // Red color for sphere intersection
+        int color_code = convert_rgb_to_int(data->spheres[closest_sphere_index].color);
+
+        // Set the pixel color to the correct sphere's color
+        my_mlx_pixel_put(data->img, x, y, color_code);
     }
     else
     {
         // No intersection: set background color (ambient light)
-        //int ambient_color = (int)(255 * data->ambient.ratio);
-        //int color_code = (ambient_color << 16) | (ambient_color << 8) | ambient_color;
-        my_mlx_pixel_put(data->img, x, y, 0x000000);
+        int ambient_color = (int)(255 * data->ambient.ratio);
+        int color_code = (ambient_color << 16) | (ambient_color << 8) | ambient_color;
+        my_mlx_pixel_put(data->img, x, y, color_code);
     }
 }
-
-
-
-
-
+   
