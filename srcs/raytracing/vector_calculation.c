@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "../../includes/minirt.h"
-
+/*
 // 1. Sub-problem (Points in 3D Space)
 // Requirement: to represent vectors
 
@@ -165,6 +165,40 @@ int ray_sphere_intersection(t_sphere sphere, t_vec3d origin, t_vec3d direction, 
     }
 }
 
+// Function to check if a ray intersects a plane and return the intersection point
+int ray_plane_intersection(t_plane plane, t_vec3d origin, t_vec3d direction, t_vec3d *hit_point)
+{
+    // Dot product between ray direction and the plane normal
+    float denom = dot_product(direction, plane.normal);
+
+    // If denom is close to 0, the ray is parallel to the plane, so no intersection
+    if (fabs(denom) > 1e-6) // Small epsilon to handle floating point inaccuracies
+    {
+        // Calculate vector from ray origin to a point on the plane
+        t_vec3d p0l0 = {
+            plane.position[0] - origin.x,
+            plane.position[1] - origin.y,
+            plane.position[2] - origin.z
+        };
+
+        // Calculate the distance along the ray to the intersection point (t)
+        float t = dot_product(p0l0, plane.normal) / denom;
+
+        // If t is positive, the intersection point is in front of the camera
+        if (t >= 0)
+        {
+            // Calculate the intersection point
+            hit_point->x = origin.x + t * direction.x;
+            hit_point->y = origin.y + t * direction.y;
+            hit_point->z = origin.z + t * direction.z;
+
+            return 1; // Intersection found
+        }
+    }
+
+    return 0; // No intersection
+}
+
 // Function to find the closest intersection with any sphere
 int find_closest_sphere(t_data *data, t_vec3d origin, t_vec3d direction, t_vec3d *closest_hit_point, int *closest_sphere_index)
 {
@@ -198,6 +232,8 @@ int find_closest_sphere(t_data *data, t_vec3d origin, t_vec3d direction, t_vec3d
     }
     return hit;  // Return whether any intersection was found
 }
+
+
 
 int convert_rgb_to_int(int color[3])
 {
@@ -260,4 +296,5 @@ void ray_trace(t_data *data, int x, int y, int screen_width, int screen_height)
         my_mlx_pixel_put(data->img, x, y, color_code);
     }
 }
+*/
    

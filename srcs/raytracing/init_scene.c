@@ -37,7 +37,7 @@ void	init_scene_img(t_data *data)
 			// data->red = 0;//just for test
 			// data->green = 0;//just for test
 			// data->blue = 255;//just for test
-			ray_trace(data, (int)x, (int)y, WIDTH, HEIGHT);
+			//ray_trace(data, (int)x, (int)y, WIDTH, HEIGHT);
 		}
 	}
 	//my_mlx_pixel_put(data->img, 5, 5, 0x00FF0000);//just for test
