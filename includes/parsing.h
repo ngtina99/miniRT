@@ -3,41 +3,55 @@
 
 # define INITIAL_CAPACITY 10 
 
+typedef struct s_vect3d
+{
+	float	x;
+	float	y;
+	float	z;
+}	t_vec3d;
+
+typedef struct s_color_rgb
+{
+	int	red;
+	int	green;
+	int	blue;
+}	t__color_rgb;
+
 typedef struct s_ambient {
     float ratio;       // Ambient lighting ratio [0.0, 1.0]
-    int color[3];      // RGB color [0-255]
+    t__color_rgb color;      // RGB color [0-255]
 } t_ambient;
 
 typedef struct s_camera {
-    float position[3];  // Camera position (x, y, z)
-    float orientation[3];  // Normalized orientation vector (x, y, z) [-1, 1]
+    t_vec3d position;  // Camera position (x, y, z)
+    t_vec3d orientation;  // Normalized orientation vector (x, y, z) [-1, 1]
     int fov;            // Field of view (FOV) [0, 180]
 } t_camera;
 
 typedef struct s_light{
-    float position[3];  // Light position (x, y, z)
+    t_vec3d position;  // Light position (x, y, z)
     float brightness;   // Brightness ratio [0.0, 1.0]
-    int color[3];       // RGB color [0-255]
+    t__color_rgb color;       // RGB color [0-255]
 } t_light;
 
 typedef struct s_sphere{
-    float center[3];    // Sphere center (x, y, z)
+    t_vec3d center;    // Sphere center (x, y, z)
     float diameter;     // Sphere diameter
-    int color[3];       // RGB color [0-255]
+    t__color_rgb color;       // RGB color [0-255]
 } t_sphere;
 
 typedef struct s_cylinder {
-    float center[3];    // Center of the cylinder base (x, y, z)
-    float axis[3];      // Normalized axis direction (x, y, z) [-1, 1]
+    t_vec3d center;    // Center of the cylinder base (x, y, z)
+    t_vec3d axis;      // Normalized axis direction (x, y, z) [-1, 1]
     float diameter;     // Cylinder diameter
     float height;       // Cylinder height
-    int color[3];       // RGB color [0-255]
+    t__color_rgb color;       // RGB color [0-255]
 } t_cylinder;
 
 typedef struct s_plane {
-    float point[3];     // A point on the plane (x, y, z)
-    float normal[3];    // Normal vector of the plane (x, y, z) [-1, 1]
-    int color[3];       // RGB color [0-255]
+    t_vec3d point;     // A point on the plane (x, y, z)
+    t_vec3d normal;    // Normal vector of the plane (x, y, z) [-1, 1]
+    t__color_rgb color;       // RGB color [0-255]
 } t_plane;
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 18:49:19 by thuy-ngu          #+#    #+#             */
-/*   Updated: 2024/10/22 12:55:46 by thuy-ngu         ###   ########.fr       */
+/*   Updated: 2024/10/25 08:51:08 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,20 +68,20 @@
 // FOR PARSING TESTING ONLY
 
 void print_ambient(t_ambient *ambient) {
-    printf("Ambient light: ratio = %f, color = %d,%d,%d\n", ambient->ratio, ambient->color[0], ambient->color[1], ambient->color[2]);
+    printf("Ambient light: ratio = %f, color = %d,%d,%d\n", ambient->ratio, ambient->color.red, ambient->color.green, ambient->color.blue);
 }
 
 void print_camera(t_camera *camera) {
     printf("Camera: position = %f,%f,%f, orientation = %f,%f,%f, FOV = %d\n", 
-            camera->position[0], camera->position[1], camera->position[2],
-            camera->orientation[0], camera->orientation[1], camera->orientation[2],
+            camera->position.x, camera->position.y, camera->position.z,
+            camera->orientation.x, camera->orientation.y, camera->orientation.z,
             camera->fov);
 }
 
 void print_light(t_light *light) {
     printf("Light: position = %f,%f,%f, brightness = %f, color = %d,%d,%d\n", 
-            light->position[0], light->position[1], light->position[2], 
-            light->brightness, light->color[0], light->color[1], light->color[2]);
+            light->position.x, light->position.y, light->position.z, 
+            light->brightness, light->color.red, light->color.green, light->color.blue);
 }
 
 void print_spheres(t_data *scene) {
@@ -89,8 +89,8 @@ void print_spheres(t_data *scene) {
     for (int i = 0; i < scene->sphere_count; i++) {
         t_sphere *sphere = &scene->spheres[i];
         printf("  Sphere %d: center = %f,%f,%f, diameter = %f, color = %d,%d,%d\n", i+1,
-               sphere->center[0], sphere->center[1], sphere->center[2],
-               sphere->diameter, sphere->color[0], sphere->color[1], sphere->color[2]);
+               sphere->center.x, sphere->center.y, sphere->center.z,
+               sphere->diameter, sphere->color.red, sphere->color.green, sphere->color.blue);
     }
 }
 
@@ -99,9 +99,9 @@ void print_planes(t_data *scene) {
     for (int i = 0; i < scene->plane_count; i++) {
         t_plane *plane = &scene->planes[i];
         printf("  Plane %d: point = %f,%f,%f, normal = %f,%f,%f, color = %d,%d,%d\n", i+1,
-               plane->point[0], plane->point[1], plane->point[2],
-               plane->normal[0], plane->normal[1], plane->normal[2],
-               plane->color[0], plane->color[1], plane->color[2]);
+               plane->point.x, plane->point.y, plane->point.z,
+               plane->normal.x, plane->normal.y, plane->normal.z,
+               plane->color.red, plane->color.green, plane->color.blue);
     }
 }
 
@@ -110,10 +110,10 @@ void print_cylinders(t_data *scene) {
     for (int i = 0; i < scene->cylinder_count; i++) {
         t_cylinder *cylinder = &scene->cylinders[i];
         printf("  Cylinder %d: center = %f,%f,%f, axis = %f,%f,%f, diameter = %f, height = %f, color = %d,%d,%d\n", i+1,
-               cylinder->center[0], cylinder->center[1], cylinder->center[2],
-               cylinder->axis[0], cylinder->axis[1], cylinder->axis[2],
+               cylinder->center.x, cylinder->center.y, cylinder->center.z,
+               cylinder->axis.x, cylinder->axis.y, cylinder->axis.z,
                cylinder->diameter, cylinder->height, 
-               cylinder->color[0], cylinder->color[1], cylinder->color[2]);
+               cylinder->color.red, cylinder->color.green, cylinder->color.blue);
     }
 }
 
@@ -167,7 +167,7 @@ int	main(int argc, char **argv)
 	// img->img = mlx_new_image(img->mlx_ptr, PIXEL, PIXEL);
 	// if (!img->img)
 	// 	print_error(3, img);
-	// img->addr = mlx_get_data_addr(img->img, &img->bits_per_pixel, \
+	// img->addr = mlx_get_data_addr(img->img, &img->bits_per_pixel,
 	// 			&img->line_length, &img->endian);
 	// if (!img->addr)
 	// 	print_error(4, img);

@@ -18,8 +18,10 @@ void	init_scene_img(t_data *data)
 	double	y;
 	int	color_code;
 	//t_ray	ray;
+	t_vec3d	direction;
 
 	y = -1;
+		
 	while (++y < HEIGHT)
 	{
 		x = -1;
@@ -35,8 +37,7 @@ void	init_scene_img(t_data *data)
 			// data->red = 0;//just for test
 			// data->green = 0;//just for test
 			// data->blue = 255;//just for test
-			color_code = vector_rendering(data);
-			my_mlx_pixel_put(data->img, x, y, color_code);// just put the calculated color_code here
+			ray_trace(data, (int)x, (int)y, WIDTH, HEIGHT);
 		}
 	}
 	//my_mlx_pixel_put(data->img, 5, 5, 0x00FF0000);//just for test

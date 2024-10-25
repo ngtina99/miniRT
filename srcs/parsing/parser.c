@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 19:49:52 by thuy-ngu          #+#    #+#             */
-/*   Updated: 2024/10/15 15:21:14 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/10/25 08:51:56 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,11 @@
 // TODO: check whitespaces handling
 // TODO: check invalid cases (now we return EXIT_SUCCESS a lot with no other cases). add validations that all params are present
 // TODO: think about the case when lines are duplicate. Not sure if needs validation
+// TODO: mandatory/not mandatory parameters
 
 // Function to add any form (cylinder, plane, sphere) to the array
-int add_form(void **array, int *count, int *capacity, void *new_form, size_t form_size) {
+int add_form(void **array, int *count, int *capacity, void *new_form, size_t form_size) 
+{
     // Check if we need to initialize or expand the array
     if (*count == 0) {
         *capacity = INITIAL_CAPACITY;
@@ -110,26 +112,26 @@ float parse_float(char **line) {
 }
 
 // Function to parse a vector (x, y, z) from a string
-int parse_vector(char **line, float *vector) {
-    vector[0] = parse_float(line);
+int parse_vector(char **line, t_vec3d *vector) {
+    vector->x = parse_float(line);
     if (**line == ',') (*line)++;  // Skip comma
-    vector[1] = parse_float(line);
+    vector->y = parse_float(line);
     if (**line == ',') (*line)++;  // Skip comma
-    vector[2] = parse_float(line);
+    vector->z = parse_float(line);
 	return EXIT_SUCCESS;
 }
 
 // Function to parse an RGB color (r, g, b) from a string
-int parse_rgb(char **line, int *color) {
-    color[0] = ft_atoi(*line);  // Parse first RGB value
+int parse_rgb(char **line, t__color_rgb *color) {
+    color->red = ft_atoi(*line);  // Parse first RGB value
     while (**line != ',' && **line != '\0') (*line)++;  // Move past digits
     if (**line == ',') (*line)++;  // Skip comma
 
-    color[1] = ft_atoi(*line);  // Parse second RGB value
+    color->green = ft_atoi(*line);  // Parse second RGB value
     while (**line != ',' && **line != '\0') (*line)++;  // Move past digits
     if (**line == ',') (*line)++;  // Skip comma
 
-    color[2] = ft_atoi(*line);  // Parse third RGB value
+    color->blue = ft_atoi(*line);  // Parse third RGB value
     while (**line != ' ' && **line != '\0') (*line)++;  // Move past digits and any trailing spaces
 	return EXIT_SUCCESS;
 }
@@ -137,9 +139,10 @@ int parse_rgb(char **line, int *color) {
 
 int parse_ambient(t_data *scene, char *line) {
     t_ambient ambient;
+
     line++;  // Skip identifier 'A'
     ambient.ratio = parse_float(&line);  // Parse ambient lighting ratio
-    parse_rgb(&line, ambient.color);  // Parse RGB color
+    parse_rgb(&line, &ambient.color);  // Parse RGB color
     scene->ambient = ambient;  // Store in the scene
 
 	return EXIT_SUCCESS;
@@ -148,8 +151,8 @@ int parse_ambient(t_data *scene, char *line) {
 int parse_camera(t_data *scene, char *line) {
     t_camera camera;
     line++;  // Skip identifier 'C'
-    parse_vector(&line, camera.position);  // Parse position (x, y, z)
-    parse_vector(&line, camera.orientation);  // Parse orientation vector
+    parse_vector(&line, &camera.position);  // Parse position (x, y, z)
+    parse_vector(&line, &camera.orientation);  // Parse orientation vector
     camera.fov = (int)parse_float(&line);  // Parse field of view (FOV)
     scene->camera = camera;  // Store in the scene
 	return EXIT_SUCCESS;
@@ -158,9 +161,9 @@ int parse_camera(t_data *scene, char *line) {
 int parse_light(t_data *scene, char *line) {
     t_light light;
     line++;  // Skip identifier 'L'
-    parse_vector(&line, light.position);  // Parse light position (x, y, z)
+    parse_vector(&line, &light.position);  // Parse light position (x, y, z)
     light.brightness = parse_float(&line);  // Parse brightness ratio
-    parse_rgb(&line, light.color);  // Parse RGB color
+    parse_rgb(&line, &light.color);  // Parse RGB color
     scene->light = light;  // Store in the scene
 	return EXIT_SUCCESS;
 }
@@ -170,9 +173,9 @@ int parse_sphere(t_data *scene, char *line) {
 	int		result;
 
     line += 2;  // Skip identifier 'sp'
-    parse_vector(&line, sphere.center);  // Parse sphere center (x, y, z)
+    parse_vector(&line, &sphere.center);  // Parse sphere center (x, y, z)
     sphere.diameter = parse_float(&line);  // Parse diameter
-    parse_rgb(&line, sphere.color);  // Parse RGB color
+    parse_rgb(&line, &sphere.color);  // Parse RGB color
     return add_form((void**)&scene->spheres, &scene->sphere_count, &scene->sphere_capacity, &sphere, sizeof(t_sphere));
 }
 
@@ -180,9 +183,9 @@ int parse_plane(t_data *scene, char *line)
 {
     t_plane plane;
     line += 2;  // Skip identifier 'pl'
-    parse_vector(&line, plane.point);  // Parse a point on the plane (x, y, z)
-    parse_vector(&line, plane.normal);  // Parse normal vector
-    parse_rgb(&line, plane.color);  // Parse RGB color
+    parse_vector(&line, &plane.point);  // Parse a point on the plane (x, y, z)
+    parse_vector(&line, &plane.normal);  // Parse normal vector
+    parse_rgb(&line, &plane.color);  // Parse RGB color
 	return add_form((void**)&scene->planes, &scene->plane_count, &scene->plane_capacity, &plane, sizeof(t_plane));
 }
 
@@ -190,11 +193,11 @@ int parse_cylinder(t_data *scene, char *line)
 {
     t_cylinder cylinder;
     line += 2;  // Skip identifier 'cy'
-    parse_vector(&line, cylinder.center);  // Parse cylinder center (x, y, z)
-    parse_vector(&line, cylinder.axis);  // Parse axis direction
+    parse_vector(&line, &cylinder.center);  // Parse cylinder center (x, y, z)
+    parse_vector(&line, &cylinder.axis);  // Parse axis direction
     cylinder.diameter = parse_float(&line);  // Parse diameter
     cylinder.height = parse_float(&line);  // Parse height
-    parse_rgb(&line, cylinder.color);  // Parse RGB color
+    parse_rgb(&line, &cylinder.color);  // Parse RGB color
     return add_form((void**)&scene->cylinders, &scene->cylinder_count, &scene->cylinder_capacity, &cylinder, sizeof(t_cylinder));
 }
 
