@@ -18,6 +18,7 @@
 # include <fcntl.h>
 # include <stdio.h>
 # include <stdarg.h>
+#include <stdint.h>
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 4096
