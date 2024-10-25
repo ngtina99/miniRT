@@ -31,13 +31,13 @@ typedef struct s_camera {
 typedef struct s_light{
     t_vec3d position;  // Light position (x, y, z)
     float brightness;   // Brightness ratio [0.0, 1.0]
-    t__color_rgb color[3];       // RGB color [0-255]
+    t__color_rgb color;       // RGB color [0-255]
 } t_light;
 
 typedef struct s_sphere{
     t_vec3d center;    // Sphere center (x, y, z)
     float diameter;     // Sphere diameter
-    t__color_rgb color[3];       // RGB color [0-255]
+    t__color_rgb color;       // RGB color [0-255]
 } t_sphere;
 
 typedef struct s_cylinder {

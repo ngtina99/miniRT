@@ -144,7 +144,8 @@ void	free_scene(t_data **scene);
 int		vector_rendering(t_data *data);
 t_vec3d normalize(t_vec3d v);
 void ray_trace(t_data *data, int x, int y, int screen_width, int screen_height);
-int convert_rgb_to_int(int color[3]);
+int convert_rgb_to_int(t__color_rgb color);
+float calculate_distance(t_vec3d point1, t_vec3d point2);
 
 # ifdef __APPLE__
 void		mlx_destroy_display(void *mlx_ptr);

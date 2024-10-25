@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "../../includes/minirt.h"
-/*
+
 // 1. Sub-problem (Points in 3D Space)
 // Requirement: to represent vectors
 
@@ -68,12 +68,22 @@ float dot_product(t_vec3d v1, t_vec3d v2)
     return (v1.x * v2.x) + (v1.y * v2.y) + (v1.z * v2.z);
 }
 
-// Function to calculate lighting for a given point
+// Function to calculate the Euclidean distance between two points in 3D space
+float calculate_distance(t_vec3d point1, t_vec3d point2)
+{
+    return sqrtf(
+        (point2.x - point1.x) * (point2.x - point1.x) +
+        (point2.y - point1.y) * (point2.y - point1.y) +
+        (point2.z - point1.z) * (point2.z - point1.z)
+    );
+}
+
+
 // Function to calculate lighting for a given point
 int calculate_lighting(t_data *data, t_vec3d hit_point, t_vec3d normal)
 {
     // Position of the light source
-    t_vec3d light_pos = {data->light.position[0], data->light.position[1], data->light.position[2]};
+    t_vec3d light_pos = data->light.position;
 
     // Light direction: from the hit point to the light source
     t_vec3d light_dir = {
@@ -96,9 +106,9 @@ int calculate_lighting(t_data *data, t_vec3d hit_point, t_vec3d normal)
     if (final_intensity > 1.0f) final_intensity = 1.0f;
 
     // Light color (scale by final intensity)
-    int red   = (int)(data->light.color[0] * final_intensity);
-    int green = (int)(data->light.color[1] * final_intensity);
-    int blue  = (int)(data->light.color[2] * final_intensity);
+    int red   = (int)(data->light.color.red * final_intensity);
+    int green = (int)(data->light.color.green * final_intensity);
+    int blue  = (int)(data->light.color.blue * final_intensity);
 
     // Return the color as an RGB code
     return (red << 16) | (green << 8) | blue;
@@ -108,9 +118,9 @@ int calculate_lighting(t_data *data, t_vec3d hit_point, t_vec3d normal)
 t_vec3d calculate_normal(t_sphere sphere, t_vec3d hit_point)
 {
     t_vec3d normal = {
-        hit_point.x - sphere.center[0],
-        hit_point.y - sphere.center[1],
-        hit_point.z - sphere.center[2]
+        hit_point.x - sphere.center.x,
+        hit_point.y - sphere.center.y,
+        hit_point.z - sphere.center.z
     };
     return normalize(normal);
 }
@@ -125,9 +135,9 @@ int ray_sphere_intersection(t_sphere sphere, t_vec3d origin, t_vec3d direction, 
 {
     float radius = get_sphere_radius(sphere);
     t_vec3d oc = {
-        origin.x - sphere.center[0],
-        origin.y - sphere.center[1],
-        origin.z - sphere.center[2]
+        origin.x - sphere.center.x,
+        origin.y - sphere.center.y,
+        origin.z - sphere.center.z
     };
 
     float a = dot_product(direction, direction);
@@ -176,9 +186,9 @@ int ray_plane_intersection(t_plane plane, t_vec3d origin, t_vec3d direction, t_v
     {
         // Calculate vector from ray origin to a point on the plane
         t_vec3d p0l0 = {
-            plane.position[0] - origin.x,
-            plane.position[1] - origin.y,
-            plane.position[2] - origin.z
+            plane.point.x - origin.x,
+            plane.point.y - origin.y,
+            plane.point.z - origin.z
         };
 
         // Calculate the distance along the ray to the intersection point (t)
@@ -199,47 +209,59 @@ int ray_plane_intersection(t_plane plane, t_vec3d origin, t_vec3d direction, t_v
     return 0; // No intersection
 }
 
-// Function to find the closest intersection with any sphere
-int find_closest_sphere(t_data *data, t_vec3d origin, t_vec3d direction, t_vec3d *closest_hit_point, int *closest_sphere_index)
+// Function to find the closest intersection with any object (spheres and planes)
+int find_closest_object(t_data *data, t_vec3d origin, t_vec3d direction, t_vec3d *closest_hit_point, int *object_type, int *object_index)
 {
     int i = 0;
     float min_distance = INFINITY; // Initially set the minimum distance to infinity
     t_vec3d hit_point;
     int hit = 0;  // Flag to check if any intersection occurs
 
-    // Loop through all spheres in the scene
+    // Check all spheres for intersection
     while (i < data->sphere_count)
     {
-        // Check if the ray intersects the current sphere
         if (ray_sphere_intersection(data->spheres[i], origin, direction, &hit_point))
         {
-            // Calculate the distance from the origin to the hit point
-            float distance = sqrtf(
-                (hit_point.x - origin.x) * (hit_point.x - origin.x) +
-                (hit_point.y - origin.y) * (hit_point.y - origin.y) +
-                (hit_point.z - origin.z) * (hit_point.z - origin.z));
-
-            // If this is the closest intersection so far, update the closest sphere
+            float distance = calculate_distance(origin, hit_point);
             if (distance < min_distance)
             {
                 min_distance = distance;
                 *closest_hit_point = hit_point;
-                *closest_sphere_index = i;
-                hit = 1;  // Mark that an intersection was found
+                *object_type = 1; // Sphere
+                *object_index = i;
+                hit = 1;
             }
         }
-        i++;  // Move to the next sphere
+        i++;
     }
-    return hit;  // Return whether any intersection was found
+
+    // Check all planes for intersection
+    i = 0;
+    while (i < data->plane_count)
+    {
+        if (ray_plane_intersection(data->planes[i], origin, direction, &hit_point))
+        {
+            float distance = calculate_distance(origin, hit_point);
+            if (distance < min_distance)
+            {
+                min_distance = distance;
+                *closest_hit_point = hit_point;
+                *object_type = 2; // Plane
+                *object_index = i;
+                hit = 1;
+            }
+        }
+        i++;
+    }
+
+    return hit; // Return whether any intersection was found
 }
 
-
-
-int convert_rgb_to_int(int color[3])
+int convert_rgb_to_int(t__color_rgb color)
 {
-    int red = color[0];   // Red component
-    int green = color[1]; // Green component
-    int blue = color[2];  // Blue component
+    int red = color.red;   // Red component
+    int green = color.green; // Green component
+    int blue = color.blue;  // Blue component
     int color_code = (red << 16) | (green << 8) | blue;
 
     return color_code;
@@ -251,7 +273,7 @@ void ray_trace(t_data *data, int x, int y, int screen_width, int screen_height)
     t_vec3d direction; // Ray direction
 
     // Camera forward vector and its normalization
-    t_vec3d forward = {data->camera.orientation[0], data->camera.orientation[1], data->camera.orientation[2]};
+    t_vec3d forward = data->camera.orientation;
     forward = normalize(forward);
 
     // Calculate the right and up vectors for the camera's orientation
@@ -264,9 +286,7 @@ void ray_trace(t_data *data, int x, int y, int screen_width, int screen_height)
     float scale = tan(data->camera.fov * 0.5 * M_PI / 180.0f);
 
     // Camera position as ray origin
-    origin.x = data->camera.position[0];
-    origin.y = data->camera.position[1];
-    origin.z = data->camera.position[2];
+    origin = data->camera.position;
 
     // Calculate the ray direction for each pixel
     float px = (2.0f * x / screen_width - 1.0f) * aspect_ratio * scale;
@@ -278,15 +298,24 @@ void ray_trace(t_data *data, int x, int y, int screen_width, int screen_height)
 
     direction = normalize(direction);
 
-    // Find the closest intersection among all spheres
+    // Find the closest intersection among all objects (spheres and planes)
     t_vec3d closest_hit_point;
-    int closest_sphere_index;
-    if (find_closest_sphere(data, origin, direction, &closest_hit_point, &closest_sphere_index))
+    int object_type;
+    int object_index;
+    if (find_closest_object(data, origin, direction, &closest_hit_point, &object_type, &object_index))
     {
-        int color_code = convert_rgb_to_int(data->spheres[closest_sphere_index].color);
-
-        // Set the pixel color to the correct sphere's color
-        my_mlx_pixel_put(data->img, x, y, color_code);
+        // If it's a sphere, set the color of the sphere
+        if (object_type == 1) // Sphere
+        {
+            int color_code = convert_rgb_to_int(data->spheres[object_index].color);
+            my_mlx_pixel_put(data->img, x, y, color_code);
+        }
+        // If it's a plane, set the color of the plane
+        else if (object_type == 2) // Plane
+        {
+            int color_code = convert_rgb_to_int( data->planes[object_index].color);
+            my_mlx_pixel_put(data->img, x, y, color_code);
+        }
     }
     else
     {
@@ -296,5 +325,5 @@ void ray_trace(t_data *data, int x, int y, int screen_width, int screen_height)
         my_mlx_pixel_put(data->img, x, y, color_code);
     }
 }
-*/
+
    

@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 18:49:19 by thuy-ngu          #+#    #+#             */
-/*   Updated: 2024/10/24 14:17:34 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/10/25 08:51:08 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void print_camera(t_camera *camera) {
 void print_light(t_light *light) {
     printf("Light: position = %f,%f,%f, brightness = %f, color = %d,%d,%d\n", 
             light->position.x, light->position.y, light->position.z, 
-            light->brightness, light->color->red, light->color->green, light->color->blue);
+            light->brightness, light->color.red, light->color.green, light->color.blue);
 }
 
 void print_spheres(t_data *scene) {
@@ -90,7 +90,7 @@ void print_spheres(t_data *scene) {
         t_sphere *sphere = &scene->spheres[i];
         printf("  Sphere %d: center = %f,%f,%f, diameter = %f, color = %d,%d,%d\n", i+1,
                sphere->center.x, sphere->center.y, sphere->center.z,
-               sphere->diameter, sphere->color->red, sphere->color->green, sphere->color->blue);
+               sphere->diameter, sphere->color.red, sphere->color.green, sphere->color.blue);
     }
 }
 

@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 19:49:52 by thuy-ngu          #+#    #+#             */
-/*   Updated: 2024/10/24 14:14:12 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/10/25 08:51:56 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,7 +163,7 @@ int parse_light(t_data *scene, char *line) {
     line++;  // Skip identifier 'L'
     parse_vector(&line, &light.position);  // Parse light position (x, y, z)
     light.brightness = parse_float(&line);  // Parse brightness ratio
-    parse_rgb(&line, light.color);  // Parse RGB color
+    parse_rgb(&line, &light.color);  // Parse RGB color
     scene->light = light;  // Store in the scene
 	return EXIT_SUCCESS;
 }
@@ -175,7 +175,7 @@ int parse_sphere(t_data *scene, char *line) {
     line += 2;  // Skip identifier 'sp'
     parse_vector(&line, &sphere.center);  // Parse sphere center (x, y, z)
     sphere.diameter = parse_float(&line);  // Parse diameter
-    parse_rgb(&line, sphere.color);  // Parse RGB color
+    parse_rgb(&line, &sphere.color);  // Parse RGB color
     return add_form((void**)&scene->spheres, &scene->sphere_count, &scene->sphere_capacity, &sphere, sizeof(t_sphere));
 }
 
