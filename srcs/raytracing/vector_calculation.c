@@ -41,6 +41,31 @@
 
 
 // Function to normalize the direction vector
+
+t_vec3d add(t_vec3d v1, t_vec3d v2) {
+    t_vec3d result;
+    result.x = v1.x + v2.x;
+    result.y = v1.y + v2.y;
+    result.z = v1.z + v2.z;
+    return result;
+}
+
+t_vec3d subtract(t_vec3d v1, t_vec3d v2) {
+    t_vec3d result;
+    result.x = v1.x - v2.x;
+    result.y = v1.y - v2.y;
+    result.z = v1.z - v2.z;
+    return result;
+}
+
+t_vec3d sc_mult(t_vec3d v, float scalar) {
+    t_vec3d result;
+    result.x = v.x * scalar;
+    result.y = v.y * scalar;
+    result.z = v.z * scalar;
+    return result;
+}
+
 t_vec3d normalize(t_vec3d v)
 {
 	float magnitude = sqrtf(v.x * v.x + v.y * v.y + v.z * v.z);
@@ -267,42 +292,75 @@ int ray_cylinder_intersection(t_cylinder cylinder, t_vec3d ray_origin, t_vec3d r
 
 int ray_cylinder_cap_intersection(t_cylinder cylinder, t_vec3d ray_origin, t_vec3d ray_direction, t_vec3d *hit_point) {
     float radius = cylinder.diameter / 2.0f;
+    t_vec3d cylinder_top = add(cylinder.center, sc_mult(cylinder.axis, cylinder.height / 2.0f));
+    t_vec3d cylinder_bottom = add(cylinder.center, sc_mult(cylinder.axis, -cylinder.height / 2.0f));
+    int hit_found = 0;
+    float min_distance = INFINITY;  // Initialize to a large value
 
     // Check intersection with the bottom cap
-    float t_bottom = (cylinder.center.z - (cylinder.height / 2.0f) - ray_origin.z) / ray_direction.z;
-    if (t_bottom >= 0) {
-        t_vec3d intersection = {
-            ray_origin.x + t_bottom * ray_direction.x,
-            ray_origin.y + t_bottom * ray_direction.y,
-            cylinder.center.z - (cylinder.height / 2.0f) // z-coordinate of the bottom cap
-        };
-
-        // Check if the intersection point is within the radius of the cap
-        if (calculate_distance(intersection, (t_vec3d){cylinder.center.x, cylinder.center.y, intersection.z}) <= radius) {
-            *hit_point = intersection;
-            return 1; // Intersection occurs
+    float denom_bottom = dot_product(ray_direction, cylinder.axis);
+    if (fabs(denom_bottom) > 1e-6) { // Avoid division by zero
+        float t_bottom = dot_product(subtract(cylinder_bottom, ray_origin), cylinder.axis) / denom_bottom;
+        if (t_bottom >= 0) { // Check if the intersection is in front of the camera
+            t_vec3d intersection_bottom = add(ray_origin, sc_mult(ray_direction, t_bottom));
+            float distance_bottom = calculate_distance(intersection_bottom, ray_origin);
+            if (calculate_distance(intersection_bottom, cylinder_bottom) <= radius && distance_bottom < min_distance) {
+                *hit_point = intersection_bottom;
+                min_distance = distance_bottom;
+                hit_found = 1;
+                printf("Closest bottom cap intersection at: (%f, %f, %f)\n", intersection_bottom.x, intersection_bottom.y, intersection_bottom.z);
+            }
         }
     }
 
     // Check intersection with the top cap
-    float t_top = (cylinder.center.z + (cylinder.height / 2.0f) - ray_origin.z) / ray_direction.z;
-    if (t_top >= 0) {
-        t_vec3d intersection = {
-            ray_origin.x + t_top * ray_direction.x,
-            ray_origin.y + t_top * ray_direction.y,
-            cylinder.center.z + (cylinder.height / 2.0f) // z-coordinate of the top cap
-        };
-
-        // Check if the intersection point is within the radius of the cap
-        if (calculate_distance(intersection, (t_vec3d){cylinder.center.x, cylinder.center.y, intersection.z}) <= radius) {
-            *hit_point = intersection;
-            return 1; // Intersection occurs
+    float denom_top = dot_product(ray_direction, cylinder.axis);
+    if (fabs(denom_top) > 1e-6) { // Avoid division by zero
+        float t_top = dot_product(subtract(cylinder_top, ray_origin), cylinder.axis) / denom_top;
+        if (t_top >= 0) { // Check if the intersection is in front of the camera
+            t_vec3d intersection_top = add(ray_origin, sc_mult(ray_direction, t_top));
+            float distance_top = calculate_distance(intersection_top, ray_origin);
+            if (calculate_distance(intersection_top, cylinder_top) <= radius && distance_top < min_distance) {
+                *hit_point = intersection_top;
+                min_distance = distance_top;
+                hit_found = 1;
+                printf("Closest top cap intersection at: (%f, %f, %f)\n", intersection_top.x, intersection_top.y, intersection_top.z);
+            }
         }
     }
 
-    return 0; // No intersection with caps
+    return hit_found; // Return 1 if either cap has an intersection, 0 otherwise
 }
 
+t_vec3d vec_scale(t_vec3d v, float scale) {
+    return (t_vec3d){v.x * scale, v.y * scale, v.z * scale};
+}
+
+int ray_cylinder_bottom_cap_intersection(t_cylinder cylinder, t_vec3d ray_origin, t_vec3d ray_direction, t_vec3d *hit_point) {
+    // Calculate bottom cap center
+    t_vec3d bottom_center = cylinder.center;
+    float radius = cylinder.diameter / 2.0f;
+    // Calculate intersection with bottom cap plane
+    float denom = dot_product(ray_direction, cylinder.axis);
+    if (fabs(denom) < 1e-6) return 0; // Ray is parallel to the bottom cap plane
+
+    t_vec3d to_cap = subtract(bottom_center, ray_origin);
+    float t = dot_product(to_cap, cylinder.axis) / denom;
+
+    if (t < 0) return 0; // Cap intersection is behind the ray
+
+    // Calculate exact intersection point
+    t_vec3d point = add(ray_origin, vec_scale(ray_direction, t));
+
+    // Check if intersection point is within the cap radius
+    t_vec3d to_point = subtract(point, bottom_center);
+    float dist2 = dot_product(to_point, to_point);
+    if (dist2 <= radius * radius) {
+        *hit_point = point;
+        return 1;
+    }
+    return 0;
+}
 // Function to find the closest intersection with any object (spheres and planes)
 int find_closest_object(t_data *data, t_vec3d origin, t_vec3d direction, t_vec3d *closest_hit_point, int *object_type, int *object_index)
 {
@@ -377,7 +435,18 @@ int find_closest_object(t_data *data, t_vec3d origin, t_vec3d direction, t_vec3d
                 hit = 1;
             }
         }
-        
+        if (ray_cylinder_bottom_cap_intersection(data->cylinders[i], origin, direction, &hit_point))
+        {
+            float distance = calculate_distance(origin, hit_point);
+            if (distance < min_distance)
+            {
+                min_distance = distance;
+                *closest_hit_point = hit_point;
+                *object_type = 4; // Cylinder Cap
+                *object_index = i;
+                hit = 1;
+            }
+        }
         i++;
     }
     return hit; // Return whether any intersection was found
