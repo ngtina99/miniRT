@@ -33,14 +33,10 @@
 // 			// data->red = 0;//just for test
 // 			// data->green = 0;//just for test
 // 			// data->blue = 255;//just for test
-	
+
 // 	color_code = (data->red << 16) | (data->green << 8) | data->blue;
 // 	return(color_code);
 // }
-
-
-
-// Function to normalize the direction vector
 
 t_vec3d add(t_vec3d v1, t_vec3d v2) {
     t_vec3d result;
@@ -66,49 +62,55 @@ t_vec3d sc_mult(t_vec3d v, float scalar) {
     return result;
 }
 
-t_vec3d normalize(t_vec3d v)
+// Function to normalize the direction vector
+// A unit vector has a length (magnitude) of 1, meaning it represents only the direction without an influence from its original length
+// This is crucial when you only need to know where the vector is pointing, not how far along it extends, such as in ray tracing or lighting calculations
+t_vec3d	normalize(t_vec3d v)
 {
-	float magnitude = sqrtf(v.x * v.x + v.y * v.y + v.z * v.z);
+	float magnitude;
 
-	if (magnitude == 0.0f)
-        return (t_vec3d){0.0f, 0.0f, -1.0f};
+	magnitude = sqrtf(v.x * v.x + v.y * v.y + v.z * v.z);
+	if (magnitude == 0.0f) //TODO mabye it would be better to handle as something else excep bringing back this value
+		return (t_vec3d){0.0f, 0.0f, -1.0f};
 	v.x /= magnitude;
 	v.y /= magnitude;
 	v.z /= magnitude;
-	return v;
+	return (v);
 }
 
+// Function to calculate the cross product of two 3D vectors
+//measure of differences
 t_vec3d cross_product(t_vec3d v1, t_vec3d v2)
 {
-    t_vec3d result;
-    result.x = v1.y * v2.z - v1.z * v2.y;
-    result.y = v1.z * v2.x - v1.x * v2.z;
-    result.z = v1.x * v2.y - v1.y * v2.x;
-    return (result);
+	t_vec3d result;
+	result.x = v1.y * v2.z - v1.z * v2.y;
+	result.y = v1.z * v2.x - v1.x * v2.z;
+	result.z = v1.x * v2.y - v1.y * v2.x;
+	return (result);
 }
 
 // Function to calculate the dot product of two 3D vectors
+//measure of similarities
 float dot_product(t_vec3d v1, t_vec3d v2)
 {
     return ((v1.x * v2.x) + (v1.y * v2.y) + (v1.z * v2.z));
 }
 
 // Function to calculate the Euclidean distance between two points in 3D space
-float calculate_distance(t_vec3d point1, t_vec3d point2)
+float	calculate_distance(t_vec3d point1, t_vec3d point2)
 {
-    return sqrtf(
-        (point2.x - point1.x) * (point2.x - point1.x) +
-        (point2.y - point1.y) * (point2.y - point1.y) +
-        (point2.z - point1.z) * (point2.z - point1.z)
-    );
+	return sqrtf(
+		(point2.x - point1.x) * (point2.x - point1.x) +
+		(point2.y - point1.y) * (point2.y - point1.y) +
+		(point2.z - point1.z) * (point2.z - point1.z)
+	);
 }
 
-
 // Function to calculate lighting for a given point
-int calculate_lighting(t_data *data, t_vec3d hit_point, t_vec3d normal)
+int	calculate_lighting(t_data *data, t_vec3d hit_point, t_vec3d normal)
 {
     // Position of the light source
-    t_vec3d light_pos = data->light.position;
+	t_vec3d light_pos = data->light.position;
 
     // Light direction: from the hit point to the light source
     t_vec3d light_dir = {
@@ -260,27 +262,27 @@ int ray_cylinder_intersection(t_cylinder cylinder, t_vec3d ray_origin, t_vec3d r
 
     // Choose the smallest positive t
     float t = (t1 > 0) ? t1 : (t2 > 0 ? t2 : INFINITY);
-    
+
     if (t < 0) {
         return 0; // Intersection is behind the ray origin
     }
 
     // Calculate the intersection point
-    t_vec3d intersection = { 
+    t_vec3d intersection = {
         ray_origin.x + t * ray_direction.x,
         ray_origin.y + t * ray_direction.y,
-        ray_origin.z + t * ray_direction.z 
+        ray_origin.z + t * ray_direction.z
     };
 
     // Check if the intersection point is within the height bounds of the cylinder
-    t_vec3d d = { 
+    t_vec3d d = {
         intersection.x - cylinder.center.x,
         intersection.y - cylinder.center.y,
-        intersection.z - cylinder.center.z 
+        intersection.z - cylinder.center.z
     };
 
     // Project the distance along the cylinder axis to check if within height
-    float height_projection = dot_product(d, cylinder.axis);
+	float height_projection = dot_product(d, cylinder.axis);
     if (height_projection < 0 || height_projection > cylinder.height) {
         return 0; // Intersection is outside the height of the cylinder
     }
@@ -290,7 +292,8 @@ int ray_cylinder_intersection(t_cylinder cylinder, t_vec3d ray_origin, t_vec3d r
     return 1; // Intersection occurs
 }
 
-int ray_cylinder_cap_intersection(t_cylinder cylinder, t_vec3d ray_origin, t_vec3d ray_direction, t_vec3d *hit_point) {
+int ray_cylinder_top_intersection(t_cylinder cylinder, t_vec3d ray_origin, t_vec3d ray_direction, t_vec3d *hit_point)
+{
     float radius = cylinder.diameter / 2.0f;
     t_vec3d cylinder_top = add(cylinder.center, sc_mult(cylinder.axis, cylinder.height / 2.0f));
     t_vec3d cylinder_bottom = add(cylinder.center, sc_mult(cylinder.axis, -cylinder.height / 2.0f));
@@ -308,7 +311,6 @@ int ray_cylinder_cap_intersection(t_cylinder cylinder, t_vec3d ray_origin, t_vec
                 *hit_point = intersection_bottom;
                 min_distance = distance_bottom;
                 hit_found = 1;
-                printf("Closest bottom cap intersection at: (%f, %f, %f)\n", intersection_bottom.x, intersection_bottom.y, intersection_bottom.z);
             }
         }
     }
@@ -324,7 +326,6 @@ int ray_cylinder_cap_intersection(t_cylinder cylinder, t_vec3d ray_origin, t_vec
                 *hit_point = intersection_top;
                 min_distance = distance_top;
                 hit_found = 1;
-                printf("Closest top cap intersection at: (%f, %f, %f)\n", intersection_top.x, intersection_top.y, intersection_top.z);
             }
         }
     }
@@ -336,11 +337,11 @@ t_vec3d vec_scale(t_vec3d v, float scale) {
     return (t_vec3d){v.x * scale, v.y * scale, v.z * scale};
 }
 
-int ray_cylinder_bottom_cap_intersection(t_cylinder cylinder, t_vec3d ray_origin, t_vec3d ray_direction, t_vec3d *hit_point) {
-    // Calculate bottom cap center
+int ray_cylinder_bottom_intersection(t_cylinder cylinder, t_vec3d ray_origin, t_vec3d ray_direction, t_vec3d *hit_point) {
+    // Calculate bottom center
     t_vec3d bottom_center = cylinder.center;
     float radius = cylinder.diameter / 2.0f;
-    // Calculate intersection with bottom cap plane
+    // Calculate intersection with bottom plane
     float denom = dot_product(ray_direction, cylinder.axis);
     if (fabs(denom) < 1e-6) return 0; // Ray is parallel to the bottom cap plane
 
@@ -405,44 +406,44 @@ int find_closest_object(t_data *data, t_vec3d origin, t_vec3d direction, t_vec3d
         }
         i++;
     }
- 
+
     i = 0;
     while (i < data->cylinder_count)
     {
-        if (ray_cylinder_intersection(data->cylinders[i], origin, direction, &hit_point))
-        {
-            float distance = calculate_distance(origin, hit_point);
-            if (distance < min_distance)
-            {
-                min_distance = distance;
-                *closest_hit_point = hit_point;
-                *object_type = 3; // Cylinder
-                *object_index = i;
-                hit = 1;
-            }
-        }
-        
+		if (ray_cylinder_intersection(data->cylinders[i], origin, direction, &hit_point))
+		{
+			float distance = calculate_distance(origin, hit_point);
+			if (distance < min_distance)
+			{
+				min_distance = distance;
+				*closest_hit_point = hit_point;
+				*object_type = 3; // Cylinder
+				*object_index = i;
+				hit = 1;
+				}
+		}
         // Check caps
-        if (ray_cylinder_cap_intersection(data->cylinders[i], origin, direction, &hit_point))
-        {
+		if (ray_cylinder_top_intersection(data->cylinders[i], origin, direction, &hit_point))
+		{
             float distance = calculate_distance(origin, hit_point);
             if (distance < min_distance)
             {
                 min_distance = distance;
                 *closest_hit_point = hit_point;
-                *object_type = 4; // Cylinder Cap
+                *object_type = 4; // Cylinder Top
                 *object_index = i;
                 hit = 1;
             }
         }
-        if (ray_cylinder_bottom_cap_intersection(data->cylinders[i], origin, direction, &hit_point))
+
+        if (ray_cylinder_bottom_intersection(data->cylinders[i], origin, direction, &hit_point))
         {
             float distance = calculate_distance(origin, hit_point);
             if (distance < min_distance)
             {
                 min_distance = distance;
                 *closest_hit_point = hit_point;
-                *object_type = 4; // Cylinder Cap
+                *object_type = 5; // Cylinder Bottom
                 *object_index = i;
                 hit = 1;
             }
@@ -454,83 +455,87 @@ int find_closest_object(t_data *data, t_vec3d origin, t_vec3d direction, t_vec3d
 
 int convert_rgb_to_int(t__color_rgb color)
 {
-    int color_code;
+	int color_code;
     int red = color.red;   // Red component
     int green = color.green; // Green component
     int blue = color.blue;  // Blue component
-    
-    color_code = (red << 16) | (green << 8) | blue;
 
+    color_code = (red << 16) | (green << 8) | blue;
     return (color_code);
 }
 
-void ray_trace(t_data *data, int x, int y, int screen_width, int screen_height)
+void	ray_trace(t_data *data, int x, int y, int screen_width, int screen_height)
 {
-    t_vec3d origin;    // Camera position
-    t_vec3d direction; // Ray direction
+	t_vec3d origin;    // Camera position
+	t_vec3d direction; // Ray direction
 
-    // Camera forward vector and its normalization
-    t_vec3d forward = data->camera.orientation;
-    forward = normalize(forward);
+	// Camera forward vector and its normalization
+	t_vec3d forward = data->camera.orientation;
+	forward = normalize(forward);
 
     // Calculate the right and up vectors for the camera's orientation
-    t_vec3d world_up = {0.0f, 1.0f, 0.0f};
-    t_vec3d right = normalize(cross_product(forward, world_up));
-    t_vec3d up = normalize(cross_product(right, forward));
+	t_vec3d world_up = {0.0f, 1.0f, 0.0f};
+	t_vec3d right = normalize(cross_product(forward, world_up));
+	t_vec3d up = normalize(cross_product(right, forward));
 
     // Field of view and aspect ratio scaling
-    float aspect_ratio = (float)screen_width / screen_height;
-    float scale = tan(data->camera.fov * 0.5 * M_PI / 180.0f);
+	float aspect_ratio = (float)screen_width / screen_height;
+	float scale = tan(data->camera.fov * 0.5 * M_PI / 180.0f);
 
     // Camera position as ray origin
-    origin = data->camera.position;
+	origin = data->camera.position;
 
     // Calculate the ray direction for each pixel
-    float px = (2.0f * x / screen_width - 1.0f) * aspect_ratio * scale;
-    float py = (1.0f - 2.0f * y / screen_height) * scale;
+	float px = (2.0f * x / screen_width - 1.0f) * aspect_ratio * scale;
+	float py = (1.0f - 2.0f * y / screen_height) * scale;
 
-    direction.x = forward.x + px * right.x + py * up.x;
-    direction.y = forward.y + px * right.y + py * up.y;
-    direction.z = forward.z + px * right.z + py * up.z;
+	direction.x = forward.x + px * right.x + py * up.x;
+	direction.y = forward.y + px * right.y + py * up.y;
+	direction.z = forward.z + px * right.z + py * up.z;
 
-    direction = normalize(direction);
+	direction = normalize(direction);
 
     // Find the closest intersection among all objects (spheres and planes)
-    t_vec3d closest_hit_point;
-    int object_type;
-    int object_index;
-    if (find_closest_object(data, origin, direction, &closest_hit_point, &object_type, &object_index))
-    {
+	t_vec3d closest_hit_point;
+	int object_type;
+	int object_index;
+	int color_code;
+	int ambient_color;
+	if (find_closest_object(data, origin, direction, &closest_hit_point, &object_type, &object_index))
+	{
         // If it's a sphere, set the color of the sphere
-        if (object_type == 1) // Sphere
-        {
-            int color_code = convert_rgb_to_int(data->spheres[object_index].color);
-            my_mlx_pixel_put(data->img, x, y, color_code);
-        }
+		if (object_type == 1) // Sphere
+		{
+			color_code = convert_rgb_to_int(data->spheres[object_index].color);
+			my_mlx_pixel_put(data->img, x, y, color_code);
+		}
         // If it's a plane, set the color of the plane
-        else if (object_type == 2) // Plane
-        {
-            int color_code = convert_rgb_to_int( data->planes[object_index].color);
-            my_mlx_pixel_put(data->img, x, y, color_code);
-        }
-        else if (object_type == 3) // Plane
-        {
-            int color_code = convert_rgb_to_int( data->cylinders[object_index].color);
-            my_mlx_pixel_put(data->img, x, y, color_code);
-        }
-        else if (object_type == 4) // Plane
-        {
-            int color_code = convert_rgb_to_int( data->cylinders[object_index].color);
-            my_mlx_pixel_put(data->img, x, y, color_code);
-        }
-    }
-    else
-    {
+		else if (object_type == 2) // Plane
+		{
+			color_code = convert_rgb_to_int(data->planes[object_index].color);
+			my_mlx_pixel_put(data->img, x, y, color_code);
+		}
+		else if (object_type == 3) // Cylinder
+		{
+			color_code = convert_rgb_to_int(data->cylinders[object_index].color);
+			my_mlx_pixel_put(data->img, x, y, color_code);
+		}
+		else if (object_type == 4) // Cylinder top
+		{
+			color_code = convert_rgb_to_int(data->cylinders[object_index].color);
+			my_mlx_pixel_put(data->img, x, y, color_code);
+		}
+		else if (object_type == 5) // Cylinder bottom
+		{
+			color_code = convert_rgb_to_int(data->cylinders[object_index].color);
+			my_mlx_pixel_put(data->img, x, y, color_code);
+		}
+	}
+	else
+	{
         // No intersection: set background color (ambient light)
-        int ambient_color = (int)(255 * data->ambient.ratio);
-        int color_code = (ambient_color << 16) | (ambient_color << 8) | ambient_color;
-        my_mlx_pixel_put(data->img, x, y, color_code);
+		ambient_color = (int)(255 * data->ambient.ratio);
+		color_code = (ambient_color << 16) | (ambient_color << 8) | ambient_color;
+		my_mlx_pixel_put(data->img, x, y, color_code);
     }
 }
-
-   
