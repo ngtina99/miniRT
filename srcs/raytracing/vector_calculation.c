@@ -210,53 +210,59 @@ int ray_plane_intersection(t_plane plane, t_vec3d origin, t_vec3d direction, t_v
 }
 
 int ray_cylinder_intersection(t_cylinder cylinder, t_vec3d ray_origin, t_vec3d ray_direction, t_vec3d *hit_point) {
-    // Step 1: Setup the cylinder parameters
     float radius = cylinder.diameter / 2.0f;
-    t_vec3d oc = { ray_origin.x - cylinder.center.x, ray_origin.y - cylinder.center.y, ray_origin.z - cylinder.center.z };
+    t_vec3d oc = {
+        ray_origin.x - cylinder.center.x,
+        ray_origin.y - cylinder.center.y,
+        ray_origin.z - cylinder.center.z
+    };
 
-    // Step 2: Calculate the quadratic coefficients
+    // Calculate quadratic coefficients
     float a = dot_product(ray_direction, ray_direction) - dot_product(ray_direction, cylinder.axis) * dot_product(ray_direction, cylinder.axis);
     float b = 2.0f * (dot_product(oc, ray_direction) - dot_product(oc, cylinder.axis) * dot_product(ray_direction, cylinder.axis));
     float c = dot_product(oc, oc) - dot_product(oc, cylinder.axis) * dot_product(oc, cylinder.axis) - radius * radius;
 
-    // Step 3: Calculate the discriminant
+    // Calculate the discriminant
     float discriminant = b * b - 4 * a * c;
 
     if (discriminant < 0) {
-        return 1; // No intersection
+        return 0; // No intersection
     }
 
-    // Step 4: Calculate the two intersection points
+    // Calculate the two intersection points
     float t1 = (-b - sqrtf(discriminant)) / (2.0f * a);
     float t2 = (-b + sqrtf(discriminant)) / (2.0f * a);
-    float t = (t1 > 0) ? t1 : t2; // Use the closest positive t
 
+    // Choose the smallest positive t
+    float t = (t1 > 0) ? t1 : (t2 > 0 ? t2 : INFINITY);
+    
     if (t < 0) {
-        return 1; // Intersection is behind the ray origin
+        return 0; // Intersection is behind the ray origin
     }
 
-    // Step 5: Calculate the intersection point
+    // Calculate the intersection point
     t_vec3d intersection = { 
         ray_origin.x + t * ray_direction.x,
         ray_origin.y + t * ray_direction.y,
         ray_origin.z + t * ray_direction.z 
     };
 
-    // Step 6: Check if the intersection point is within the height bounds of the cylinder
+    // Check if the intersection point is within the height bounds of the cylinder
     t_vec3d d = { 
         intersection.x - cylinder.center.x,
         intersection.y - cylinder.center.y,
         intersection.z - cylinder.center.z 
     };
 
+    // Project the distance along the cylinder axis to check if within height
     float height_projection = dot_product(d, cylinder.axis);
     if (height_projection < 0 || height_projection > cylinder.height) {
-        return 1; // Intersection is outside the height of the cylinder
+        return 0; // Intersection is outside the height of the cylinder
     }
 
     // Store the intersection point
     *hit_point = intersection;
-    return 0; // Intersection occurs
+    return 1; // Intersection occurs
 }
 
 // Function to find the closest intersection with any object (spheres and planes)
@@ -267,7 +273,7 @@ int find_closest_object(t_data *data, t_vec3d origin, t_vec3d direction, t_vec3d
     t_vec3d hit_point;
     int hit = 0;  // Flag to check if any intersection occurs
 
-    // Check all spheres for intersection
+    //Check all spheres for intersection
     while (i < data->sphere_count)
     {
         if (ray_sphere_intersection(data->spheres[i], origin, direction, &hit_point))
@@ -285,7 +291,7 @@ int find_closest_object(t_data *data, t_vec3d origin, t_vec3d direction, t_vec3d
         i++;
     }
 
-    // Check all planes for intersection
+    //Check all planes for intersection
     i = 0;
     while (i < data->plane_count)
     {
@@ -297,6 +303,24 @@ int find_closest_object(t_data *data, t_vec3d origin, t_vec3d direction, t_vec3d
                 min_distance = distance;
                 *closest_hit_point = hit_point;
                 *object_type = 2; // Plane
+                *object_index = i;
+                hit = 1;
+            }
+        }
+        i++;
+    }
+
+    i = 0;
+    while (i < data->cylinder_count)
+    {
+        if (ray_cylinder_intersection(data->cylinders[i], origin, direction, &hit_point))
+        {
+            float distance = calculate_distance(origin, hit_point);
+            if (distance < min_distance)
+            {
+                min_distance = distance;
+                *closest_hit_point = hit_point;
+                *object_type = 3; // cylinder
                 *object_index = i;
                 hit = 1;
             }
@@ -366,6 +390,11 @@ void ray_trace(t_data *data, int x, int y, int screen_width, int screen_height)
         else if (object_type == 2) // Plane
         {
             int color_code = convert_rgb_to_int( data->planes[object_index].color);
+            my_mlx_pixel_put(data->img, x, y, color_code);
+        }
+        else if (object_type == 3) // Plane
+        {
+            int color_code = convert_rgb_to_int( data->cylinders[object_index].color);
             my_mlx_pixel_put(data->img, x, y, color_code);
         }
     }
