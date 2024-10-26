@@ -265,6 +265,44 @@ int ray_cylinder_intersection(t_cylinder cylinder, t_vec3d ray_origin, t_vec3d r
     return 1; // Intersection occurs
 }
 
+int ray_cylinder_cap_intersection(t_cylinder cylinder, t_vec3d ray_origin, t_vec3d ray_direction, t_vec3d *hit_point) {
+    float radius = cylinder.diameter / 2.0f;
+
+    // Check intersection with the bottom cap
+    float t_bottom = (cylinder.center.z - (cylinder.height / 2.0f) - ray_origin.z) / ray_direction.z;
+    if (t_bottom >= 0) {
+        t_vec3d intersection = {
+            ray_origin.x + t_bottom * ray_direction.x,
+            ray_origin.y + t_bottom * ray_direction.y,
+            cylinder.center.z - (cylinder.height / 2.0f) // z-coordinate of the bottom cap
+        };
+
+        // Check if the intersection point is within the radius of the cap
+        if (calculate_distance(intersection, (t_vec3d){cylinder.center.x, cylinder.center.y, intersection.z}) <= radius) {
+            *hit_point = intersection;
+            return 1; // Intersection occurs
+        }
+    }
+
+    // Check intersection with the top cap
+    float t_top = (cylinder.center.z + (cylinder.height / 2.0f) - ray_origin.z) / ray_direction.z;
+    if (t_top >= 0) {
+        t_vec3d intersection = {
+            ray_origin.x + t_top * ray_direction.x,
+            ray_origin.y + t_top * ray_direction.y,
+            cylinder.center.z + (cylinder.height / 2.0f) // z-coordinate of the top cap
+        };
+
+        // Check if the intersection point is within the radius of the cap
+        if (calculate_distance(intersection, (t_vec3d){cylinder.center.x, cylinder.center.y, intersection.z}) <= radius) {
+            *hit_point = intersection;
+            return 1; // Intersection occurs
+        }
+    }
+
+    return 0; // No intersection with caps
+}
+
 // Function to find the closest intersection with any object (spheres and planes)
 int find_closest_object(t_data *data, t_vec3d origin, t_vec3d direction, t_vec3d *closest_hit_point, int *object_type, int *object_index)
 {
@@ -309,7 +347,7 @@ int find_closest_object(t_data *data, t_vec3d origin, t_vec3d direction, t_vec3d
         }
         i++;
     }
-
+ 
     i = 0;
     while (i < data->cylinder_count)
     {
@@ -320,14 +358,28 @@ int find_closest_object(t_data *data, t_vec3d origin, t_vec3d direction, t_vec3d
             {
                 min_distance = distance;
                 *closest_hit_point = hit_point;
-                *object_type = 3; // cylinder
+                *object_type = 3; // Cylinder
                 *object_index = i;
                 hit = 1;
             }
         }
+        
+        // Check caps
+        if (ray_cylinder_cap_intersection(data->cylinders[i], origin, direction, &hit_point))
+        {
+            float distance = calculate_distance(origin, hit_point);
+            if (distance < min_distance)
+            {
+                min_distance = distance;
+                *closest_hit_point = hit_point;
+                *object_type = 4; // Cylinder Cap
+                *object_index = i;
+                hit = 1;
+            }
+        }
+        
         i++;
     }
-
     return hit; // Return whether any intersection was found
 }
 
@@ -393,6 +445,11 @@ void ray_trace(t_data *data, int x, int y, int screen_width, int screen_height)
             my_mlx_pixel_put(data->img, x, y, color_code);
         }
         else if (object_type == 3) // Plane
+        {
+            int color_code = convert_rgb_to_int( data->cylinders[object_index].color);
+            my_mlx_pixel_put(data->img, x, y, color_code);
+        }
+        else if (object_type == 4) // Plane
         {
             int color_code = convert_rgb_to_int( data->cylinders[object_index].color);
             my_mlx_pixel_put(data->img, x, y, color_code);
