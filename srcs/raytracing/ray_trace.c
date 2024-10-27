@@ -13,37 +13,38 @@
 #include "../../includes/minirt.h"
 
 // Function to find the closest intersection with any object (spheres and planes)
-int find_closest_object(t_data *data, t_vec3d origin, t_vec3d direction, t_vec3d *closest_hit_point, int *object_type, int *object_index)
+int	find_closest_object(t_data *data, t_vec3d origin, t_vec3d direction, t_vec3d *closest_hit_point, int *object_type, int *object_index)
 {
 	int i ;
-	float min_distance = INFINITY; // Initially set the minimum distance to infinity
 	t_vec3d hit_point;
-	int hit;  // Flag to check if any intersection occurs
+	int hit; // Flag to check if any intersection occurs
+	float min_distance;
 	float distance; //TODO maybe set up to 0 if it shows uninitialised value
 
 	i = 0;
 	hit = 0;
+	min_distance = INFINITY; // Initially set the minimum distance to infinity
 	while (i < data->sphere_count)
 	{
 		if (ray_sphere_intersection(data->spheres[i], origin, direction, &hit_point))
 		{
-            distance = calculate_distance(origin, hit_point);
-            if (distance < min_distance)
-            {
-                min_distance = distance;
-                *closest_hit_point = hit_point;
-                *object_type = SPHERE;
-                *object_index = i;
-                hit = 1;
-            }
-        }
-        i++;
-    }
-    i = 0;
-    while (i < data->plane_count)
-    {
-        if (ray_plane_intersection(data->planes[i], origin, direction, &hit_point))
-        {
+			distance = calculate_distance(origin, hit_point);
+			if (distance < min_distance)
+			{
+				min_distance = distance;
+				*closest_hit_point = hit_point;
+				*object_type = SPHERE;
+				*object_index = i;
+				hit = 1;
+			}
+		}
+		i++;
+	}
+	i = 0;
+	while (i < data->plane_count)
+	{
+		if (ray_plane_intersection(data->planes[i], origin, direction, &hit_point))
+		{
             distance = calculate_distance(origin, hit_point);
             if (distance < min_distance)
             {
@@ -56,7 +57,6 @@ int find_closest_object(t_data *data, t_vec3d origin, t_vec3d direction, t_vec3d
         }
         i++;
     }
-
     i = 0;
     while (i < data->cylinder_count)
     {
