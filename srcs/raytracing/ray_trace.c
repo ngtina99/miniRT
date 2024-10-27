@@ -12,44 +12,17 @@
 
 #include "../../includes/minirt.h"
 
-// Function to normalize the direction vector
-// A unit vector has a length (magnitude) of 1, meaning it represents only the direction without an influence from its original length
-// This is crucial when you only need to know where the vector is pointing, not how far along it extends, such as in ray tracing or lighting calculations
-
-// Function to calculate the Euclidean distance between two points in 3D space
-
-t_vec3d	normalize(t_vec3d v)
-{
-	float	magnitude;
-
-	magnitude = sqrtf(v.x * v.x + v.y * v.y + v.z * v.z);
-	if (magnitude == 0.0f) //TODO question in useful.txt
-		return (t_vec3d){0.0f, 0.0f, -1.0f};
-	v.x /= magnitude;
-	v.y /= magnitude;
-	v.z /= magnitude;
-	return (v);
-}
-
-float calculate_distance(t_vec3d point1, t_vec3d point2)
-{
-	float dx = point2.x - point1.x;
-	float dy = point2.y - point1.y;
-	float dz = point2.z - point1.z;
-
-	return sqrtf(dx * dx + dy * dy + dz * dz);
-}
-
 // Function to find the closest intersection with any object (spheres and planes)
 int find_closest_object(t_data *data, t_vec3d origin, t_vec3d direction, t_vec3d *closest_hit_point, int *object_type, int *object_index)
 {
-	int i = 0;
+	int i ;
 	float min_distance = INFINITY; // Initially set the minimum distance to infinity
 	t_vec3d hit_point;
-	int hit = 0;  // Flag to check if any intersection occurs
-	float distance = 0;
+	int hit;  // Flag to check if any intersection occurs
+	float distance; //TODO maybe set up to 0 if it shows uninitialised value
 
-    //Check all spheres for intersection
+	i = 0;
+	hit = 0;
 	while (i < data->sphere_count)
 	{
 		if (ray_sphere_intersection(data->spheres[i], origin, direction, &hit_point))
@@ -59,15 +32,13 @@ int find_closest_object(t_data *data, t_vec3d origin, t_vec3d direction, t_vec3d
             {
                 min_distance = distance;
                 *closest_hit_point = hit_point;
-                *object_type = SPHERE; // Sphere
+                *object_type = SPHERE;
                 *object_index = i;
                 hit = 1;
             }
         }
         i++;
     }
-
-    //Check all planes for intersection
     i = 0;
     while (i < data->plane_count)
     {
@@ -78,7 +49,7 @@ int find_closest_object(t_data *data, t_vec3d origin, t_vec3d direction, t_vec3d
             {
                 min_distance = distance;
                 *closest_hit_point = hit_point;
-                *object_type = PLANE; // Plane
+                *object_type = PLANE;
                 *object_index = i;
                 hit = 1;
             }
@@ -96,33 +67,32 @@ int find_closest_object(t_data *data, t_vec3d origin, t_vec3d direction, t_vec3d
 			{
 				min_distance = distance;
 				*closest_hit_point = hit_point;
-				*object_type = CYLINDER; // Cylinder
+				*object_type = CYLINDER;
 				*object_index = i;
 				hit = 1;
 				}
 		}
-        // Check caps
-		if (ray_cylinder_top_intersection(data->cylinders[i], origin, direction, &hit_point))
+		if (ray_cylinder_top(data->cylinders[i], origin, direction, &hit_point))
 		{
             distance = calculate_distance(origin, hit_point);
             if (distance < min_distance)
             {
                 min_distance = distance;
                 *closest_hit_point = hit_point;
-                *object_type = CY_TOP; // Cylinder Top
+                *object_type = CY_TOP;
                 *object_index = i;
                 hit = 1;
             }
         }
 
-        if (ray_cylinder_bottom_intersection(data->cylinders[i], origin, direction, &hit_point))
+        if (ray_cylinder_bottom(data->cylinders[i], origin, direction, &hit_point))
         {
             distance = calculate_distance(origin, hit_point);
             if (distance < min_distance)
             {
                 min_distance = distance;
                 *closest_hit_point = hit_point;
-                *object_type = CY_BOTTOM; // Cylinder Bottom
+                *object_type = CY_BOTTOM;
                 *object_index = i;
                 hit = 1;
             }
@@ -138,8 +108,8 @@ void	ray_trace(t_data *data, int x, int y, int screen_width, int screen_height)
 	t_vec3d direction; // Ray direction
 
 	// Camera forward vector and its normalization
-	t_vec3d forward = data->camera.orientation;
-	forward = normalize(forward);
+	t_vec3d forward;
+	forward = normalize(data->camera.orientation);
 
     // Calculate the right and up vectors for the camera's orientation
 	t_vec3d world_up = {0.0f, 1.0f, 0.0f};
@@ -164,7 +134,7 @@ void	ray_trace(t_data *data, int x, int y, int screen_width, int screen_height)
 	direction = normalize(direction);
 
     // Find the closest intersection among all objects (spheres and planes)
-	t_vec3d closest_hit_point;
+	t_vec3d closest_hit_point; // TODO is it needed later?
 	int object_type;
 	int object_index;
 	int color_code;

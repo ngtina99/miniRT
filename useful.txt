@@ -3,7 +3,7 @@
 3. OPENGLFLAGS are only 1 time in makefile
 4. rename my_mlx_pixel_put to for example set_pixel_color
 
-5. I don't understand why the 0.0f set up to {0.0f, 0.0f, -1.0f};
+5. I don't understand why the 0.0f set up to {0.0f, 0.0f, -1.0f}; - Tina
 t_vec3d	normalize(t_vec3d v)
 {
 	float magnitude;
@@ -16,3 +16,11 @@ t_vec3d	normalize(t_vec3d v)
 	v.z /= magnitude;
 	return (v);
 }
+
+6. I don't understand this part - Tina
+    // Calculate the right and up vectors for the camera's orientation
+	t_vec3d world_up = {0.0f, 1.0f, 0.0f};
+	t_vec3d right = normalize(cross_product(forward, world_up));
+	t_vec3d up = normalize(cross_product(right, forward));
+
+7. 	t_vec3d closest_hit_point; // TODO is it needed later?
