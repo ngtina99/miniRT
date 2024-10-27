@@ -380,7 +380,7 @@ int find_closest_object(t_data *data, t_vec3d origin, t_vec3d direction, t_vec3d
             {
                 min_distance = distance;
                 *closest_hit_point = hit_point;
-                *object_type = 1; // Sphere
+                *object_type = SPHERE; // Sphere
                 *object_index = i;
                 hit = 1;
             }
@@ -399,7 +399,7 @@ int find_closest_object(t_data *data, t_vec3d origin, t_vec3d direction, t_vec3d
             {
                 min_distance = distance;
                 *closest_hit_point = hit_point;
-                *object_type = 2; // Plane
+                *object_type = PLANE; // Plane
                 *object_index = i;
                 hit = 1;
             }
@@ -417,7 +417,7 @@ int find_closest_object(t_data *data, t_vec3d origin, t_vec3d direction, t_vec3d
 			{
 				min_distance = distance;
 				*closest_hit_point = hit_point;
-				*object_type = 3; // Cylinder
+				*object_type = CYLINDER; // Cylinder
 				*object_index = i;
 				hit = 1;
 				}
@@ -430,7 +430,7 @@ int find_closest_object(t_data *data, t_vec3d origin, t_vec3d direction, t_vec3d
             {
                 min_distance = distance;
                 *closest_hit_point = hit_point;
-                *object_type = 4; // Cylinder Top
+                *object_type = CY_TOP; // Cylinder Top
                 *object_index = i;
                 hit = 1;
             }
@@ -443,14 +443,14 @@ int find_closest_object(t_data *data, t_vec3d origin, t_vec3d direction, t_vec3d
             {
                 min_distance = distance;
                 *closest_hit_point = hit_point;
-                *object_type = 5; // Cylinder Bottom
+                *object_type = CY_BOTTOM; // Cylinder Bottom
                 *object_index = i;
                 hit = 1;
             }
         }
         i++;
     }
-    return hit; // Return whether any intersection was found
+    return (hit); // Return whether any intersection was found
 }
 
 int convert_rgb_to_int(t__color_rgb color)
@@ -504,28 +504,28 @@ void	ray_trace(t_data *data, int x, int y, int screen_width, int screen_height)
 	if (find_closest_object(data, origin, direction, &closest_hit_point, &object_type, &object_index))
 	{
         // If it's a sphere, set the color of the sphere
-		if (object_type == 1) // Sphere
+		if (object_type == SPHERE) // Sphere
 		{
 			color_code = convert_rgb_to_int(data->spheres[object_index].color);
 			my_mlx_pixel_put(data->img, x, y, color_code);
 		}
         // If it's a plane, set the color of the plane
-		else if (object_type == 2) // Plane
+		else if (object_type == PLANE) // Plane
 		{
 			color_code = convert_rgb_to_int(data->planes[object_index].color);
 			my_mlx_pixel_put(data->img, x, y, color_code);
 		}
-		else if (object_type == 3) // Cylinder
+		else if (object_type == CYLINDER) // Cylinder
 		{
 			color_code = convert_rgb_to_int(data->cylinders[object_index].color);
 			my_mlx_pixel_put(data->img, x, y, color_code);
 		}
-		else if (object_type == 4) // Cylinder top
+		else if (object_type == CY_TOP) // Cylinder top
 		{
 			color_code = convert_rgb_to_int(data->cylinders[object_index].color);
 			my_mlx_pixel_put(data->img, x, y, color_code);
 		}
-		else if (object_type == 5) // Cylinder bottom
+		else if (object_type == CY_BOTTOM) // Cylinder bottom
 		{
 			color_code = convert_rgb_to_int(data->cylinders[object_index].color);
 			my_mlx_pixel_put(data->img, x, y, color_code);
@@ -533,9 +533,9 @@ void	ray_trace(t_data *data, int x, int y, int screen_width, int screen_height)
 	}
 	else
 	{
-        // No intersection: set background color (ambient light)
+        // No intersection: set background color, ambient light
 		ambient_color = (int)(255 * data->ambient.ratio);
 		color_code = (ambient_color << 16) | (ambient_color << 8) | ambient_color;
 		my_mlx_pixel_put(data->img, x, y, color_code);
-    }
+	}
 }

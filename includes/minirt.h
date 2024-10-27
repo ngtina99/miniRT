@@ -70,7 +70,7 @@
 // # define LEFT 65361
 
 //EVENTCODES
-enum 
+enum	key_codes
 {
 	ON_KEYDOWN = 2,
 	ON_KEYUP = 3,
@@ -79,6 +79,15 @@ enum
 	ON_MOUSEMOVE = 6,
 	ON_EXPOSE = 12,
 	ON_DESTROY = 17
+};
+
+enum	object_type
+{
+	SPHERE,
+	PLANE,
+	CYLINDER,
+	CY_TOP,
+	CY_BOTTOM
 };
 
 typedef struct s_data t_data;
