@@ -39,14 +39,6 @@ int	close_window_esc(int keycode, t_graphic *img)
 	return (0);
 }
 
-void	my_mlx_pixel_put(t_graphic *data, int x, int y, int color)
-{
-	char	*dst;
-
-	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
-	*(unsigned int*)dst = color;
-}
-
 void	setup_hooks(t_graphic *img)
 {
 	// mlx_mouse_hook(img->win_ptr, ft_mousehooks, img);

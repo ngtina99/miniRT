@@ -146,16 +146,25 @@ typedef struct s_ray
 
 int		open_rt(int argc, char **argv);
 void	init_mlx(t_data *data);
+int 	convert_rgb_to_int(t__color_rgb color);
 void	my_mlx_pixel_put(t_graphic *data, int x, int y, int color);
 void	init_scene_img(t_data *data);
 void	initialize_scene(t_data *scene);
 int		parse_scene(t_data *scene, int fd);
 void	free_scene(t_data **scene);
+t_vec3d add_vector(t_vec3d v1, t_vec3d v2);
+t_vec3d subtract_vector(t_vec3d v1, t_vec3d v2);
+t_vec3d	scale_vector(t_vec3d v, float scale);
 t_vec3d	normalize(t_vec3d v);
+t_vec3d	cross_product(t_vec3d v1, t_vec3d v2);
+float	dot_product(t_vec3d v1, t_vec3d v2);
 void	ray_trace(t_data *data, int x, int y, int screen_width, int screen_height);
-int		convert_rgb_to_int(t__color_rgb color);
 float	calculate_distance(t_vec3d point1, t_vec3d point2);
-
+int		ray_sphere_intersection(t_sphere sphere, t_vec3d origin, t_vec3d direction, t_vec3d *hit_point);
+int 	ray_plane_intersection(t_plane plane, t_vec3d origin, t_vec3d direction, t_vec3d *hit_point);
+int		ray_cylinder_intersection(t_cylinder cylinder, t_vec3d ray_origin, t_vec3d ray_direction, t_vec3d *hit_point);
+int		ray_cylinder_top_intersection(t_cylinder cylinder, t_vec3d ray_origin, t_vec3d ray_direction, t_vec3d *hit_point);
+bool	ray_cylinder_bottom_intersection(t_cylinder cylinder, t_vec3d ray_origin, t_vec3d ray_direction, t_vec3d *hit_point);
 # ifdef __APPLE__
 void		mlx_destroy_display(void *mlx_ptr);
 # endif
