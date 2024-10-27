@@ -2,3 +2,17 @@
 2. make sure to submit ALL libraries including minilibx
 3. OPENGLFLAGS are only 1 time in makefile
 4. rename my_mlx_pixel_put to for example set_pixel_color
+
+5. I don't understand why the 0.0f set up to {0.0f, 0.0f, -1.0f};
+t_vec3d	normalize(t_vec3d v)
+{
+	float magnitude;
+
+	magnitude = sqrtf(v.x * v.x + v.y * v.y + v.z * v.z);
+	if (magnitude == 0.0f) //TODO
+		return (t_vec3d){0.0f, 0.0f, -1.0f};
+	v.x /= magnitude;
+	v.y /= magnitude;
+	v.z /= magnitude;
+	return (v);
+}

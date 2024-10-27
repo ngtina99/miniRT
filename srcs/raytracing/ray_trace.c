@@ -17,6 +17,20 @@
 // This is crucial when you only need to know where the vector is pointing, not how far along it extends, such as in ray tracing or lighting calculations
 
 // Function to calculate the Euclidean distance between two points in 3D space
+
+t_vec3d	normalize(t_vec3d v)
+{
+	float	magnitude;
+
+	magnitude = sqrtf(v.x * v.x + v.y * v.y + v.z * v.z);
+	if (magnitude == 0.0f) //TODO question in useful.txt
+		return (t_vec3d){0.0f, 0.0f, -1.0f};
+	v.x /= magnitude;
+	v.y /= magnitude;
+	v.z /= magnitude;
+	return (v);
+}
+
 float calculate_distance(t_vec3d point1, t_vec3d point2)
 {
 	float dx = point2.x - point1.x;
@@ -157,29 +171,27 @@ void	ray_trace(t_data *data, int x, int y, int screen_width, int screen_height)
 	int ambient_color;
 	if (find_closest_object(data, origin, direction, &closest_hit_point, &object_type, &object_index))
 	{
-        // If it's a sphere, set the color of the sphere
-		if (object_type == SPHERE) // Sphere
+		if (object_type == SPHERE)
 		{
 			color_code = convert_rgb_to_int(data->spheres[object_index].color);
 			my_mlx_pixel_put(data->img, x, y, color_code);
 		}
-        // If it's a plane, set the color of the plane
-		else if (object_type == PLANE) // Plane
+		else if (object_type == PLANE)
 		{
 			color_code = convert_rgb_to_int(data->planes[object_index].color);
 			my_mlx_pixel_put(data->img, x, y, color_code);
 		}
-		else if (object_type == CYLINDER) // Cylinder
+		else if (object_type == CYLINDER)
 		{
 			color_code = convert_rgb_to_int(data->cylinders[object_index].color);
 			my_mlx_pixel_put(data->img, x, y, color_code);
 		}
-		else if (object_type == CY_TOP) // Cylinder top
+		else if (object_type == CY_TOP)
 		{
 			color_code = convert_rgb_to_int(data->cylinders[object_index].color);
 			my_mlx_pixel_put(data->img, x, y, color_code);
 		}
-		else if (object_type == CY_BOTTOM) // Cylinder bottom
+		else if (object_type == CY_BOTTOM)
 		{
 			color_code = convert_rgb_to_int(data->cylinders[object_index].color);
 			my_mlx_pixel_put(data->img, x, y, color_code);
@@ -187,7 +199,6 @@ void	ray_trace(t_data *data, int x, int y, int screen_width, int screen_height)
 	}
 	else
 	{
-        // No intersection: set background color, ambient light
 		ambient_color = (int)(255 * data->ambient.ratio);
 		color_code = (ambient_color << 16) | (ambient_color << 8) | ambient_color;
 		my_mlx_pixel_put(data->img, x, y, color_code);
