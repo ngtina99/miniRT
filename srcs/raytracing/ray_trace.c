@@ -158,13 +158,13 @@ void	ray_trace(t_data *data, int x, int y, int screen_width, int screen_height)
 		}
 		else if (object_type == CY_TOP)
 		{
-			color_code = convert_rgb_to_int(data->cylinders[object_index].color);
-			my_mlx_pixel_put(data->img, x, y, color_code);
+			color_code = convert_rgb_to_int(data->cylinders[object_index].color);//TODO delete later: for test to see I add more coloe
+			my_mlx_pixel_put(data->img, x, y, 100+(color_code));
 		}
 		else if (object_type == CY_BOTTOM)
 		{
-			color_code = convert_rgb_to_int(data->cylinders[object_index].color);
-			my_mlx_pixel_put(data->img, x, y, color_code);
+			color_code = convert_rgb_to_int(data->cylinders[object_index].color);// TODOdelete later: for test to see I add more coloe
+			my_mlx_pixel_put(data->img, x, y, 100+(color_code));
 		}
 	}
 	else

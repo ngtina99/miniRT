@@ -6,7 +6,7 @@
 /*   By: ngtina1999 <ngtina1999@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 17:28:19 by thuy-ngu          #+#    #+#             */
-/*   Updated: 2024/10/28 01:59:09 by ngtina1999       ###   ########.fr       */
+/*   Updated: 2024/10/28 02:22:50 by ngtina1999       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,17 +40,14 @@ bool	ray_sphere_intersection(t_sphere sphere, t_vec3d ray_origin, t_vec3d ray_di
 	float discriminant = b * b - 4 * a * c;
 	if (discriminant < 0)
 		return (false); // No intersection
-	else
-	{
-		t = calculate_nearest_inters_p(a, b, discriminant);
-		// If both t values are negative, the intersection is behind the camera
-		//printf("Both t1 and t2 are negative, intersection behind camera\n");
-		if (t < 0)
-			return (false); // Intersection is behind the camera
-		*hit_point = add_vector(ray_origin, (scale_vector(ray_direction, t)));
-        //printf("Intersection point: (%f, %f, %f)\n", hit_point->x, hit_point->y, hit_point->z);
-		return (true); // Intersection occurs
-	}
+	t = calculate_nearest_inters_p(a, b, discriminant);
+	// If both t values are negative, the intersection is behind the camera
+	//printf("Both t1 and t2 are negative, intersection behind camera\n");
+	if (t < 0)
+		return (false); // Intersection is behind the camera
+	*hit_point = add_vector(ray_origin, (scale_vector(ray_direction, t)));
+	//printf("Intersection point: (%f, %f, %f)\n", hit_point->x, hit_point->y, hit_point->z);
+	return (true); // Intersection occurs
 }
 
 // Function to check if a ray intersects a plane and return the intersection point
@@ -92,7 +89,7 @@ bool ray_plane_intersection(t_plane plane, t_vec3d ray_origin, t_vec3d ray_direc
 
 bool ray_cylinder_intersection(t_cylinder cylinder, t_vec3d ray_origin, t_vec3d ray_direction, t_vec3d *hit_point)
 {
-    float	radius;
+	float	radius;
 	t_vec3d	oc;
 	float	discriminant;
 	float	t;
@@ -140,7 +137,6 @@ bool ray_cylinder_bottom(t_cylinder cylinder, t_vec3d ray_origin, t_vec3d ray_di
 
 	//subtract the half of the center to get the bottom center
 	bottom_center = cylinder.center;
-	//bottom_center = subtract_vector(cylinder.center, scale_vector(cylinder.axis, cylinder.height / 2.0f));
 	radius = cylinder.diameter / 2.0f;
 	// Calculate intersection with bottom plane
 	parallel_factor = dot_product(ray_direction, cylinder.axis);
