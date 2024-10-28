@@ -4,6 +4,9 @@
 4. rename my_mlx_pixel_put to for example set_pixel_color
 
 5. I don't understand why the 0.0f set up to {0.0f, 0.0f, -1.0f}; - Tina
+Yulia: this was to make it return something if it's (0,0,0) vector (which is not really a vector), not to devide by 0 in the next steps.
+I chose this value as "default view", as if user is standing and looking right at the screen (-z axis)
+
 t_vec3d	normalize(t_vec3d v)
 {
 	float magnitude;
@@ -23,4 +26,12 @@ t_vec3d	normalize(t_vec3d v)
 	t_vec3d right = normalize(cross_product(forward, world_up));
 	t_vec3d up = normalize(cross_product(right, forward));
 
+Yulia: world_up - this is our Y axis (not relative, just one on the screen), we need that as a reference, to not loose screen orientation :) 
+right, up, forward - this is like camera coordinate system. based on it's orientation, we calculate it's own X, Y and Z.
+right = X_for_camera
+up = Y_for_camera
+forward = Z_for_camera
+we need that to build real view from camera point.
+
 7. 	t_vec3d closest_hit_point; // TODO is it needed later?
+we are using it in find_closest_object to write value that we got. I think we will need later, if not - can remove. 
