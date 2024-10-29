@@ -39,10 +39,10 @@ int	close_window_esc(int keycode, t_graphic *img)
 	return (0);
 }
 
-void	setup_hooks(t_graphic *img)
+void	setup_hooks(t_graphic *img, t_data *data)
 {
-	mlx_mouse_hook(img->win_ptr, ft_mousehooks, img);
-	mlx_key_hook(img->win_ptr, ft_keyhooks, img);
+	mlx_mouse_hook(img->win_ptr, ft_mousehooks, data);
+	mlx_key_hook(img->win_ptr, ft_keyhooks, data);
 	mlx_hook(img->win_ptr, ON_DESTROY, 0, close_window, img);
 	mlx_hook(img->win_ptr, 17, 0, close_window, img);
 	mlx_hook(img->win_ptr, ON_KEYDOWN, 1, close_window_esc, img);
@@ -63,5 +63,5 @@ void	init_mlx(t_data *data)
 	img.data = data;
 	//my_mlx_pixel_put(&img, 5, 5, 0x00FF0000);//I put in init ray it was working when it was simply here
 	//mlx_put_image_to_window(img.mlx_ptr, img.win_ptr, img.img, 0, 0); I put in init ray might be better here
-	setup_hooks(&img);
+	setup_hooks(&img, data);
 }

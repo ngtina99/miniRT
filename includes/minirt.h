@@ -82,6 +82,13 @@ enum	key_codes
 	ON_DESTROY = 17
 };
 
+enum mouse_buttons
+{
+    LEFT_CLICK = 1,
+    RIGHT_CLICK = 2,
+    MIDDLE_CLICK = 3
+};
+
 enum	object_type
 {
 	SPHERE,
@@ -101,6 +108,10 @@ typedef struct	s_graphic {
 	int		bits_per_pixel;
 	int		line_length;
 	int		endian;
+	double	m_x;
+	double	m_y;
+	double	offset_x;
+	double	offset_y;
 	t_data	*data;
 }				t_graphic;
 

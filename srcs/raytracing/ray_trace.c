@@ -144,27 +144,27 @@ void	ray_trace(t_data *data, int x, int y, int screen_width, int screen_height)
 		if (object_type == SPHERE)
 		{
 			color_code = convert_rgb_to_int(data->spheres[object_index].color);
-			my_mlx_pixel_put(data->img, x, y, color_code);
+			my_mlx_pixel_put(data->img, x + data->img->m_x, y + data->img->m_y, color_code);
 		}
 		else if (object_type == PLANE)
 		{
 			color_code = convert_rgb_to_int(data->planes[object_index].color);
-			my_mlx_pixel_put(data->img, x, y, color_code);
+			my_mlx_pixel_put(data->img, x + data->img->m_x, y + data->img->m_y, color_code);
 		}
 		else if (object_type == CYLINDER)
 		{
 			color_code = convert_rgb_to_int(data->cylinders[object_index].color);
-			my_mlx_pixel_put(data->img, x, y, color_code);
+			my_mlx_pixel_put(data->img, x + data->img->m_x, y + data->img->m_y, color_code);
 		}
 		else if (object_type == CY_TOP)
 		{
 			color_code = convert_rgb_to_int(data->cylinders[object_index].color);//TODO delete later: for test to see I add more coloe
-			my_mlx_pixel_put(data->img, x, y, 100+(color_code));
+			my_mlx_pixel_put(data->img, x + data->img->m_x, y + data->img->m_y, 100 + color_code);
 		}
 		else if (object_type == CY_BOTTOM)
 		{
 			color_code = convert_rgb_to_int(data->cylinders[object_index].color);// TODOdelete later: for test to see I add more coloe
-			my_mlx_pixel_put(data->img, x, y, 100+(color_code));
+			my_mlx_pixel_put(data->img, x + data->img->m_x, y + data->img->m_y, 100 + color_code);
 		}
 	}
 	else
