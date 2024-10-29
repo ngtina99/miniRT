@@ -158,6 +158,8 @@ bool 	ray_plane_intersection(t_plane plane, t_vec3d origin, t_vec3d direction, t
 bool	ray_cylinder_intersection(t_cylinder cylinder, t_vec3d ray_origin, t_vec3d ray_direction, t_vec3d *hit_point);
 bool	ray_cylinder_top(t_cylinder cylinder, t_vec3d ray_origin, t_vec3d ray_direction, t_vec3d *hit_point);
 bool	ray_cylinder_bottom(t_cylinder cylinder, t_vec3d ray_origin, t_vec3d ray_direction, t_vec3d *hit_point);
+int		ft_mousehooks(int button, int x, int y, t_data *img);
+int		ft_keyhooks(int keycode, t_data *img);
 
 # ifdef __APPLE__
 void		mlx_destroy_display(void *mlx_ptr);
