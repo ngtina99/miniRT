@@ -41,8 +41,8 @@ int	close_window_esc(int keycode, t_graphic *img)
 
 void	setup_hooks(t_graphic *img)
 {
-	//mlx_mouse_hook(img->win_ptr, ft_mousehooks, img);
-	//mlx_key_hook(img->win_ptr, ft_keyhooks, img);
+	mlx_mouse_hook(img->win_ptr, ft_mousehooks, img);
+	mlx_key_hook(img->win_ptr, ft_keyhooks, img);
 	mlx_hook(img->win_ptr, ON_DESTROY, 0, close_window, img);
 	mlx_hook(img->win_ptr, 17, 0, close_window, img);
 	mlx_hook(img->win_ptr, ON_KEYDOWN, 1, close_window_esc, img);
