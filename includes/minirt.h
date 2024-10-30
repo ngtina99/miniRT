@@ -29,7 +29,7 @@
 # endif
 
 
-# define WIDTH 1200
+# define WIDTH 800
 # define HEIGHT 800
 
 #define PATH_LEN 9
