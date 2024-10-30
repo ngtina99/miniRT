@@ -35,3 +35,6 @@ we need that to build real view from camera point.
 
 7. 	t_vec3d closest_hit_point; // TODO is it needed later?
 we are using it in find_closest_object to write value that we got. I think we will need later, if not - can remove. 
+
+8. Yulia: Can you please add to makefile that thing, that makes it recompile when *.h files are changed? 
+Please! so we don't need to do make re all the time
