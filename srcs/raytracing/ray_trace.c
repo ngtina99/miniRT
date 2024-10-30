@@ -152,8 +152,8 @@ void	ray_trace(t_data *data, int x, int y, int screen_width, int screen_height)
 	origin = data->camera.position;
 
     // Calculate the ray direction for each pixel
-	float px = (2.0f * x / screen_width - 1.0f) * aspect_ratio * scale;
-	float py = (1.0f - 2.0f * y / screen_height) * scale;
+	float px = (2.0f * x / screen_width - 1.0f) * scale;
+	float py = (1.0f - 2.0f * y / screen_height) * scale / aspect_ratio;
 
 	direction.x = forward.x + px * right.x + py * up.x;
 	direction.y = forward.y + px * right.y + py * up.y;
