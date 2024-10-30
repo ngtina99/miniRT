@@ -116,16 +116,14 @@ t_vec3d sphere_normal(t_sphere sphere, t_vec3d hit_point)
     return normalize(normal); // vector normalization
 }
 
+//not good yet!
 t_vec3d cylinder_normal(t_cylinder cylinder, t_vec3d hit_point)
 {
-    // Проекция вектора от центра цилиндра к точке пересечения на ось цилиндра
     t_vec3d center_to_hit = subtract_vector(hit_point, cylinder.center);
     float projection_length = dot_product(center_to_hit, cylinder.axis);
 
-    // Находим точку на оси цилиндра, ближайшую к точке пересечения
     t_vec3d closest_point_on_axis = add_vector(cylinder.center, scale_vector(cylinder.axis, projection_length));
 
-    // Вектор от этой точки к точке пересечения — это нормаль
     t_vec3d normal = subtract_vector(hit_point, closest_point_on_axis);
     return normalize(normal);
 }
