@@ -6,7 +6,7 @@
 /*   By: ngtina1999 <ngtina1999@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 18:19:53 by ngtina1999        #+#    #+#             */
-/*   Updated: 2024/10/29 19:39:48 by ngtina1999       ###   ########.fr       */
+/*   Updated: 2024/10/30 13:32:57 by ngtina1999       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,7 @@
 // I pushed these 4 new components 
 // 	double	m_x;
 // 	double	m_y;
-// 	double	offset_x;
-// 	double	offset_y;
+
 // should set up to 0 in the parsing
 int	ft_mousehooks(int button, int x, int y, t_data *data)
 {
