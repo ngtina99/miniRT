@@ -102,6 +102,36 @@ int	find_closest_object(t_data *data, t_vec3d origin, t_vec3d direction, t_vec3d
     return (hit); // Return whether any intersection was found
 }
 
+int apply_shading(int base_color, float intensity) 
+{
+    int red = ((base_color >> 16) & 0xFF) * intensity;
+    int green = ((base_color >> 8) & 0xFF) * intensity;
+    int blue = (base_color & 0xFF) * intensity;
+    return (red << 16) | (green << 8) | blue;
+}
+
+t_vec3d sphere_normal(t_sphere sphere, t_vec3d hit_point)
+{
+    t_vec3d normal = subtract_vector(hit_point, sphere.center); // vector from the center to intersection
+    return normalize(normal); // vector normalization
+}
+
+t_vec3d cylinder_normal(t_cylinder cylinder, t_vec3d hit_point)
+{
+    // Проекция вектора от центра цилиндра к точке пересечения на ось цилиндра
+    t_vec3d center_to_hit = subtract_vector(hit_point, cylinder.center);
+    float projection_length = dot_product(center_to_hit, cylinder.axis);
+
+    // Находим точку на оси цилиндра, ближайшую к точке пересечения
+    t_vec3d closest_point_on_axis = add_vector(cylinder.center, scale_vector(cylinder.axis, projection_length));
+
+    // Вектор от этой точки к точке пересечения — это нормаль
+    t_vec3d normal = subtract_vector(hit_point, closest_point_on_axis);
+    return normalize(normal);
+}
+
+
+
 void	ray_trace(t_data *data, int x, int y, int screen_width, int screen_height)
 {
 	t_vec3d origin;    // Camera position
@@ -141,31 +171,30 @@ void	ray_trace(t_data *data, int x, int y, int screen_width, int screen_height)
 	int ambient_color;
 	if (find_closest_object(data, origin, direction, &closest_hit_point, &object_type, &object_index))
 	{
+		t_vec3d normal;
+
 		if (object_type == SPHERE)
-		{
-			color_code = convert_rgb_to_int(data->spheres[object_index].color);
-			my_mlx_pixel_put(data->img, x, y, color_code);
-		}
+			normal = sphere_normal(data->spheres[object_index], closest_hit_point);
 		else if (object_type == PLANE)
-		{
-			color_code = convert_rgb_to_int(data->planes[object_index].color);
-			my_mlx_pixel_put(data->img, x, y, color_code);
-		}
+			normal = data->planes[object_index].normal;
 		else if (object_type == CYLINDER)
-		{
-			color_code = convert_rgb_to_int(data->cylinders[object_index].color);
-			my_mlx_pixel_put(data->img, x, y, color_code);
-		}
-		else if (object_type == CY_TOP)
-		{
-			color_code = convert_rgb_to_int(data->cylinders[object_index].color);//TODO delete later: for test to see I add more coloe
-			my_mlx_pixel_put(data->img, x, y, 100+(color_code));
-		}
-		else if (object_type == CY_BOTTOM)
-		{
-			color_code = convert_rgb_to_int(data->cylinders[object_index].color);// TODOdelete later: for test to see I add more coloe
-			my_mlx_pixel_put(data->img, x, y, 100+(color_code));
-		}
+			normal = cylinder_normal(data->cylinders[object_index], closest_hit_point);
+		t_vec3d light_dir = normalize(subtract_vector(data->light.position, closest_hit_point));
+
+		// calculating light intensity. can we use fmax()?
+		float light_intensity = fmax(0.0, dot_product(normal, light_dir)) * data->light.brightness;
+
+		// adding darkening to base light
+		int base_color;
+		if (object_type == SPHERE)
+			base_color = convert_rgb_to_int(data->spheres[object_index].color);
+		else if (object_type == PLANE)
+			base_color = convert_rgb_to_int(data->planes[object_index].color);
+		else
+			base_color = convert_rgb_to_int(data->cylinders[object_index].color);
+
+		color_code = apply_shading(base_color, light_intensity);
+		my_mlx_pixel_put(data->img, x, y, color_code);
 	}
 	else
 	{
