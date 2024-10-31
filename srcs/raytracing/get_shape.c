@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 17:28:19 by thuy-ngu          #+#    #+#             */
-/*   Updated: 2024/10/31 13:45:05 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/10/31 14:00:01 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,7 @@ bool ray_plane_intersection(t_plane plane, t_vec3d ray_origin, t_vec3d ray_direc
 // }
 
 
-// new function - YULIA
+// a bit changed original function to include tops and bottoms - YULIA
 bool ray_cylinder_intersection(t_cylinder cylinder, t_vec3d ray_origin, t_vec3d ray_direction, t_vec3d *hit_point)
 {
     float   radius;
