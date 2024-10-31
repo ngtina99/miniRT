@@ -179,9 +179,7 @@ void	ray_trace(t_data *data, int x, int y, int screen_width, int screen_height)
 
     // Find the closest intersection among all objects (spheres and planes)
 	t_object_hit closest_hit;
-	t_vec3d closest_hit_point; // TODO is it needed later?
 	int color_code;
-	int ambient_color;
 	if (find_closest_object(data, origin, direction, &closest_hit))
 	{
 		t_vec3d normal;
@@ -211,8 +209,8 @@ void	ray_trace(t_data *data, int x, int y, int screen_width, int screen_height)
 	}
 	else
 	{
-		ambient_color = (int)(255 * data->ambient.ratio);
-		color_code = (ambient_color << 16) | (ambient_color << 8) | ambient_color;
+		// TODO: put it in separate function. Question: in above function do we need to take ambient in consideration as well?
+		color_code = ((int)(data->ambient.color.red * data->ambient.ratio) << 16) | ((int)(data->ambient.color.green * data->ambient.ratio) << 8) | (int)(data->ambient.color.blue  * data->ambient.ratio);
 		my_mlx_pixel_put(data->img, x, y, color_code);
 	}
 }
