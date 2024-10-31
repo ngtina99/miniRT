@@ -136,6 +136,14 @@ typedef struct s_ray
     t_vec3d direction; // Direction the ray is traveling
 }   t_ray;
 
+typedef struct s_object_hit
+{
+	t_vec3d hit_point;
+	int object_type;
+	int object_color;
+	int	object_index;
+} t_object_hit;
+
 int		open_rt(int argc, char **argv);
 void	init_mlx(t_data *data);
 int 	convert_rgb_to_int(t__color_rgb color);
