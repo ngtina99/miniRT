@@ -36,7 +36,7 @@ we need that to build real view from camera point.
 7. 	t_vec3d closest_hit_point; // TODO is it needed later?
 we are using it in find_closest_object to write value that we got. I think we will need later, if not - can remove. 
 
-9.     else if (projection_length >= cylinder.height) {
+8.     else if (projection_length >= cylinder.height) {
         //return normalize(cylinder.axis); // Normal points outward for top cap
 		return normalize(scale_vector(cylinder.axis, 1)); //TODO I think we have to change to this but test later
     }
