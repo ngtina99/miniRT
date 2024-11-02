@@ -130,19 +130,13 @@ t_vec3d cylinder_normal(t_cylinder cylinder, t_vec3d hit_point)
     
     // If the intersection point is on the bottom cap
     if (projection_length <= 0) {
-        return normalize(scale_vector(cylinder.axis, -1)); // Normal points inward for bottom cap
+        return normalize(scale_vector(cylinder.axis, 1)); //TODO why do we need normalizer here?// Normal points inward for bottom cap
     }
     // If the intersection point is on the top cap
     else if (projection_length >= cylinder.height) {
-        return normalize(cylinder.axis); // Normal points outward for top cap
+        //return normalize(cylinder.axis); // Normal points outward for top cap
+		return normalize(scale_vector(cylinder.axis, 1)); //TODO I think we have to change to this but test later
     }
-//     if (projection_length <= 0) {
-//         return normalize(cylinder.axis); // Normal points outward for bottom cap
-//     }
-//     // If the intersection point is on the top cap
-//     else if (projection_length >= cylinder.height) {
-//         return normalize(scale_vector(cylinder.axis, -1)); // Normal points inward for top cap
-//     }
     // Otherwise, calculate the normal for the cylindrical surface
     t_vec3d closest_point_on_axis = add_vector(cylinder.center, scale_vector(cylinder.axis, projection_length));
     t_vec3d normal = subtract_vector(hit_point, closest_point_on_axis);
@@ -170,7 +164,6 @@ t_vec3d cylinder_normal(t_cylinder cylinder, t_vec3d hit_point)
 //     t_vec3d normal = subtract_vector(hit_point, closest_point_on_axis);
 //     return normalize(normal);
 // }
-
 
 void	ray_trace(t_data *data, int x, int y, int screen_width, int screen_height)
 {
@@ -240,3 +233,5 @@ void	ray_trace(t_data *data, int x, int y, int screen_width, int screen_height)
 		my_mlx_pixel_put(data->img, x, y, color_code);
 	}
 }
+
+
