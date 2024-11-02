@@ -130,7 +130,8 @@ t_vec3d cylinder_normal(t_cylinder cylinder, t_vec3d hit_point)
     
     // If the intersection point is on the bottom cap
     if (projection_length <= 0) {
-        return normalize(scale_vector(cylinder.axis, 1)); //TODO why do we need normalizer here?// Normal points inward for bottom cap
+		//cylinder.axis = subtract_vector(cylinder.axis, (t_vec3d){1,1,1}); //that is going to be the solution
+        return normalize(scale_vector((cylinder.axis), -1)); //TODO why do we need normalizer here?// Normal points inward for bottom cap
     }
     // If the intersection point is on the top cap
     else if (projection_length >= cylinder.height) {
