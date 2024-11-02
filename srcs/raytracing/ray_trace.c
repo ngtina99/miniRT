@@ -121,27 +121,48 @@ t_vec3d sphere_normal(t_sphere sphere, t_vec3d hit_point)
 }
 
 //not good yet!
+// t_vec3d cylinder_normal(t_cylinder cylinder, t_vec3d hit_point)
+// {
+//     // Vector from cylinder center to hit point
+//     t_vec3d center_to_hit = subtract_vector(hit_point, cylinder.center);
+//     // Project the vector onto the cylinder axis to find the closest point on the axis
+//     float projection_length = dot_product(center_to_hit, cylinder.axis);
+    
+//     // If the intersection point is on the bottom cap
+//     if (projection_length <= 0) {
+//         return normalize(scale_vector(cylinder.axis, -1)); // Normal points inward for bottom cap
+//     }
+//     // If the intersection point is on the top cap
+//     else if (projection_length >= cylinder.height) {
+//         return normalize(cylinder.axis); // Normal points outward for top cap
+//     }
+
+//     // Otherwise, calculate the normal for the cylindrical surface
+//     t_vec3d closest_point_on_axis = add_vector(cylinder.center, scale_vector(cylinder.axis, projection_length));
+//     t_vec3d normal = subtract_vector(hit_point, closest_point_on_axis);
+//     return normalize(normal);
+// }
+
 t_vec3d cylinder_normal(t_cylinder cylinder, t_vec3d hit_point)
 {
     // Vector from cylinder center to hit point
     t_vec3d center_to_hit = subtract_vector(hit_point, cylinder.center);
     // Project the vector onto the cylinder axis to find the closest point on the axis
     float projection_length = dot_product(center_to_hit, cylinder.axis);
-    
-    // If the intersection point is on the bottom cap
-    if (projection_length <= 0) {
-        return normalize(scale_vector(cylinder.axis, -1)); // Normal points inward for bottom cap
-    }
-    // If the intersection point is on the top cap
-    else if (projection_length >= cylinder.height) {
-        return normalize(cylinder.axis); // Normal points outward for top cap
+
+    float epsilon = 1e-6; // Small value to prevent precision issues
+    float bottom_cap_threshold = 0; // Assuming the bottom cap is at y = 0
+
+    // Check if the intersection point is on the bottom circle
+    if (projection_length < epsilon && hit_point.y <= bottom_cap_threshold + epsilon) {
+        // Normal points outward for the bottom cap
+        return normalize(scale_vector(cylinder.axis, -1));
     }
 
-    // Otherwise, calculate the normal for the cylindrical surface
-    t_vec3d closest_point_on_axis = add_vector(cylinder.center, scale_vector(cylinder.axis, projection_length));
-    t_vec3d normal = subtract_vector(hit_point, closest_point_on_axis);
-    return normalize(normal);
+    // Return a zero vector if the hit point is not on the bottom circle
+    return (t_vec3d){0, 0, 0}; // No normal for other areas
 }
+
 
 void	ray_trace(t_data *data, int x, int y, int screen_width, int screen_height)
 {
