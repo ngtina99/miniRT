@@ -38,3 +38,4 @@ we are using it in find_closest_object to write value that we got. I think we wi
 
 8. Yulia: Can you please add to makefile that thing, that makes it recompile when *.h files are changed? 
 Please! so we don't need to do make re all the time
+- Tina: It is already like that, but let's check together

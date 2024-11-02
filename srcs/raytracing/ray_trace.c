@@ -143,9 +143,6 @@ t_vec3d cylinder_normal(t_cylinder cylinder, t_vec3d hit_point)
     return normalize(normal);
 }
 
-
-
-
 void	ray_trace(t_data *data, int x, int y, int screen_width, int screen_height)
 {
 	t_vec3d origin;    // Camera position

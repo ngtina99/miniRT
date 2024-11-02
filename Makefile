@@ -13,7 +13,7 @@ OBJ			= $(addprefix $(OBJ_DIR)/,$(SRC:srcs/%.c=%.o))
 OBJ_DIR		= objs
 
 LIBFT 			= ./libs/libft/libft.a
-INC    			= -I./includes
+INC				= -I./includes
 
 #CFLAGS			= -Wall -Wextra -Werror -g
 #MLXFLAGS		= -O3 -L libs/minilibx-linux/ -lmlx -L/usr/lib -Ilmlx -lXext -lX11 -lm -lz -lpthread #lpthread maybe we can
