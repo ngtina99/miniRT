@@ -40,3 +40,5 @@ we are using it in find_closest_object to write value that we got. I think we wi
         //return normalize(cylinder.axis); // Normal points outward for top cap
 		return normalize(scale_vector(cylinder.axis, 1)); //TODO I think we have to change to this but test later
     }
+
+9. todo the angle are better when the cylinder were seperated
