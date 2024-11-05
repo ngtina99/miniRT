@@ -159,7 +159,7 @@ float vector_length(t_vec3d v);
 t_vec3d	normalize(t_vec3d v);
 t_vec3d	cross_product(t_vec3d v1, t_vec3d v2);
 float	dot_product(t_vec3d v1, t_vec3d v2);
-void	ray_trace(t_data *data, int x, int y, int screen_width, int screen_height);
+void	ray_trace(t_data *data, int x, int y);
 float	calculate_distance(t_vec3d point1, t_vec3d point2);
 bool	ray_sphere_intersection(t_sphere sphere, t_vec3d origin, t_vec3d direction, t_vec3d *hit_point);
 bool 	ray_plane_intersection(t_plane plane, t_vec3d origin, t_vec3d direction, t_vec3d *hit_point);
@@ -168,7 +168,7 @@ bool	ray_cylinder_top(t_cylinder cylinder, t_vec3d ray_origin, t_vec3d ray_direc
 bool	ray_cylinder_bottom(t_cylinder cylinder, t_vec3d ray_origin, t_vec3d ray_direction, t_vec3d *hit_point);
 int		ft_mousehooks(int button, int x, int y, t_data *img);
 int		ft_keyhooks(int keycode, t_data *img);
-
+t_vec3d	setup_camera(t_data *data, int x, int y);
 # ifdef __APPLE__
 void		mlx_destroy_display(void *mlx_ptr);
 # endif

@@ -166,40 +166,16 @@ t_vec3d cylinder_normal(t_cylinder cylinder, t_vec3d hit_point)
 //     return normalize(normal);
 // }
 
-void	ray_trace(t_data *data, int x, int y, int screen_width, int screen_height)
+void	ray_trace(t_data *data, int x, int y)
 {
 	t_vec3d origin;    // Camera position
 	t_vec3d direction; // Ray direction
-
-	// Camera forward vector and its normalization
-	t_vec3d forward;
-	forward = normalize(data->camera.orientation);
-
-    // Calculate the right and up vectors for the camera's orientation
-	t_vec3d world_up = {0.0f, 1.0f, 0.0f};
-	t_vec3d right = normalize(cross_product(forward, world_up));
-	t_vec3d up = normalize(cross_product(right, forward));
-
-    // Field of view and aspect ratio scaling
-	float aspect_ratio = (float)screen_width / screen_height;
-	float scale = tan(data->camera.fov * 0.5 * M_PI / 180.0f);
-
-    // Camera position as ray origin
-	origin = data->camera.position;
-
-    // Calculate the ray direction for each pixel
-	float px = (2.0f * x / screen_width - 1.0f) * aspect_ratio * scale;
-	float py = (1.0f - 2.0f * y / screen_height) * scale;
-
-	direction.x = forward.x + px * right.x + py * up.x;
-	direction.y = forward.y + px * right.y + py * up.y;
-	direction.z = forward.z + px * right.z + py * up.z;
-
-	direction = normalize(direction);
-
     // Find the closest intersection among all objects (spheres and planes)
 	t_object_hit closest_hit;
 	int color_code;
+
+	origin = data->camera.position;
+	direction = setup_camera(data, x, y);
 	if (find_closest_object(data, origin, direction, &closest_hit))
 	{
 		t_vec3d normal;
@@ -234,5 +210,3 @@ void	ray_trace(t_data *data, int x, int y, int screen_width, int screen_height)
 		my_mlx_pixel_put(data->img, x, y, color_code);
 	}
 }
-
-
