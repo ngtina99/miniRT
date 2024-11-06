@@ -29,8 +29,8 @@
 # endif
 
 
-# define WIDTH 800
-# define HEIGHT 800
+# define WIDTH 1200
+# define HEIGHT 1200
 
 #define PATH_LEN 9
 //COLORCODES
@@ -81,6 +81,8 @@ enum	key_codes
 	ON_EXPOSE = 12,
 	ON_DESTROY = 17
 };
+
+# define EPSILON 1e-4
 
 enum	object_type
 {
