@@ -67,17 +67,17 @@ bool	find_closest_object(t_data *data, t_vec3d origin, t_vec3d direction, t_obje
     i = 0;
     while (i < data->cylinder_count)
     {
-		if (ray_cylinder_intersection(data->cylinders[i], origin, direction, &hit_point))
-		{
-			distance = calculate_distance(origin, hit_point);
-			if (distance < min_distance)
-			{
-				min_distance = distance;
-				color = convert_rgb_to_int(data->cylinders[i].color);
-				save_hit_values(closest_hit, hit_point, CYLINDER, color, i);
-				hit = true;
-			}
-		}
+		// if (ray_cylinder_intersection(data->cylinders[i], origin, direction, &hit_point))
+		// {
+		// 	distance = calculate_distance(origin, hit_point);
+		// 	if (distance < min_distance)
+		// 	{
+		// 		min_distance = distance;
+		// 		color = convert_rgb_to_int(data->cylinders[i].color);
+		// 		save_hit_values(closest_hit, hit_point, CYLINDER, color, i);
+		// 		hit = true;
+		// 	}
+		// }
 		if (ray_cylinder_top(data->cylinders[i], origin, direction, &hit_point))
 		{
             distance = calculate_distance(origin, hit_point);

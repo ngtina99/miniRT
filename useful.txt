@@ -48,4 +48,4 @@ is misconfigured or if the filename doesn't end with the `.rt` extension.
 
 11. bottom - need noise correction, and I think it is oversized so bigger than the body
 
-12. top is dismorph and it is just not working (maybve need noise correction)
+12. top is perfect it has no noise at all
