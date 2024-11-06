@@ -46,6 +46,6 @@ we are using it in find_closest_object to write value that we got. I think we wi
 10.Also check that the program returns an error and exits properly when the configuration file 
 is misconfigured or if the filename doesn't end with the `.rt` extension.
 
-11. bottom - need noise correction 
+11. bottom - need noise correction, and I think it is oversized so bigger than the body
 
-12. top is dismorph (maybve need noise correction)
+12. top is dismorph and it is just not working (maybve need noise correction)
