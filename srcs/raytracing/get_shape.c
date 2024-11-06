@@ -6,7 +6,7 @@
 /*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 17:28:19 by thuy-ngu          #+#    #+#             */
-/*   Updated: 2024/11/06 20:01:20 by thuy-ngu         ###   ########.fr       */
+/*   Updated: 2024/11/06 20:40:08 by thuy-ngu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,90 +87,6 @@ bool ray_plane_intersection(t_plane plane, t_vec3d ray_origin, t_vec3d ray_direc
     return (false); // No intersection
 }
 
-// bool ray_cylinder_intersection(t_cylinder cylinder, t_vec3d ray_origin, t_vec3d ray_direction, t_vec3d *hit_point)
-// {
-//     float radius = cylinder.diameter / 2.0f;
-//     t_vec3d oc = subtract_vector(ray_origin, cylinder.center);
-//     float parallel_factor = dot_product(ray_direction, cylinder.axis);
-
-//     // *** First, check intersection with the side of the cylinder ***
-
-//     // Calculate quadratic coefficients for the side intersection
-//     float a = dot_product(ray_direction, ray_direction) - dot_product(ray_direction, cylinder.axis) * dot_product(ray_direction, cylinder.axis);
-//     float b = 2.0f * (dot_product(oc, ray_direction) - dot_product(oc, cylinder.axis) * dot_product(ray_direction, cylinder.axis));
-//     float c = dot_product(oc, oc) - dot_product(oc, cylinder.axis) * dot_product(oc, cylinder.axis) - radius * radius;
-
-//     // Calculate the discriminant to check if there's an intersection with the side
-//     float discriminant = b * b - 4 * a * c;
-//     if (discriminant >= 0)
-//     {
-//         float t_side = calculate_nearest_inters_p(a, b, discriminant);
-//         if (t_side >= 0)
-//         {
-//             // Compute intersection point with the side
-//             t_vec3d intersection = add_vector(ray_origin, scale_vector(ray_direction, t_side));
-
-//             // Check if the intersection is within the height bounds of the cylinder
-//             t_vec3d diff = subtract_vector(intersection, cylinder.center);
-//             float height_projection = dot_product(diff, cylinder.axis);
-
-//             // If height_projection < 0 or > cylinder.height, the point is outside the cylinder's bounds
-//             if (height_projection >= 0 && height_projection <= cylinder.height)
-//             {
-//                 *hit_point = intersection;
-//                 return true; // Side intersection
-//             }
-//         }
-//     }
-
-//     // *** Now check intersection with the bottom cap ***
-
-//     // Check if the ray is parallel to the bottom cap (near zero dot product with axis)
-//     if (fabs(parallel_factor) < 1e-6)
-//         return false; // Ray is parallel to the bottom cap plane
-
-//     t_vec3d bottom_center = cylinder.center; // Bottom cap is at the cylinder's center
-//     t_vec3d bo = subtract_vector(bottom_center, ray_origin);
-//     float t_bottom = dot_product(bo, cylinder.axis) / parallel_factor;
-    
-//     if (t_bottom >= 0)
-//     {
-//         // Calculate the intersection point on the bottom cap
-//         t_vec3d point = add_vector(ray_origin, scale_vector(ray_direction, t_bottom));
-//         t_vec3d pb = subtract_vector(point, bottom_center);
-
-//         // Check if the intersection point lies within the radius of the bottom cap
-//         if (dot_product(pb, pb) <= radius * radius)
-//         {
-//             *hit_point = point;
-//             return true; // Bottom cap intersection
-//         }
-//     }
-
-//     // *** Finally, check intersection with the top cap ***
-
-//     t_vec3d top_center = add_vector(cylinder.center, scale_vector(cylinder.axis, cylinder.height)); // Top center of the cylinder
-//     t_vec3d to = subtract_vector(top_center, ray_origin);
-//     float t_top = dot_product(to, cylinder.axis) / parallel_factor;
-
-//     if (t_top >= 0)
-//     {
-//         // Calculate the intersection point on the top cap
-//         t_vec3d point = add_vector(ray_origin, scale_vector(ray_direction, t_top));
-//         t_vec3d pt = subtract_vector(point, top_center);
-
-//         // Check if the intersection point lies within the radius of the top cap
-//         if (dot_product(pt, pt) <= radius * radius)
-//         {
-//             *hit_point = point;
-//             return true; // Top cap intersection
-//         }
-//     }
-
-//     // If no intersection was found
-//     return false;
-// }
-
 // a bit changed original function to include tops and bottoms - YULIA
 // bool ray_cylinder_intersection(t_cylinder cylinder, t_vec3d ray_origin, t_vec3d ray_direction, t_vec3d *hit_point)
 // {
@@ -236,7 +152,6 @@ bool ray_plane_intersection(t_plane plane, t_vec3d ray_origin, t_vec3d ray_direc
 //     *hit_point = intersection;
 //     return (true); // Intersection occurs
 // }
-
 
 bool ray_cylinder_intersection(t_cylinder cylinder, t_vec3d ray_origin, t_vec3d ray_direction, t_vec3d *hit_point)
 {
