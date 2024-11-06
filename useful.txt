@@ -45,3 +45,7 @@ we are using it in find_closest_object to write value that we got. I think we wi
 
 10.Also check that the program returns an error and exits properly when the configuration file 
 is misconfigured or if the filename doesn't end with the `.rt` extension.
+
+11. body has an extra shade, but the form is good
+
+12. bottom and top the size is not even fit the body not good and there is a noise
