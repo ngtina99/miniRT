@@ -78,29 +78,28 @@ bool	find_closest_object(t_data *data, t_vec3d origin, t_vec3d direction, t_obje
 				hit = true;
 			}
 		}
-		// if (ray_cylinder_top(data->cylinders[i], origin, direction, &hit_point))
-		// {
-        //     distance = calculate_distance(origin, hit_point);
-        //     if (distance < min_distance)
-        //     {
-        //         min_distance = distance;
-		// 		color = convert_rgb_to_int(data->cylinders[i].color);
-        //         save_hit_values(closest_hit, hit_point, CY_TOP, color, i);
-        //         hit = true;
-        //     }
-        // }
-
-        // if (ray_cylinder_bottom(data->cylinders[i], origin, direction, &hit_point))
-        // {
-        //     distance = calculate_distance(origin, hit_point);
-        //     if (distance < min_distance)
-        //     {
-        //         min_distance = distance;
-		// 		color = convert_rgb_to_int(data->cylinders[i].color);
-        //         save_hit_values(closest_hit, hit_point, CY_BOTTOM, color, i);
-        //         hit = true;
-        //     }
-        // }
+		if (ray_cylinder_top(data->cylinders[i], origin, direction, &hit_point))
+		{
+            distance = calculate_distance(origin, hit_point);
+            if (distance < min_distance)
+            {
+                min_distance = distance;
+				color = convert_rgb_to_int(data->cylinders[i].color);
+                save_hit_values(closest_hit, hit_point, CYLINDER, color, i);
+                hit = true;
+            }
+        }
+        if (ray_cylinder_bottom(data->cylinders[i], origin, direction, &hit_point))
+        {
+            distance = calculate_distance(origin, hit_point);
+            if (distance < min_distance)
+            {
+                min_distance = distance;
+				color = convert_rgb_to_int(data->cylinders[i].color);
+                save_hit_values(closest_hit, hit_point, CYLINDER, color, i);
+                hit = true;
+            }
+        }
         i++;
     }
     return (hit); // Return whether any intersection was found
