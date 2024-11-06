@@ -166,6 +166,15 @@ t_vec3d cylinder_normal(t_cylinder cylinder, t_vec3d hit_point)
 //     return normalize(normal);
 // }
 
+bool is_in_shadow(t_data *data, t_vec3d hit_point, t_vec3d light_dir) 
+{
+	t_object_hit shadow_hit;
+	
+	return find_closest_object(data, hit_point, light_dir, &shadow_hit) 
+		&& calculate_distance(hit_point, shadow_hit.hit_point) < calculate_distance(hit_point, data->light.position);
+}
+
+
 void	ray_trace(t_data *data, int x, int y)
 {
 	t_vec3d origin;    // Camera position
@@ -192,8 +201,19 @@ void	ray_trace(t_data *data, int x, int y)
 		float ambient_intensity = data->ambient.ratio;
 		float diffuse_intensity = fmax(0.0f, dot_product(normal, light_dir)) * data->light.brightness;
 
+		float diffuse_intensity;
 		// Combine ambient and diffuse components for the final intensity
-		float light_intensity = ambient_intensity + diffuse_intensity;
+		if (is_in_shadow(data, closest_hit.hit_point, light_dir))
+		{
+			// In shadow, apply only ambient lighting
+			light_intensity = ambient_intensity;
+		}
+		else
+		{
+			// Not in shadow, apply both ambient and diffuse lighting
+			float diffuse_intensity = fmax(0.0f, dot_product(normal, light_dir)) * data->light.brightness;
+			light_intensity = ambient_intensity + diffuse_intensity;
+		}
 
 		// Clamp the final intensity to [0, 1] to avoid over-brightening
 		light_intensity = fmin(light_intensity, 1.0f);
