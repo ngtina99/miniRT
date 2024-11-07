@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_shape.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 17:28:19 by thuy-ngu          #+#    #+#             */
-/*   Updated: 2024/11/06 22:12:50 by thuy-ngu         ###   ########.fr       */
+/*   Updated: 2024/11/07 15:09:07 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -257,7 +257,7 @@ bool ray_cylinder_bottom(t_cylinder cylinder, t_vec3d ray_origin, t_vec3d ray_di
 	t_vec3d pb; //from point to bottom
 
 	//subtract the half of the center to get the bottom center
-	bottom_center = cylinder.center;
+	bottom_center = subtract_vector(cylinder.center, scale_vector(cylinder.axis, 0.0001f));
 	radius = cylinder.diameter / 2.0f;
 	// Calculate intersection with bottom plane
 	parallel_factor = dot_product(ray_direction, cylinder.axis);
