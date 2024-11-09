@@ -3,31 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   cylinder_shape.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ngtina1999 <ngtina1999@student.42.fr>      +#+  +:+       +#+        */
+/*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/09 01:32:47 by ngtina1999        #+#    #+#             */
-/*   Updated: 2024/11/09 01:39:05 by ngtina1999       ###   ########.fr       */
+/*   Updated: 2024/11/09 15:05:23 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minirt.h"
-
-t_vec3d normalize_vector(t_vec3d v) //TODO: with this normalize it was working not sure if it is the reason 
-{
-    float magnitude = sqrt(v.x * v.x + v.y * v.y + v.z * v.z);
-
-    // Prevent division by zero
-    if (magnitude == 0)
-        return (t_vec3d){0, 0, 0};
-
-    t_vec3d normalized = {
-        v.x / magnitude,
-        v.y / magnitude,
-        v.z / magnitude
-    };
-    
-    return normalized;
-}
 
 bool ray_cylinder_intersection(t_cylinder cylinder, t_vec3d ray_origin, t_vec3d ray_direction, t_vec3d *hit_point)
 {
@@ -35,7 +18,7 @@ bool ray_cylinder_intersection(t_cylinder cylinder, t_vec3d ray_origin, t_vec3d 
     t_vec3d oc = subtract_vector(ray_origin, cylinder.center);
 
     // Ensure the cylinder axis is normalized
-    t_vec3d cylinder_axis = normalize_vector(cylinder.axis);
+    t_vec3d cylinder_axis = normalize(cylinder.axis);
 
     // Decompose ray direction into parallel and perpendicular components to the cylinder axis
     float ray_dir_parallel = dot_product(ray_direction, cylinder_axis);
