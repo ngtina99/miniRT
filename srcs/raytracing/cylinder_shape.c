@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/09 01:32:47 by ngtina1999        #+#    #+#             */
-/*   Updated: 2024/11/09 15:05:23 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/11/09 15:19:11 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 bool ray_cylinder_intersection(t_cylinder cylinder, t_vec3d ray_origin, t_vec3d ray_direction, t_vec3d *hit_point)
 {
-    float radius = cylinder.diameter / 2.0f;
     t_vec3d oc = subtract_vector(ray_origin, cylinder.center);
 
     // Ensure the cylinder axis is normalized
@@ -31,7 +30,7 @@ bool ray_cylinder_intersection(t_cylinder cylinder, t_vec3d ray_origin, t_vec3d 
     // Calculate quadratic coefficients based on perpendicular components
     float a = dot_product(ray_dir_perp, ray_dir_perp);
     float b = 2.0f * dot_product(oc_perp, ray_dir_perp);
-    float c = dot_product(oc_perp, oc_perp) - radius * radius;
+    float c = dot_product(oc_perp, oc_perp) - (cylinder.diameter / 2.0f) * (cylinder.diameter / 2.0f);
 
     // Calculate discriminant
     float discriminant = b * b - 4 * a * c;
@@ -61,7 +60,6 @@ bool ray_cylinder_intersection(t_cylinder cylinder, t_vec3d ray_origin, t_vec3d 
 bool ray_cylinder_top(t_cylinder cylinder, t_vec3d ray_origin, t_vec3d ray_direction, t_vec3d *hit_point)
 {
 	t_vec3d	top_center;
-	float	radius;
 	float parallel_factor = dot_product(ray_direction, cylinder.axis);
 	t_vec3d to; //from top to origin ray
 	float t;
@@ -70,7 +68,6 @@ bool ray_cylinder_top(t_cylinder cylinder, t_vec3d ray_origin, t_vec3d ray_direc
 
 	//ad the half height of the cylinder to get the top
 	top_center = add_vector(cylinder.center, scale_vector(cylinder.axis, cylinder.height / 2.0f));
-	radius = cylinder.diameter / 2.0f;
 	parallel_factor = dot_product(ray_direction, cylinder.axis);
 	if (fabs(parallel_factor) < 1e-6)
 		return (false); // Ray is parallel to the top cap plane
@@ -82,7 +79,7 @@ bool ray_cylinder_top(t_cylinder cylinder, t_vec3d ray_origin, t_vec3d ray_direc
 	point = add_vector(ray_origin, scale_vector(ray_direction, t));
     // Check if intersection point is within the cap radius
 	pt = subtract_vector(point, top_center);
-	if (dot_product(pt, pt) <= radius * radius)
+	if (dot_product(pt, pt) <= (cylinder.diameter / 2.0f) * (cylinder.diameter / 2.0f))
 	{
 		*hit_point = point;
 		return (true); // Intersection found
@@ -93,7 +90,6 @@ bool ray_cylinder_top(t_cylinder cylinder, t_vec3d ray_origin, t_vec3d ray_direc
 bool ray_cylinder_bottom(t_cylinder cylinder, t_vec3d ray_origin, t_vec3d ray_direction, t_vec3d *hit_point)
 {
 	t_vec3d	bottom_center;
-	float	radius;
 	float	parallel_factor; // 
 	t_vec3d	bo; //from bottom to origin
 	float	t;
@@ -102,7 +98,6 @@ bool ray_cylinder_bottom(t_cylinder cylinder, t_vec3d ray_origin, t_vec3d ray_di
 
 	//subtract the half of the center to get the bottom center
 	bottom_center = subtract_vector(cylinder.center, scale_vector(cylinder.axis, 0.0001f));
-	radius = cylinder.diameter / 2.0f;
 	// Calculate intersection with bottom plane
 	parallel_factor = dot_product(ray_direction, cylinder.axis);
 	//if (parallel_factor > 1e-6 || parallel_factor < -1e-6) it would be the same affect as with fabs
@@ -120,7 +115,7 @@ bool ray_cylinder_bottom(t_cylinder cylinder, t_vec3d ray_origin, t_vec3d ray_di
 	//  gives the squared length of that vector.
 	// This squared distance is a shorthand for avoiding the costly square root operation 
 	// (from sqrt()), making it more efficient.
-	if ((dot_product(pb, pb)) <= radius * radius)
+	if ((dot_product(pb, pb)) <= (cylinder.diameter / 2.0f) * (cylinder.diameter / 2.0f))
 	{
 		*hit_point = point;
 		return (true);
