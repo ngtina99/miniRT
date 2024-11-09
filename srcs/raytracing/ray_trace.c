@@ -183,7 +183,6 @@ bool is_in_shadow(t_data *data, t_vec3d hit_point, t_vec3d light_dir)
 
 }
 
-
 void	ray_trace(t_data *data, int x, int y)
 {
 	t_vec3d origin;    // Camera position

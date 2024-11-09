@@ -28,6 +28,17 @@ typedef struct s_camera {
     int fov;            // Field of view (FOV) [0, 180]
 } t_camera;
 
+typedef struct s_setup_cam {
+	float		aspect_ratio;
+	float		scale;
+	float		px;
+	float		py;
+	t_vec3d		forward;
+	t_vec3d		world_up;
+	t_vec3d		right;
+	t_vec3d		up;
+} t_setup_cam;
+
 typedef struct s_light{
     t_vec3d position;  // Light position (x, y, z)
     float brightness;   // Brightness ratio [0.0, 1.0]

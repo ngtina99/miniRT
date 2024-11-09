@@ -1,3 +1,26 @@
+***********************************************************
+
+testing normalize functions (normalize and normalize_vector), cylinder worked fo rmw with normalize_vector but maybe there were other changes as a result so the original normalize is good too
+
+maybe use this struct for discriminant calculation in cylinder I used in the others, 
+and take care not to switch the sequence of the calculations, so for example if you
+typedef struct s_discr_util
+{
+	float	a;
+	float	b;
+	float	c;
+	float	discriminant;
+} t_discr_util;
+
+for example you should calculate t only after it is turned out if discrimnant < 0
+if (discriminant < 0)
+        return false; // No intersection with the infinite cylinder
+
+    // Calculate the nearest intersection point (t)
+    float t = calculate_nearest_inters_p(a, b, discriminant);
+    if (t < 0)
+
+**********************************************************
 1. check in libft and miniRT makfile CFLAGS (I comment out on my own PC, because it is not compatible)
 2. make sure to submit ALL libraries including minilibx
 3. OPENGLFLAGS are only 1 time in makefile

@@ -51,10 +51,10 @@ void	setup_hooks(t_graphic *img)
 
 void	init_mlx(t_data *data)
 {
-	t_graphic img;
+	t_graphic	img;
 
 	img.mlx_ptr = mlx_init();
-	img.win_ptr = mlx_new_window(img.mlx_ptr, WIDTH, HEIGHT, "miniRT"); 
+	img.win_ptr = mlx_new_window(img.mlx_ptr, WIDTH, HEIGHT, "miniRT");
 	img.img = mlx_new_image(img.mlx_ptr, WIDTH, HEIGHT);
 	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length, &img.endian);
 	data->img = &img;

@@ -14,8 +14,8 @@
 
 int	convert_rgb_to_int(t__color_rgb color)
 {
-	int color_code;
-	
+	int	color_code;
+
 	color_code = (color.red << 16) | (color.green << 8) | color.blue;
 	return (color_code);
 }
@@ -25,5 +25,5 @@ void	my_mlx_pixel_put(t_graphic *data, int x, int y, int color)
 	char	*dst;
 
 	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
-	*(unsigned int*)dst = color;
+	*(unsigned int *)dst = color;
 }

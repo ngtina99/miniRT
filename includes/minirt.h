@@ -146,6 +146,14 @@ typedef struct s_object_hit
 	int	object_index;
 } t_object_hit;
 
+typedef struct s_discr_util
+{
+	float	a;
+	float	b;
+	float	c;
+	float	discriminant;
+} t_discr_util;
+
 int		open_rt(int argc, char **argv);
 void	init_mlx(t_data *data);
 int 	convert_rgb_to_int(t__color_rgb color);
@@ -171,6 +179,8 @@ bool	ray_cylinder_bottom(t_cylinder cylinder, t_vec3d ray_origin, t_vec3d ray_di
 int		ft_mousehooks(int button, int x, int y, t_data *img);
 int		ft_keyhooks(int keycode, t_data *img);
 t_vec3d	setup_camera(t_data *data, int x, int y);
+float	calculate_nearest_inters_p(float a, float b, float discriminant);
+
 # ifdef __APPLE__
 void		mlx_destroy_display(void *mlx_ptr);
 # endif
