@@ -3,27 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   vector_calculations.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ngtina1999 <ngtina1999@student.42.fr>      +#+  +:+       +#+        */
+/*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/27 20:07:04 by ngtina1999        #+#    #+#             */
-/*   Updated: 2024/10/28 02:05:06 by ngtina1999       ###   ########.fr       */
+/*   Updated: 2024/11/10 19:46:00 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minirt.h"
 
-// Function to calculate the Euclidean distance between two points in 3D space
-// Function to calculate the dot product of two 3D vectors
-//measure of similarities
+/* Function to calculate the Euclidean distance between two points in 3D space
+Function to calculate the dot product of two 3D vectors
+measure of similarities
+*/
 float	dot_product(t_vec3d v1, t_vec3d v2)
 {
 	return ((v1.x * v2.x) + (v1.y * v2.y) + (v1.z * v2.z));
 }
 
-// Function to calculate the cross product of two 3D vectors
-//measure of differences
-// The cross product is not commutative, so → u × → v ≠ → v × → u . If we are given 2 vectors: → u = { u 1 , u 2 , u 3 } and → v = { v 1 , v 2 , v 3 } , 
-//  the formula is: → u × → v = { u 2 ⋅ v 3 − u 3 ⋅ v 2 , u 3 ⋅ v 1 − u 1 ⋅ v 3 , u 1 ⋅ v 2 − u 2 ⋅ v 1 }
+/* Function to calculate the cross product of two 3D vectors
+measure of differences
+The cross product is not commutative, so → u × → v ≠ → v × → u . 
+If we are given 2 vectors: 
+→ u = { u 1 , u 2 , u 3 } and → v = { v 1 , v 2 , v 3 } , 
+the formula is: 
+→ u × → v = {u2 ⋅ v3 − u3 ⋅ v2 , u3 ⋅ v1 − u1 ⋅ v3 , u1 ⋅ v2 − u2 ⋅ v1}
+*/
 t_vec3d	cross_product(t_vec3d v1, t_vec3d v2)
 {
 	t_vec3d	result;
@@ -34,16 +39,19 @@ t_vec3d	cross_product(t_vec3d v1, t_vec3d v2)
 	return (result);
 }
 
-// Function to normalize the direction vector
-// A unit vector has a length (magnitude) of 1, meaning it represents only the direction without an influence from its original length
-// This is crucial when you only need to know where the vector is pointing, not how far along it extends, such as in ray tracing or lighting calculations
+/* Function to normalize the direction vector
+A unit vector has a length (magnitude) of 1, meaning it represents only the 
+direction without an influence from its original length.
+This is crucial when you only need to know where the vector is pointing, 
+not how far along it extends, such as in ray tracing or lighting calculations
+*/
 t_vec3d	normalize(t_vec3d v)
 {
 	float	magnitude;
 
 	magnitude = vector_length(v);
-	if (magnitude == 0.0f) //TODO question in useful.txt, I think we should return only 0.0 for all
-		return (t_vec3d){0.0f, 0.0f, -1.0f};
+	if (magnitude == 0.0f)
+		return ((t_vec3d){0.0f, 0.0f, -1.0f});
 	v.x /= magnitude;
 	v.y /= magnitude;
 	v.z /= magnitude;
@@ -52,7 +60,8 @@ t_vec3d	normalize(t_vec3d v)
 
 float	calculate_distance(t_vec3d point1, t_vec3d point2)
 {
-	t_vec3d v_distance; 
+	t_vec3d	v_distance;
+
 	v_distance = subtract_vector(point1, point2);
 	return (vector_length(v_distance));
 }
