@@ -58,5 +58,9 @@
   "C_Cpp_Runner.msvcSecureNoWarnings": false,
   "editor.useTabStops": true,
   "editor.detectIndentation": false,
-  "editor.insertSpaces": false
+"editor.insertSpaces": false,
+"files.associations": {
+	"queue": "c",
+	"stack": "c"
+}
 }

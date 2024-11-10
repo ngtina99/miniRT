@@ -154,6 +154,15 @@ typedef struct s_discr_util
 	float	discriminant;
 } t_discr_util;
 
+typedef struct s_cyl_intersection_util
+{
+	t_vec3d	cylinder_axis;
+	t_vec3d	ray_dir_perp;
+	t_vec3d	oc_perp;
+	float	ray_dir_parallel;
+	float	oc_parallel;
+}			t_cyl_intersection_util;
+
 int		open_rt(int argc, char **argv);
 void	init_mlx(t_data *data);
 int 	convert_rgb_to_int(t__color_rgb color);
