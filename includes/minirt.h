@@ -189,6 +189,13 @@ int		ft_mousehooks(int button, int x, int y, t_data *img);
 int		ft_keyhooks(int keycode, t_data *img);
 t_vec3d	setup_camera(t_data *data, int x, int y);
 float	calculate_nearest_inters_p(float a, float b, float discriminant);
+bool	calculate_quadratic_coefficients(t_discr_util *discr,
+		t_cyl_intersection_util *util, t_vec3d oc, t_cylinder cyl);
+bool	check_cylinder_height(t_vec3d intersection, t_cylinder cylinder,
+		t_vec3d cylinder_axis);
+bool	calculate_intersection_point(t_vec3d ray_origin, t_vec3d ray_direction,
+		float t, t_vec3d *intersection);
+bool	within_cap_radius(t_vec3d point, t_vec3d cap_center, float cap_radius);
 
 # ifdef __APPLE__
 void		mlx_destroy_display(void *mlx_ptr);
