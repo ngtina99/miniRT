@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   vector_operations.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ngtina1999 <ngtina1999@student.42.fr>      +#+  +:+       +#+        */
+/*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 17:28:19 by thuy-ngu          #+#    #+#             */
-/*   Updated: 2024/10/27 22:02:59 by ngtina1999       ###   ########.fr       */
+/*   Updated: 2024/11/10 19:46:47 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minirt.h"
 
-float vector_length(t_vec3d v)
+float	vector_length(t_vec3d v)
 {
-	return sqrtf(v.x * v.x + v.y * v.y + v.z * v.z);
+	return (sqrtf(v.x * v.x + v.y * v.y + v.z * v.z));
 }
 
 t_vec3d	add_vector(t_vec3d v1, t_vec3d v2)
