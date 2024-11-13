@@ -120,28 +120,56 @@ t_vec3d sphere_normal(t_sphere sphere, t_vec3d hit_point)
 }
 
 //not good yet!
+// t_vec3d cylinder_normal(t_cylinder cylinder, t_vec3d hit_point)
+// {
+//     // Vector from cylinder center to hit point
+//     t_vec3d center_to_hit = subtract_vector(hit_point, cylinder.center);
+//     // Project the vector onto the cylinder axis to find the closest point on the axis
+//     float projection_length = dot_product(center_to_hit, cylinder.axis);
+    
+//     // If the intersection point is on the bottom cap
+//     if (projection_length <= 0) {
+// 		//cylinder.axis = subtract_vector(cylinder.axis, (t_vec3d){1,1,1}); //that is going to be the solution
+//         return normalize(scale_vector((cylinder.axis), -1)); //TODO why do we need normalizer here?// Normal points inward for bottom cap
+//     }
+//     // If the intersection point is on the top cap
+//     else if (projection_length >= cylinder.height) {
+//         //return normalize(cylinder.axis); // Normal points outward for top cap
+// 		return normalize(scale_vector(cylinder.axis, 1)); //TODO I think we have to change to this but test later
+//     }
+//     // Otherwise, calculate the normal for the cylindrical surface
+//     t_vec3d closest_point_on_axis = add_vector(cylinder.center, scale_vector(cylinder.axis, projection_length));
+//     t_vec3d normal = subtract_vector(hit_point, closest_point_on_axis);
+//     return normalize(normal);
+// }
+
 t_vec3d cylinder_normal(t_cylinder cylinder, t_vec3d hit_point)
 {
-    // Vector from cylinder center to hit point
-    t_vec3d center_to_hit = subtract_vector(hit_point, cylinder.center);
-    // Project the vector onto the cylinder axis to find the closest point on the axis
-    float projection_length = dot_product(center_to_hit, cylinder.axis);
-    
-    // If the intersection point is on the bottom cap
-    if (projection_length <= 0) {
-		//cylinder.axis = subtract_vector(cylinder.axis, (t_vec3d){1,1,1}); //that is going to be the solution
-        return normalize(scale_vector((cylinder.axis), -1)); //TODO why do we need normalizer here?// Normal points inward for bottom cap
+    t_vec3d axis = cylinder.axis;
+    t_vec3d base_center = cylinder.center;
+    t_vec3d top_center = add_vector(cylinder.center, scale_vector(axis, cylinder.height));
+
+    // checking if it belongs to top
+    if (fabs(dot_product(subtract_vector(hit_point, top_center), axis)) < EPSILON)
+    {
+        return axis; 
     }
-    // If the intersection point is on the top cap
-    else if (projection_length >= cylinder.height) {
-        //return normalize(cylinder.axis); // Normal points outward for top cap
-		return normalize(scale_vector(cylinder.axis, 1)); //TODO I think we have to change to this but test later
+    // checking if it belongs to bottom
+    else if (fabs(dot_product(subtract_vector(hit_point, base_center), axis)) < EPSILON)
+    {
+        return scale_vector(axis, -1.0f);
     }
-    // Otherwise, calculate the normal for the cylindrical surface
-    t_vec3d closest_point_on_axis = add_vector(cylinder.center, scale_vector(cylinder.axis, projection_length));
-    t_vec3d normal = subtract_vector(hit_point, closest_point_on_axis);
-    return normalize(normal);
+    else
+    {
+        // side part of cylinder
+        t_vec3d oc = subtract_vector(hit_point, base_center);
+        float projection = dot_product(oc, axis);
+        t_vec3d closest_point = add_vector(base_center, scale_vector(axis, projection));
+        t_vec3d normal = subtract_vector(hit_point, closest_point);
+        return normalize(normal);
+    }
 }
+
 
 // t_vec3d cylinder_normal(t_cylinder cylinder, t_vec3d hit_point)
 // {
@@ -177,7 +205,7 @@ bool is_in_shadow(t_data *data, t_vec3d hit_point, t_vec3d light_dir)
 {
 	t_object_hit shadow_hit;
 	
-	// EPSILON is used to reduce floating point errors. We can decide later if we need it, can remove
+	//  is used to reduce floating point errors. We can decide later if we need it, can remove
 	return find_closest_object(data, hit_point, light_dir, &shadow_hit) 
     && (calculate_distance(hit_point, shadow_hit.hit_point) + EPSILON) < calculate_distance(hit_point, data->light.position);
 
