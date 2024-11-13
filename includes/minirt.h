@@ -95,7 +95,7 @@ enum e_key_codes
 	ON_DESTROY = 17
 };
 
-# define EPSILON 1e-4
+# define EPSILON 0.001f
 
 enum e_object_type
 {
