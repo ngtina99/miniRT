@@ -146,25 +146,26 @@ t_vec3d sphere_normal(t_sphere sphere, t_vec3d hit_point)
 t_vec3d cylinder_normal(t_cylinder cylinder, t_vec3d hit_point)
 {
     t_vec3d axis = cylinder.axis;
-    t_vec3d base_center = cylinder.center;
-    t_vec3d top_center = add_vector(cylinder.center, scale_vector(axis, cylinder.height));
+    // Calculate base and top centers based on the cylinder's center and height
+    t_vec3d base_center = subtract_vector(cylinder.center, scale_vector(axis, cylinder.height / 2.0f));
+    t_vec3d top_center = add_vector(cylinder.center, scale_vector(axis, cylinder.height / 2.0f));
 
-    // checking if it belongs to top
+    // Check if the hit point is on the top cap
     if (fabs(dot_product(subtract_vector(hit_point, top_center), axis)) < EPSILON)
     {
         return axis; 
     }
-    // checking if it belongs to bottom
+    // Check if the hit point is on the bottom cap
     else if (fabs(dot_product(subtract_vector(hit_point, base_center), axis)) < EPSILON)
     {
         return scale_vector(axis, -1.0f);
     }
     else
     {
-        // side part of cylinder
-        t_vec3d oc = subtract_vector(hit_point, base_center);
+        // Calculate normal for the side surface
+        t_vec3d oc = subtract_vector(hit_point, cylinder.center);
         float projection = dot_product(oc, axis);
-        t_vec3d closest_point = add_vector(base_center, scale_vector(axis, projection));
+        t_vec3d closest_point = add_vector(cylinder.center, scale_vector(axis, projection));
         t_vec3d normal = subtract_vector(hit_point, closest_point);
         return normalize(normal);
     }
