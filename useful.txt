@@ -1,31 +1,8 @@
-***********************************************************
-
-testing normalize functions (normalize and normalize_vector), cylinder worked fo rmw with normalize_vector but maybe there were other changes as a result so the original normalize is good too
-
-maybe use this struct for discriminant calculation in cylinder I used in the others, 
-and take care not to switch the sequence of the calculations, so for example if you
-typedef struct s_discr_util
-{
-	float	a;
-	float	b;
-	float	c;
-	float	discriminant;
-} t_discr_util;
-
-for example you should calculate t only after it is turned out if discrimnant < 0
-if (discriminant < 0)
-        return false; // No intersection with the infinite cylinder
-
-    // Calculate the nearest intersection point (t)
-    float t = calculate_nearest_inters_p(a, b, discriminant);
-    if (t < 0)
-
 **********************************************************
 1. check in libft and miniRT makfile CFLAGS (I comment out on my own PC, because it is not compatible)
 2. make sure to submit ALL libraries including minilibx
-4. rename set_pixel_color to for example set_pixel_color
 
-5. I don't understand why the 0.0f set up to {0.0f, 0.0f, -1.0f}; - Tina
+5. I don't understand why the 0.0f set up to {0.0f, 0.0f, -1.0f}; - to discuss in person
 Yulia: this was to make it return something if it's (0,0,0) vector (which is not really a vector), not to devide by 0 in the next steps.
 I chose this value as "default view", as if user is standing and looking right at the screen (-z axis)
 
@@ -42,7 +19,7 @@ t_vec3d	normalize(t_vec3d v)
 	return (v);
 }
 
-6. I don't understand this part - Tina
+6. DISCUSSED
     // Calculate the right and up vectors for the camera's orientation
 	t_vec3d world_up = {0.0f, 1.0f, 0.0f};
 	t_vec3d right = normalize(cross_product(forward, world_up));
@@ -58,24 +35,12 @@ we need that to build real view from camera point.
 7. 	t_vec3d closest_hit_point; // TODO is it needed later?
 we are using it in find_closest_object to write value that we got. I think we will need later, if not - can remove. 
 
-8.     else if (projection_length >= cylinder.height) {
-        //return normalize(cylinder.axis); // Normal points outward for top cap
-		return normalize(scale_vector(cylinder.axis, 1)); //TODO I think we have to change to this but test later
-    }
-
-9. todo the angle are better when the cylinder were seperated
-
-10.Also check that the program returns an error and exits properly when the configuration file 
-is misconfigured or if the filename doesn't end with the `.rt` extension.
-
-11. body has an extra shade, but the form is good
-
-12. bottom and top the size is not even fit the body not good and there is a noise
-
-
 TODO:
 1. add examples (Tina to start, Yulia also)
 2. remove default "/scenes" from the path (Tina - if we don't find file in scenes/ - then try path.)
++ add validation for .rt extension (Tina) - check that the program returns an error and exits properly when the configuration file 
+is misconfigured or if the filename doesn't end with the `.rt` extension.
 3. norminette: ray_trace.c - Tina
 4. parsing: start norminette Yulia.
 5. parsing corner cases (both of us)
+6. check all TODO in code
