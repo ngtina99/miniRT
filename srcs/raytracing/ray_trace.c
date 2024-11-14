@@ -145,7 +145,7 @@ t_vec3d sphere_normal(t_sphere sphere, t_vec3d hit_point)
 
 t_vec3d cylinder_normal(t_cylinder cylinder, t_vec3d hit_point)
 {
-    t_vec3d axis = cylinder.axis;
+    t_vec3d axis = normalize(cylinder.axis);
     // Calculate base and top centers based on the cylinder's center and height
     t_vec3d base_center = subtract_vector(cylinder.center, scale_vector(axis, cylinder.height / 2.0f));
     t_vec3d top_center = add_vector(cylinder.center, scale_vector(axis, cylinder.height / 2.0f));
@@ -208,7 +208,7 @@ bool is_in_shadow(t_data *data, t_vec3d hit_point, t_vec3d light_dir)
 	
 	//  is used to reduce floating point errors. We can decide later if we need it, can remove
 	return find_closest_object(data, hit_point, light_dir, &shadow_hit) 
-    && (calculate_distance(hit_point, shadow_hit.hit_point) + EPSILON) < calculate_distance(hit_point, data->light.position);
+    && (calculate_distance(hit_point, shadow_hit.hit_point) + 0.001f) < calculate_distance(hit_point, data->light.position);
 
 }
 
