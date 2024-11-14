@@ -40,6 +40,6 @@ void	init_scene_img(t_data *data)
 			ray_trace(data, (int)x, (int)y);
 		}
 	}
-	//my_mlx_pixel_put(data->img, 5, 5, 0x00FF0000);//just for test
+	//set_pixel_color(data->img, 5, 5, 0x00FF0000);//just for test
 	mlx_put_image_to_window(data->img->mlx_ptr, data->img->win_ptr, data->img->img, 0, 0);
 }

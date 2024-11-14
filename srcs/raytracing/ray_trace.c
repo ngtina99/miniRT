@@ -261,12 +261,12 @@ void	ray_trace(t_data *data, int x, int y)
 		// adding darkening to base light
 		int base_color = closest_hit.object_color;
 		color_code = apply_shading(base_color, light_intensity);
-		my_mlx_pixel_put(data->img, x, y, color_code);
+		set_pixel_color(data->img, x, y, color_code);
 	}
 	else
 	{
 		// TODO: put it in separate function. Question: in above function do we need to take ambient in consideration as well?
 		color_code = ((int)(data->ambient.color.red * data->ambient.ratio) << 16) | ((int)(data->ambient.color.green * data->ambient.ratio) << 8) | (int)(data->ambient.color.blue  * data->ambient.ratio);
-		my_mlx_pixel_put(data->img, x, y, color_code);
+		set_pixel_color(data->img, x, y, color_code);
 	}
 }

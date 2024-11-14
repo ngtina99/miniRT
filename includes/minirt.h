@@ -171,7 +171,7 @@ typedef struct s_cyl_intersection_util
 int		open_rt(int argc, char **argv);
 void	init_mlx(t_data *data);
 int		convert_rgb_to_int(t__color_rgb color);
-void	my_mlx_pixel_put(t_graphic *data, int x, int y, int color);
+void	set_pixel_color(t_graphic *data, int x, int y, int color);
 void	init_scene_img(t_data *data);
 void	initialize_scene(t_data *scene);
 int		parse_scene(t_data *scene, int fd);

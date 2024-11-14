@@ -20,7 +20,7 @@ int	convert_rgb_to_int(t__color_rgb color)
 	return (color_code);
 }
 
-void	my_mlx_pixel_put(t_graphic *data, int x, int y, int color)
+void	set_pixel_color(t_graphic *data, int x, int y, int color)
 {
 	char	*dst;
 

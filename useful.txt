@@ -23,8 +23,7 @@ if (discriminant < 0)
 **********************************************************
 1. check in libft and miniRT makfile CFLAGS (I comment out on my own PC, because it is not compatible)
 2. make sure to submit ALL libraries including minilibx
-3. OPENGLFLAGS are only 1 time in makefile
-4. rename my_mlx_pixel_put to for example set_pixel_color
+4. rename set_pixel_color to for example set_pixel_color
 
 5. I don't understand why the 0.0f set up to {0.0f, 0.0f, -1.0f}; - Tina
 Yulia: this was to make it return something if it's (0,0,0) vector (which is not really a vector), not to devide by 0 in the next steps.
@@ -72,3 +71,11 @@ is misconfigured or if the filename doesn't end with the `.rt` extension.
 11. body has an extra shade, but the form is good
 
 12. bottom and top the size is not even fit the body not good and there is a noise
+
+
+TODO:
+1. add examples (Tina to start, Yulia also)
+2. remove default "/scenes" from the path (Tina - if we don't find file in scenes/ - then try path.)
+3. norminette: ray_trace.c - Tina
+4. parsing: start norminette Yulia.
+5. parsing corner cases (both of us)

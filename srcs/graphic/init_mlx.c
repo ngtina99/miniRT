@@ -61,7 +61,7 @@ void	init_mlx(t_data *data)
 	//initialize_scene(data);
 	init_scene_img(data);
 	img.data = data;
-	//my_mlx_pixel_put(&img, 5, 5, 0x00FF0000);//I put in init ray it was working when it was simply here
+	//set_pixel_color(&img, 5, 5, 0x00FF0000);//I put in init ray it was working when it was simply here
 	//mlx_put_image_to_window(img.mlx_ptr, img.win_ptr, img.img, 0, 0); I put in init ray might be better here
 	setup_hooks(&img);
 }
