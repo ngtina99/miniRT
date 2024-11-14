@@ -44,3 +44,4 @@ is misconfigured or if the filename doesn't end with the `.rt` extension.
 4. parsing: start norminette Yulia.
 5. parsing corner cases (both of us)
 6. check all TODO in code
+7. remove all printing for parsing params
