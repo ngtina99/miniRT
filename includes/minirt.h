@@ -147,6 +147,8 @@ typedef struct s_light_info
 {
 	t_vec3d	light_dir;
 	float	light_intensity;
+	int		x;
+	int		y;
 }	t_light_info;
 
 typedef struct s_object_hit

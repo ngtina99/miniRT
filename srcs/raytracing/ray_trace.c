@@ -40,7 +40,7 @@ t_light_info	calculate_object_lighting(t_data *data, t_light_info light, t_vec3d
 	return (light);
 }
 
-void	calculate_object_color(t_data *data, t_object_hit closest_hit, int x, int y, t_light_info light)
+void	calculate_object_color(t_data *data, t_object_hit closest_hit, t_light_info light)
 {
 	// calculating light intensity. are we allowed to use fmax()?
 	// adding darkening to base light
@@ -50,7 +50,7 @@ void	calculate_object_color(t_data *data, t_object_hit closest_hit, int x, int y
 
 	base_color = closest_hit.object_color;
 	color_code = (apply_shading(base_color, light.light_intensity));
-	set_pixel_color(data->img, x, y, color_code);
+	set_pixel_color(data->img, light.x, light.y, color_code);
 }
 
 void	calculate_background_color(t_data *data, int x, int y)
@@ -80,6 +80,8 @@ void	ray_trace(t_data *data, int x, int y)
 	direction = setup_camera(data, x, y);
 	if (find_closest_object(data, origin, direction, &closest_hit))
 	{
+		light.x = x;
+		light.y = y;
 		if (closest_hit.object_type == SPHERE)
 			normal = sphere_normal(data->spheres[closest_hit.object_index], closest_hit.hit_point);
 		else if (closest_hit.object_type == PLANE)
@@ -88,7 +90,7 @@ void	ray_trace(t_data *data, int x, int y)
 			normal = cylinder_normal(data->cylinders[closest_hit.object_index], closest_hit.hit_point);
 		light.light_dir = normalize(subtract_vector(data->light.position, closest_hit.hit_point));
 		light = calculate_object_lighting(data, light, normal, closest_hit); // get the light_intensity
-		calculate_object_color(data, closest_hit, x, y, light);
+		calculate_object_color(data, closest_hit, light);
 	}
 	else
 		calculate_background_color(data, x, y);
