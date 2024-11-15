@@ -3,7 +3,7 @@ NAME		= miniRT
 SRC	= $(addprefix srcs/,$(addsuffix .c, $(FILES)))
 FILES		= main parsing/init_file parsing/parser \
 			  raytracing/init_scene raytracing/ray_trace raytracing/vector_operations raytracing/vector_calculations raytracing/get_shape \
-			  raytracing/cylinder_shape raytracing/cylinder_util \
+			   raytracing/find_closest raytracing/cylinder_shape raytracing/cylinder_util \
 			  raytracing/setup_camera graphic/init_mlx graphic/render_img \
 			  cleanup/cleanup 
 

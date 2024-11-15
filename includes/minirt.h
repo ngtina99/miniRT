@@ -143,6 +143,12 @@ typedef struct s_ray
 	t_vec3d	direction; // Direction the ray is traveling
 }	t_ray;
 
+typedef struct s_light_info
+{
+	t_vec3d	light_dir;
+	float	light_intensity;
+}	t_light_info;
+
 typedef struct s_object_hit
 {
 	t_vec3d	hit_point;
@@ -184,6 +190,7 @@ t_vec3d	normalize(t_vec3d v);
 t_vec3d	cross_product(t_vec3d v1, t_vec3d v2);
 float	dot_product(t_vec3d v1, t_vec3d v2);
 void	ray_trace(t_data *data, int x, int y);
+bool	find_closest_object(t_data *data, t_vec3d origin, t_vec3d direction, t_object_hit *closest_hit);
 float	calculate_distance(t_vec3d point1, t_vec3d point2);
 bool	ray_sphere_intersection(t_sphere sphere, t_vec3d origin,
 			t_vec3d direction, t_vec3d *hit_point);
@@ -205,7 +212,7 @@ bool	check_cylinder_height(t_vec3d intersection, t_cylinder cylinder,
 			t_vec3d cylinder_axis);
 bool	calculate_intersection_point(t_vec3d ray_origin, t_vec3d ray_direction,
 			float t, t_vec3d *intersection);
-bool	within_cap_radius(t_vec3d point, t_vec3d cap_center, float cap_radius);
+bool	incap_radius(t_vec3d point, t_vec3d cap_center, float cap_radius);
 
 # ifdef __APPLE__
 

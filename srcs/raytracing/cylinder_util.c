@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cylinder_util.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/10 20:23:35 by yioffe            #+#    #+#             */
-/*   Updated: 2024/11/13 11:03:05 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/11/15 21:09:31 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,18 +23,17 @@ bool	calculate_quadratic_coefficients(t_discr_util *discr,
 	return (discr->discriminant >= 0);
 }
 
-bool check_cylinder_height(t_vec3d intersection, t_cylinder cylinder,
-                           t_vec3d cylinder_axis)
+bool	check_cylinder_height(t_vec3d intersection, t_cylinder cylinder,
+							t_vec3d cylinder_axis)
 {
-    t_vec3d diff;
-    float height_projection;
+	t_vec3d	diff;
+	float	height_projection;
 
-    diff = subtract_vector(intersection, cylinder.center);
-    height_projection = dot_product(diff, cylinder_axis);
+	diff = subtract_vector(intersection, cylinder.center);
+	height_projection = dot_product(diff, cylinder_axis);
     /* Check if the intersection is within the cylinder's height */
-    return (height_projection >= -cylinder.height / 2.0f && height_projection <= cylinder.height / 2.0f);
+	return (height_projection >= -cylinder.height / 2.0f && height_projection <= cylinder.height / 2.0f);
 }
-
 
 bool	calculate_intersection_point(t_vec3d ray_origin, t_vec3d ray_direction,
 		float t, t_vec3d *intersection)
@@ -45,7 +44,7 @@ bool	calculate_intersection_point(t_vec3d ray_origin, t_vec3d ray_direction,
 	return (true);
 }
 
-bool	within_cap_radius(t_vec3d point, t_vec3d cap_center, float cap_radius)
+bool	incap_radius(t_vec3d point, t_vec3d cap_center, float cap_radius)
 {
 	t_vec3d	diff;
 	float	distance_squared;
