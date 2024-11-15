@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/09 01:32:47 by ngtina1999        #+#    #+#             */
-/*   Updated: 2024/11/15 21:15:20 by marvin           ###   ########.fr       */
+/*   Updated: 2024/11/15 23:27:19 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ bool	ray_cylinder_intersection(t_cylinder cylinder, t_vec3d ray_origin,
 {
 	t_vec3d					oc;
 	t_discr_util			discr;
-	t_cyl_intersection_util	util;
+	t_cy_intersection_util	util;
 	float					t;
 
 	oc = subtract_vector(ray_origin, cylinder.center);

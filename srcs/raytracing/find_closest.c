@@ -12,23 +12,23 @@
 
 #include "../../includes/minirt.h"
 
-void	save_hit_values(t_object_hit *object_hit, t_vec3d hit_point, int type, int color, int index)
+void	save_hit_values(t_object_hit *object_hit, t_vec3d hit_point, t_obj_info obj, int index)
 {
 	object_hit->hit_point = hit_point;
-	object_hit->object_type = type;
-	object_hit->object_color = color;
+	object_hit->object_type = obj.type;
+	object_hit->object_color = obj.color;
 	object_hit->object_index = index;
 }
 
 // Function to find the closest intersection with any object (spheres and planes)
 bool	find_closest_object(t_data *data, t_vec3d origin, t_vec3d direction, t_object_hit *closest_hit)
 {
-	int		i;
-	t_vec3d	hit_point;
-	bool	hit; // Flag to check if any intersection occurs
-	float	min_distance;
-	float	distance; //TODO maybe set up to 0 if it shows uninitialised value
-	int		color;
+	int			i;
+	t_vec3d		hit_point;
+	bool		hit; // Flag to check if any intersection occurs
+	float		min_distance;
+	float		distance; //TODO maybe set up to 0 if it shows uninitialised value
+	t_obj_info	obj;
 
 	i = 0;
 	hit = false;
@@ -41,8 +41,9 @@ bool	find_closest_object(t_data *data, t_vec3d origin, t_vec3d direction, t_obje
 			if (distance < min_distance)
 			{
 				min_distance = distance;
-				color = convert_rgb_to_int(data->spheres[i].color);
-				save_hit_values(closest_hit, hit_point, SPHERE, color, i);
+				obj.color = convert_rgb_to_int(data->spheres[i].color);
+				obj.type = SPHERE;
+				save_hit_values(closest_hit, hit_point, obj, i);
 				hit = true;
 			}
 		}
@@ -57,8 +58,9 @@ bool	find_closest_object(t_data *data, t_vec3d origin, t_vec3d direction, t_obje
             if (distance < min_distance)
             {
                 min_distance = distance;
-				color = convert_rgb_to_int(data->planes[i].color);
-				save_hit_values(closest_hit, hit_point, PLANE, color, i);
+				obj.color = convert_rgb_to_int(data->planes[i].color);
+				obj.type = PLANE;
+				save_hit_values(closest_hit, hit_point, obj, i);
                 hit = true;
             }
         }
@@ -73,8 +75,9 @@ bool	find_closest_object(t_data *data, t_vec3d origin, t_vec3d direction, t_obje
 			if (distance < min_distance)
 			{
 				min_distance = distance;
-				color = convert_rgb_to_int(data->cylinders[i].color);
-				save_hit_values(closest_hit, hit_point, CYLINDER, color, i);
+				obj.color = convert_rgb_to_int(data->cylinders[i].color);
+				obj.type = CYLINDER;
+				save_hit_values(closest_hit, hit_point, obj, i);
 				hit = true;
 			}
 		}
@@ -84,8 +87,9 @@ bool	find_closest_object(t_data *data, t_vec3d origin, t_vec3d direction, t_obje
 			if (distance < min_distance)
 			{
 				min_distance = distance;
-				color = convert_rgb_to_int(data->cylinders[i].color);
-				save_hit_values(closest_hit, hit_point, CYLINDER, color, i);
+				obj.color = convert_rgb_to_int(data->cylinders[i].color);
+				obj.type = CYLINDER;
+				save_hit_values(closest_hit, hit_point, obj, i);
 				hit = true;
 			}
 		}
@@ -95,8 +99,9 @@ bool	find_closest_object(t_data *data, t_vec3d origin, t_vec3d direction, t_obje
 			if (distance < min_distance)
 			{
 				min_distance = distance;
-				color = convert_rgb_to_int(data->cylinders[i].color);
-				save_hit_values(closest_hit, hit_point, CYLINDER, color, i);
+				obj.color = convert_rgb_to_int(data->cylinders[i].color);
+				obj.type = CYLINDER;
+				save_hit_values(closest_hit, hit_point, obj, i);
 				hit = true;
 			}
 		}

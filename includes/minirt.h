@@ -102,8 +102,6 @@ enum e_object_type
 	SPHERE,
 	PLANE,
 	CYLINDER,
-	CY_TOP,
-	CY_BOTTOM
 };
 
 typedef struct s_data	t_data;
@@ -167,14 +165,27 @@ typedef struct s_discr_util
 	float	discriminant;
 }	t_discr_util;
 
-typedef struct s_cyl_intersection_util
+typedef struct s_cy_intersection_util
 {
 	t_vec3d	cylinder_axis;
 	t_vec3d	ray_dir_perp;
 	t_vec3d	oc_perp;
 	float	ray_dir_parallel;
 	float	oc_parallel;
-}	t_cyl_intersection_util;
+}	t_cy_intersection_util;
+
+typedef struct s_cy_norm
+{
+	t_vec3d	axis;
+	t_vec3d	base_center;
+	t_vec3d	top_center;
+}	t_cy_norm;
+
+typedef struct s_obj_info
+{
+	int	type;
+	int	color;
+}	t_obj_info;
 
 int		open_rt(int argc, char **argv);
 void	init_mlx(t_data *data);
@@ -211,7 +222,7 @@ t_vec3d	sphere_normal(t_sphere sphere, t_vec3d hit_point);
 t_vec3d	cylinder_normal(t_cylinder cylinder, t_vec3d hit_point);
 float	calculate_nearest_inters_p(float a, float b, float discriminant);
 bool	calculate_quadratic_coefficients(t_discr_util *discr,
-			t_cyl_intersection_util *util, t_vec3d oc, t_cylinder cyl);
+			t_cy_intersection_util *util, t_vec3d oc, t_cylinder cyl);
 bool	check_cylinder_height(t_vec3d intersection, t_cylinder cylinder,
 			t_vec3d cylinder_axis);
 bool	calculate_intersection_point(t_vec3d ray_origin, t_vec3d ray_direction,
