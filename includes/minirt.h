@@ -205,6 +205,8 @@ bool	ray_cylinder_bottom(t_cylinder cylinder, t_vec3d ray_origin,
 int		ft_mousehooks(int button, int x, int y, t_data *img);
 int		ft_keyhooks(int keycode, t_data *img);
 t_vec3d	setup_camera(t_data *data, int x, int y);
+t_vec3d	sphere_normal(t_sphere sphere, t_vec3d hit_point);
+t_vec3d	cylinder_normal(t_cylinder cylinder, t_vec3d hit_point);
 float	calculate_nearest_inters_p(float a, float b, float discriminant);
 bool	calculate_quadratic_coefficients(t_discr_util *discr,
 			t_cyl_intersection_util *util, t_vec3d oc, t_cylinder cyl);
@@ -213,6 +215,8 @@ bool	check_cylinder_height(t_vec3d intersection, t_cylinder cylinder,
 bool	calculate_intersection_point(t_vec3d ray_origin, t_vec3d ray_direction,
 			float t, t_vec3d *intersection);
 bool	incap_radius(t_vec3d point, t_vec3d cap_center, float cap_radius);
+int		apply_shading(int base_color, float intensity);
+bool	is_in_shadow(t_data *data, t_vec3d hit_point, t_vec3d light_dir);
 
 # ifdef __APPLE__
 

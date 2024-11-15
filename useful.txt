@@ -41,6 +41,8 @@ TODO:
 + add validation for .rt extension (Tina) - check that the program returns an error and exits properly when the configuration file 
 is misconfigured or if the filename doesn't end with the `.rt` extension.
 3. norminette: ray_trace.c - Tina
+ ***calculate_object_color(data, closest_hit, x, y, light); I didn't correct this, take a look 
+ what kind of structure we should use there
 4. parsing: start norminette Yulia.
 5. parsing corner cases (both of us)
 6. check all TODO in code

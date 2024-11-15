@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_shape.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ngtina1999 <ngtina1999@student.42.fr>      +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 17:28:19 by thuy-ngu          #+#    #+#             */
-/*   Updated: 2024/11/09 02:14:23 by ngtina1999       ###   ########.fr       */
+/*   Updated: 2024/11/15 22:48:26 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,31 +28,6 @@ float	calculate_nearest_inters_p(float a, float b, float discriminant)
 	else
 		t = t2;
 	return (t);
-}
-
-bool	ray_sphere_intersection(t_sphere sphere, t_vec3d ray_origin, t_vec3d ray_direction, t_vec3d *hit_point)
-{
-	t_discr_util	discr;
-	float			t;
-	float			radius;
-	t_vec3d			oc; //from origin to center
-
-	radius = sphere.diameter / 2.0f;
-	oc = subtract_vector(ray_origin, sphere.center);
-	discr.a = dot_product(ray_direction, ray_direction);
-	discr.b = 2.0f * dot_product(oc, ray_direction);
-	discr.c = dot_product(oc, oc) - radius * radius;
-	discr.discriminant = discr.b * discr.b - 4 * discr.a * discr.c;
-	if (discr.discriminant < 0)
-		return (false); // No intersection
-	// If both t values are negative, the intersection is behind the camera
-	//printf("Both t1 and t2 are negative, intersection behind camera\n");
-	t = calculate_nearest_inters_p(discr.a, discr.b, discr.discriminant);
-	if (t < 0)
-		return (false); // Intersection is behind the camera
-	*hit_point = add_vector(ray_origin, (scale_vector(ray_direction, t)));
-	//printf("Intersection point: (%f, %f, %f)\n", hit_point->x, hit_point->y, hit_point->z);
-	return (true); // Intersection occurs
 }
 
 // Function to check if a ray intersects a plane and return the intersection point
@@ -90,4 +65,36 @@ bool	ray_plane_intersection(t_plane plane, t_vec3d ray_origin, t_vec3d ray_direc
 		}
 	}
 	return (false);// No intersection
+}
+
+t_vec3d	sphere_normal(t_sphere sphere, t_vec3d hit_point)
+{
+	t_vec3d normal;
+	normal = subtract_vector(hit_point, sphere.center); // vector from the center to intersection
+	return (normalize(normal)); // vector normalization
+}
+
+bool	ray_sphere_intersection(t_sphere sphere, t_vec3d ray_origin, t_vec3d ray_direction, t_vec3d *hit_point)
+{
+	t_discr_util	discr;
+	float			t;
+	float			radius;
+	t_vec3d			oc; //from origin to center
+
+	radius = sphere.diameter / 2.0f;
+	oc = subtract_vector(ray_origin, sphere.center);
+	discr.a = dot_product(ray_direction, ray_direction);
+	discr.b = 2.0f * dot_product(oc, ray_direction);
+	discr.c = dot_product(oc, oc) - radius * radius;
+	discr.discriminant = discr.b * discr.b - 4 * discr.a * discr.c;
+	if (discr.discriminant < 0)
+		return (false); // No intersection
+	// If both t values are negative, the intersection is behind the camera
+	//printf("Both t1 and t2 are negative, intersection behind camera\n");
+	t = calculate_nearest_inters_p(discr.a, discr.b, discr.discriminant);
+	if (t < 0)
+		return (false); // Intersection is behind the camera
+	*hit_point = add_vector(ray_origin, (scale_vector(ray_direction, t)));
+	//printf("Intersection point: (%f, %f, %f)\n", hit_point->x, hit_point->y, hit_point->z);
+	return (true); // Intersection occurs
 }

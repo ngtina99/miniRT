@@ -6,11 +6,39 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/10 20:23:35 by yioffe            #+#    #+#             */
-/*   Updated: 2024/11/15 21:09:31 by marvin           ###   ########.fr       */
+/*   Updated: 2024/11/15 22:49:15 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minirt.h"
+
+t_vec3d	cylinder_normal(t_cylinder cylinder, t_vec3d hit_point)
+{
+    t_vec3d axis = normalize(cylinder.axis);
+    // Calculate base and top centers based on the cylinder's center and height
+    t_vec3d base_center = subtract_vector(cylinder.center, scale_vector(axis, cylinder.height / 2.0f));
+    t_vec3d top_center = add_vector(cylinder.center, scale_vector(axis, cylinder.height / 2.0f));
+
+    // Check if the hit point is on the top cap
+    if (fabs(dot_product(subtract_vector(hit_point, top_center), axis)) < EPSILON)
+    {
+        return axis; 
+    }
+    // Check if the hit point is on the bottom cap
+    else if (fabs(dot_product(subtract_vector(hit_point, base_center), axis)) < EPSILON)
+    {
+        return scale_vector(axis, -1.0f);
+    }
+    else
+    {
+        // Calculate normal for the side surface
+        t_vec3d oc = subtract_vector(hit_point, cylinder.center);
+        float projection = dot_product(oc, axis);
+        t_vec3d closest_point = add_vector(cylinder.center, scale_vector(axis, projection));
+        t_vec3d normal = subtract_vector(hit_point, closest_point);
+        return normalize(normal);
+    }
+}
 
 bool	calculate_quadratic_coefficients(t_discr_util *discr,
 		t_cyl_intersection_util *util, t_vec3d oc, t_cylinder cyl)
