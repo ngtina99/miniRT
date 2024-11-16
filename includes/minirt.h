@@ -187,6 +187,13 @@ typedef struct s_obj_info
 	int	color;
 }	t_obj_info;
 
+typedef struct s_inter_info
+{
+	bool	hit;
+	float	min_distance;
+	float	distance;
+}	t_inter_info;
+
 int		open_rt(int argc, char **argv);
 void	init_mlx(t_data *data);
 int		convert_rgb_to_int(t__color_rgb color);

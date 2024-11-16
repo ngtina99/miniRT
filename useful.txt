@@ -37,15 +37,16 @@ we are using it in find_closest_object to write value that we got. I think we wi
 
 TODO:
 1. add examples (Tina to start, Yulia also)
-2. remove default "/scenes" from the path (Tina - if we don't find file in scenes/ - then try path.)
-+ add validation for .rt extension (Tina) - check that the program returns an error and exits properly when the configuration file 
+2. check that the program returns an error and exits properly when the configuration file 
 is misconfigured or if the filename doesn't end with the `.rt` extension.
-3. norminette: ray_trace.c - Tina
+3. norminette: find_closest object (it would be better together - Tina)
 4. parsing: start norminette Yulia.
 5. parsing corner cases (both of us)
 6. check all TODO in code
 7. remove all printing for parsing params
 
+**********
+SOLVED JUST TO CHECK THIS TYPE OF MISTAKES
 valgrind ./miniRT yulia
 ==3585== Memcheck, a memory error detector
 ==3585== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
@@ -68,3 +69,4 @@ Error: input not an existing .rt file
 ==3585==
 ==3585== For lists of detected and suppressed errors, rerun with: -s
 ==3585== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+***********

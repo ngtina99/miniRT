@@ -126,7 +126,7 @@ int	main(int argc, char **argv)
 
 	if (argc != 2)
 	{
-		printf(RED"Error: input number has to be one\n"RESET);
+		printf(RED "Error: Please put a valid .rt file path as an argument\n" RESET);
 		return (1);
 	}
 	fd = open_rt(argc, argv);

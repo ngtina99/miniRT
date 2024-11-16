@@ -48,11 +48,10 @@ YELLOW="\033[1;33m"
 EOC:="\033[0;0m" #END OF COLOR
 
 all:		$(NAME)
-	@echo
-	@echo $(PINK) "*SOME INSTRUCTIONS*" $(EOC) $(RED)
-	@echo
 	@echo $(PURPLE)
 	@echo "✨The program is ready✨" $(EOC)
+	@echo $(PURPLE)
+	@echo "Please put a .rt file path as an argument" $(EOC)
 
 # @echo "maybe instruct put cylinder" $(EOC) $(GREEN)
 # @echo "maybe instruct put cube" $(EOC) $(BLUE)
