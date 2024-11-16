@@ -44,6 +44,8 @@ is misconfigured or if the filename doesn't end with the `.rt` extension.
 5. parsing corner cases (both of us)
 6. check all TODO in code
 7. remove all printing for parsing params
+8. check for marvin in headers
+9. maybe we can print errors to STD_ERR fd? then we can't show colors, but it will be more correct
 
 **********
 SOLVED JUST TO CHECK THIS TYPE OF MISTAKES
