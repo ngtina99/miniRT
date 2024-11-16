@@ -42,8 +42,8 @@
 #  define RIGHT 65363
 # endif
 
-# define WIDTH 1200
-# define HEIGHT 1200
+# define WIDTH 600
+# define HEIGHT 600
 
 # define PATH_LEN 9
 // COLORCODES

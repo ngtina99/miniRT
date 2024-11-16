@@ -1,0 +1,18 @@
+A 0.1                                      20,0,20
+C 0,0,0            0,0,1      40
+L 10,0,0            0.8        255,255,255
+
+sp 0,6,20            1          0,0,255  # Top center
+sp -2,6,20           1          0,0,255  # Left top
+sp 2,6,20            1          0,0,255  # Right top
+sp -3,5,20           1          0,0,255  # Upper left
+sp 3,5,20            1          0,0,255  # Upper right
+sp -4,4,20           1          0,0,255  # Middle left
+sp 4,4,20            1          0,0,255  # Middle right
+sp -3,3,20           1          0,0,255  # Left middle down
+sp 3,3,20            1          0,0,255  # Right middle down
+sp -2,2,20           1          0,0,255  # Lower left
+sp 2,2,20            1          0,0,255  # Lower right
+sp -1,1,20           1          0,0,255  # Bottom left
+sp 1,1,20            1          0,0,255	 # Bottom right
+sp 0,0,20            1          0,0,255  # Bottom tip

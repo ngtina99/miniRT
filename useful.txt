@@ -37,9 +37,9 @@ we are using it in find_closest_object to write value that we got. I think we wi
 
 TODO:
 1. add examples (Tina to start, Yulia also)
-2. check that the program returns an error and exits properly when the configuration file 
+2. DONE: check that the program returns an error and exits properly when the configuration file 
 is misconfigured or if the filename doesn't end with the `.rt` extension.
-3. norminette: find_closest object (it would be better together - Tina)
+3. norminette: find_closest object (it would be better together - Tina, rest is DONE)
 4. parsing: start norminette Yulia.
 5. parsing corner cases (both of us)
 6. check all TODO in code
