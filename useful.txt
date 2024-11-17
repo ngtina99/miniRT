@@ -49,6 +49,12 @@ is misconfigured or if the filename doesn't end with the `.rt` extension.
 10. add all flags to makefile -Wall -Werror -Wextra + maybe O3 flag?
 11. check EPSILON values (and some places in code with small values). Try different to have better picture (Yulia)
 
+NORMINETTE LEFT (except comments):
+1. init_file (too long lines, but maybe we can printout to STD_ERR instead. also text itself can go to .h file)
+2. find_closest.C (to do together)
+3. ray_trace.C (to do together)
+4. main.c (Tina?)
+
 
 **********
 SOLVED JUST TO CHECK THIS TYPE OF MISTAKES
