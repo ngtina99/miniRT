@@ -47,6 +47,7 @@ is misconfigured or if the filename doesn't end with the `.rt` extension.
 8. check for marvin in headers
 9. maybe we can print errors to STD_ERR fd? then we can't show colors, but it will be more correct
 10. add all flags to makefile -Wall -Werror -Wextra + maybe O3 flag?
+11. check EPSILON values (and some places in code with small values). Try different to have better picture (Yulia)
 
 
 **********
