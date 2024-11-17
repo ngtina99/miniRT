@@ -200,7 +200,6 @@ int		convert_rgb_to_int(t__color_rgb color);
 void	set_pixel_color(t_graphic *data, int x, int y, int color);
 void	init_scene_img(t_data *data);
 void	initialize_scene(t_data *scene);
-int		parse_scene(t_data *scene, int fd);
 void	free_scene(t_data **scene);
 t_vec3d	add_vector(t_vec3d v1, t_vec3d v2);
 t_vec3d	subtract_vector(t_vec3d v1, t_vec3d v2);
@@ -237,6 +236,26 @@ bool	calculate_intersection_point(t_vec3d ray_origin, t_vec3d ray_direction,
 bool	incap_radius(t_vec3d point, t_vec3d cap_center, float cap_radius);
 int		apply_shading(int base_color, float intensity);
 bool	is_in_shadow(t_data *data, t_vec3d hit_point, t_vec3d light_dir);
+
+/* parser and helpers */
+int		parse_scene(t_data *scene, int fd);
+int		add_form(void **array, int *count, int *capacity, void *new_form,
+			size_t form_size);
+int		allocate_initial_array(void **array, int *capacity, size_t form_size);
+int		resize_array(void **array, int *capacity, int count, size_t form_size);
+void	skip_whitespace(char **line);
+void	skip_invalid_chars(char **line);
+int		parse_sign(char **line);
+void	parse_number(char **line, float *result, float *fraction,
+			bool *is_fractional);
+float	parse_float(char **line);
+int		parse_vector(char **line, t_vec3d *vector);
+int		parse_rgb(char **line, t__color_rgb *color);
+int		parse_sphere(t_data *scene, char *line);
+int		parse_plane(t_data *scene, char *line);
+int		parse_cylinder(t_data *scene, char *line);
+int		parse_camera(t_data *scene, char *line);
+int		parse_light(t_data *scene, char *line);
 
 # ifdef __APPLE__
 

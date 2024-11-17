@@ -10,6 +10,14 @@ typedef struct s_vect3d
 	float	z;
 }	t_vec3d;
 
+typedef struct s_array
+{
+    void	*data;
+    int		count;
+    int		capacity;
+    size_t	element_size;
+} t_array;
+
 typedef struct s_color_rgb
 {
 	int	red;
