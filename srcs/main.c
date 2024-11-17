@@ -67,6 +67,7 @@
 
 // FOR PARSING TESTING ONLY
 
+/*
 void print_ambient(t_ambient *ambient) {
     printf("Ambient light: ratio = %f, color = %d,%d,%d\n", ambient->ratio, ambient->color.red, ambient->color.green, ambient->color.blue);
 }
@@ -116,7 +117,7 @@ void print_cylinders(t_data *scene) {
                cylinder->color.red, cylinder->color.green, cylinder->color.blue);
     }
 }
-
+*/
 
 int	main(int argc, char **argv)
 {
@@ -132,7 +133,6 @@ int	main(int argc, char **argv)
 	fd = open_rt(argc, argv);
 	if (fd == -1)
 		return (1);
-	
 	//data = parse_rt(fd);
 	// if (data == NULL)
 	//  	free_data with some Error\n message and exit;
@@ -151,12 +151,12 @@ int	main(int argc, char **argv)
 		return (EXIT_FAILURE);
 	}
 	close(fd);
-	print_ambient(&scene->ambient);
+	/* print_ambient(&scene->ambient);
     print_camera(&scene->camera);
     print_light(&scene->light);
     print_spheres(scene);
     print_planes(scene);
-    print_cylinders(scene);
+    print_cylinders(scene); */
 	init_mlx(scene);
 	free_scene(&scene);
 	//free(scene);
