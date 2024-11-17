@@ -27,21 +27,23 @@ Not sure if needs validation
 */
 /* Function to add any form (cylinder, plane, sphere) to the array */
 
-int	add_form(void **array, int *count, int *capacity, void *new_form,
-		size_t form_size)
+int	add_form(t_add_form_params *params, void *new_form)
 {
-	if (*count == 0)
+	if (*(params->count) == 0)
 	{
-		if (allocate_initial_array(array, capacity, form_size) == EXIT_FAILURE)
+		if (allocate_initial_array(params->array, params->capacity,
+				params->form_size) == EXIT_FAILURE)
 			return (EXIT_FAILURE);
 	}
-	else if (*count == *capacity)
+	else if (*(params->count) == *(params->capacity))
 	{
-		if (resize_array(array, capacity, *count, form_size) == EXIT_FAILURE)
+		if (resize_array(params->array, params->capacity, *(params->count),
+				params->form_size) == EXIT_FAILURE)
 			return (EXIT_FAILURE);
 	}
-	ft_memcpy((char *)(*array) + (*count) * form_size, new_form, form_size);
-	(*count)++;
+	ft_memcpy((char *)(*(params->array)) + (*(params->count))
+		* params->form_size, new_form, params->form_size);
+	(*(params->count))++;
 	return (EXIT_SUCCESS);
 }
 

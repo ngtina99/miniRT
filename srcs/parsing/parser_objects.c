@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 23:22:29 by yioffe            #+#    #+#             */
-/*   Updated: 2024/11/17 00:19:43 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/11/17 00:25:31 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,32 +14,40 @@
 
 int	parse_sphere(t_data *scene, char *line)
 {
-	t_sphere	sphere;
-	int			result;
+	t_sphere			sphere;
+	t_add_form_params	params;
 
 	line += 2;
 	parse_vector(&line, &sphere.center);
 	sphere.diameter = parse_float(&line);
 	parse_rgb(&line, &sphere.color);
-	return (add_form((void **)&scene->spheres, &scene->sphere_count,
-			&scene->sphere_capacity, &sphere, sizeof(t_sphere)));
+	params.array = (void **)&scene->spheres;
+	params.count = &scene->sphere_count;
+	params.capacity = &scene->sphere_capacity;
+	params.form_size = sizeof(t_sphere);
+	return (add_form(&params, &sphere));
 }
 
 int	parse_plane(t_data *scene, char *line)
 {
-	t_plane	plane;
+	t_plane				plane;
+	t_add_form_params	params;
 
 	line += 2;
 	parse_vector(&line, &plane.point);
 	parse_vector(&line, &plane.normal);
 	parse_rgb(&line, &plane.color);
-	return (add_form((void **)&scene->planes, &scene->plane_count,
-			&scene->plane_capacity, &plane, sizeof(t_plane)));
+	params.array = (void **)&scene->planes;
+	params.count = &scene->plane_count;
+	params.capacity = &scene->plane_capacity;
+	params.form_size = sizeof(t_plane);
+	return (add_form(&params, &plane));
 }
 
 int	parse_cylinder(t_data *scene, char *line)
 {
-	t_cylinder	cylinder;
+	t_cylinder			cylinder;
+	t_add_form_params	params;
 
 	line += 2;
 	parse_vector(&line, &cylinder.center);
@@ -47,8 +55,11 @@ int	parse_cylinder(t_data *scene, char *line)
 	cylinder.diameter = parse_float(&line);
 	cylinder.height = parse_float(&line);
 	parse_rgb(&line, &cylinder.color);
-	return (add_form((void **)&scene->cylinders, &scene->cylinder_count,
-			&scene->cylinder_capacity, &cylinder, sizeof(t_cylinder)));
+	params.array = (void **)&scene->cylinders;
+	params.count = &scene->cylinder_count;
+	params.capacity = &scene->cylinder_capacity;
+	params.form_size = sizeof(t_cylinder);
+	return (add_form(&params, &cylinder));
 }
 
 int	parse_camera(t_data *scene, char *line)
