@@ -56,12 +56,15 @@ void	init_mlx(t_data *data)
 	img.mlx_ptr = mlx_init();
 	img.win_ptr = mlx_new_window(img.mlx_ptr, WIDTH, HEIGHT, "miniRT");
 	img.img = mlx_new_image(img.mlx_ptr, WIDTH, HEIGHT);
-	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length, &img.endian);
+	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel,
+			&img.line_length, &img.endian);
 	data->img = &img;
 	//initialize_scene(data);
 	init_scene_img(data);
 	img.data = data;
-	//set_pixel_color(&img, 5, 5, 0x00FF0000);//I put in init ray it was working when it was simply here
-	//mlx_put_image_to_window(img.mlx_ptr, img.win_ptr, img.img, 0, 0); I put in init ray might be better here
+	//set_pixel_color(&img, 5, 5, 0x00FF0000);
+	//I put in init ray it was working when it was simply here
+	//mlx_put_image_to_window(img.mlx_ptr, img.win_ptr, img.img, 0, 0); 
+	//I put in init ray might be better here
 	setup_hooks(&img);
 }

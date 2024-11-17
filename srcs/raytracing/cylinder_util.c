@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cylinder_util.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/10 20:23:35 by yioffe            #+#    #+#             */
-/*   Updated: 2024/11/15 23:48:13 by marvin           ###   ########.fr       */
+/*   Updated: 2024/11/17 10:21:45 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,21 +21,26 @@ t_vec3d	cylinder_normal(t_cylinder cylinder, t_vec3d hit_point)
 	t_vec3d		normal;
 
 	norm.axis = normalize(cylinder.axis);
-    // Calculate base and top centers based on the cylinder's center and height
-	norm.base_center = subtract_vector(cylinder.center, scale_vector(norm.axis, cylinder.height / 2.0f));
-	norm.top_center = add_vector(cylinder.center, scale_vector(norm.axis, cylinder.height / 2.0f));
-    // Check if the hit point is on the top cap
-	if (fabs(dot_product(subtract_vector(hit_point, norm.top_center), norm.axis)) < EPSILON)
-		return (norm.axis); 
-    // Check if the hit point is on the bottom cap
-	else if (fabs(dot_product(subtract_vector(hit_point, norm.base_center), norm.axis)) < EPSILON)
+	// Calculate base and top centers based on the cylinder's center and height
+	norm.base_center = subtract_vector(cylinder.center, scale_vector(norm.axis,
+				cylinder.height / 2.0f));
+	norm.top_center = add_vector(cylinder.center, scale_vector(norm.axis,
+				cylinder.height / 2.0f));
+	// Check if the hit point is on the top cap
+	if (fabs(dot_product(subtract_vector(hit_point, norm.top_center),
+				norm.axis)) < EPSILON)
+		return (norm.axis);
+	// Check if the hit point is on the bottom cap
+	else if (fabs(dot_product(subtract_vector(hit_point, norm.base_center),
+				norm.axis)) < EPSILON)
 		return (scale_vector(norm.axis, -1.0f));
 	else
 	{
-        // Calculate normal for the side surface
+		// Calculate normal for the side surface
 		oc = subtract_vector(hit_point, cylinder.center);
 		projection = dot_product(oc, norm.axis);
-		closest_point = add_vector(cylinder.center, scale_vector(norm.axis, projection));
+		closest_point = add_vector(cylinder.center, scale_vector(norm.axis,
+					projection));
 		normal = subtract_vector(hit_point, closest_point);
 		return (normalize(normal));
 	}
@@ -53,15 +58,16 @@ bool	calculate_quadratic_coefficients(t_discr_util *discr,
 }
 
 bool	check_cylinder_height(t_vec3d intersection, t_cylinder cylinder,
-							t_vec3d cylinder_axis)
+		t_vec3d cylinder_axis)
 {
 	t_vec3d	diff;
 	float	height_projection;
 
 	diff = subtract_vector(intersection, cylinder.center);
 	height_projection = dot_product(diff, cylinder_axis);
-    /* Check if the intersection is within the cylinder's height */
-	return (height_projection >= -cylinder.height / 2.0f && height_projection <= cylinder.height / 2.0f);
+	/* Check if the intersection is within the cylinder's height */
+	return (height_projection >= -cylinder.height / 2.0f
+		&& height_projection <= cylinder.height / 2.0f);
 }
 
 bool	calculate_intersection_point(t_vec3d ray_origin, t_vec3d ray_direction,

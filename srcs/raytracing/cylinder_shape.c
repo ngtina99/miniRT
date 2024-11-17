@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cylinder_shape.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/09 01:32:47 by ngtina1999        #+#    #+#             */
-/*   Updated: 2024/11/15 23:27:19 by marvin           ###   ########.fr       */
+/*   Updated: 2024/11/17 10:19:54 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,12 +52,14 @@ bool	ray_cylinder_top(t_cylinder cylinder, t_vec3d ray_origin,
 
 	cyl_axis = normalize(cylinder.axis);
     /* Calculate top center */
-	top_center = add_vector(cylinder.center, scale_vector(cyl_axis, cylinder.height / 2.0f));
+	top_center = add_vector(cylinder.center,
+		scale_vector(cyl_axis, cylinder.height / 2.0f));
 	parallel_factor = dot_product(ray_direction, cyl_axis);
 	if (fabs(parallel_factor) < 1e-6)
 		return (false);
     /* Calculate t for intersection with top cap */
-	t = dot_product(subtract_vector(top_center, ray_origin), cyl_axis) / parallel_factor;
+	t = dot_product(subtract_vector(top_center,
+		ray_origin), cyl_axis) / parallel_factor;
 	if (!calculate_intersection_point(ray_origin, ray_direction, t, hit_point))
 		return (false);
     /* Check if intersection point is within the cap radius */
@@ -74,12 +76,14 @@ bool	ray_cylinder_bottom(t_cylinder cylinder, t_vec3d ray_origin,
 
 	cyl_axis = normalize(cylinder.axis);
     /* Calculate bottom center */
-	bottom_center = subtract_vector(cylinder.center, scale_vector(cyl_axis, cylinder.height / 2.0f));
+	bottom_center = subtract_vector(cylinder.center,
+		scale_vector(cyl_axis, cylinder.height / 2.0f));
 	parallel_factor = dot_product(ray_direction, cyl_axis);
 	if (fabs(parallel_factor) < 1e-6)
 		return (false);
     /* Calculate t for intersection with bottom cap */
-	t = dot_product(subtract_vector(bottom_center, ray_origin), cyl_axis) / parallel_factor;
+	t = dot_product(subtract_vector(bottom_center, ray_origin),
+		cyl_axis) / parallel_factor;
 	if (!calculate_intersection_point(ray_origin, ray_direction, t, hit_point))
 		return (false);
     /* Check if intersection point is within the cap radius */
