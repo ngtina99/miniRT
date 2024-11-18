@@ -69,18 +69,13 @@ void	calculate_background_color(t_data *data, int x, int y)
 
 void	ray_trace(t_data *data, int x, int y)
 {
-	// TODO: maybe rename origin to camera_position?
-	// TODO: direction to ray_direction ? or maybe that one is clear
-	t_vec3d			origin; // Camera position
 	t_vec3d			direction; // Ray direction
-    // Find the closest intersection among all objects (spheres and planes)
 	t_object_hit	closest_hit;
 	t_vec3d			normal;
 	t_light_info	light;
 
-	origin = data->camera.position;
 	direction = setup_camera(data, x, y);
-	if (find_closest_object(data, origin, direction, &closest_hit))
+	if (find_closest_object(data, data->camera.position, direction, &closest_hit))
 	{
 		light.x = x;
 		light.y = y;
