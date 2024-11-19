@@ -31,7 +31,7 @@ int	main(int argc, char **argv)
 	{
 		close(fd);
 		free_scene(&scene);
-		ft_putstr_fd("Not valid .rt", STDERR_FILENO);
+		ft_putstr_fd("Not valid .rt\n", STDERR_FILENO);
 		return (EXIT_FAILURE);
 	}
 	close(fd);

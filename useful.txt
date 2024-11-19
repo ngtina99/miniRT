@@ -23,32 +23,18 @@ t_vec3d	normalize(t_vec3d v)
 we are using it in find_closest_object to write value that we got. I think we will need later, if not - can remove. 
 
 TODO:
-1. add examples (Tina to start, Yulia also)
-2. DONE: check that the program returns an error and exits properly when the configuration file 
-is misconfigured or if the filename doesn't end with the `.rt` extension.
 3. norminette: find_closest object (it would be better together - Tina, rest is DONE)
-4. DONE: parsing: start norminette Yulia.
-5. parsing corner cases (both of us)
-6. DONE: check all TODO in code
-7. DONE: remove all printing for parsing params
-8. DONE: check for marvin in headers
+5. IN PROGRESS: parsing corner cases (both of us)
+7. check for marvin in headers
 9. maybe we can print errors to STD_ERR fd? then we can't show colors, but it will be more correct (it means changing printf to perror and/or ft_putstr_fd. 
 	If it's system failor, like malloc failed - perror will be good, if it's us who throw error (like wrong extention, or incorrect format) perror won't work and we have to use ft_putstr_fd. 
 	I can explain more in person
+14. check the cleanup/error.c (main.c and open.rt error messages) (STDERR?)
 10. add all flags to makefile -Wall -Werror -Wextra + maybe O3 flag?
 11. check EPSILON values (and some places in code with small values). Try different to have better picture (Yulia)
 12. try empty .rt with valgrind to make 
-***NEW*** -  19 Nov
-13. norminette line too long fix you have to do enter and use \ this sign before the enter for norminette to accept when you split a too long line
-14. check the cleanup/error.c (main.c and open.rt error messages) (STDERR?)
 15. check parser corner cases especially with valgrind https://42-cursus.gitbook.io/guide/rank-04/minirt/building-the-thing
-***new branch name: commented_miniRT - Tina
 
-
-NORMINETTE LEFT (except comments):
-1. init_file (too long lines, but maybe we can printout to STD_ERR instead. also text itself can go to .h file)
-2. find_closest.C (to do together)
-3. ray_trace.C (to do together)
 
 **********
 SOLVED JUST TO CHECK THIS TYPE OF MISTAKES
