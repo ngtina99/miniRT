@@ -31,7 +31,6 @@ t_light_info	calculate_object_lighting(t_data *data, t_light_info light, t_vec3d
 
 void	calculate_object_color(t_data *data, t_object_hit closest_hit, t_light_info light)
 {
-	// TODO: calculating light intensity. are we allowed to use fmax()?
 	int	base_color;
 	int	color_code;
 
