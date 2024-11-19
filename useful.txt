@@ -29,9 +29,9 @@ is misconfigured or if the filename doesn't end with the `.rt` extension.
 3. norminette: find_closest object (it would be better together - Tina, rest is DONE)
 4. DONE: parsing: start norminette Yulia.
 5. parsing corner cases (both of us)
-6. check all TODO in code
+6. DONE: check all TODO in code
 7. DONE: remove all printing for parsing params
-8. check for marvin in headers
+8. DONE: check for marvin in headers
 9. maybe we can print errors to STD_ERR fd? then we can't show colors, but it will be more correct (it means changing printf to perror and/or ft_putstr_fd. 
 	If it's system failor, like malloc failed - perror will be good, if it's us who throw error (like wrong extention, or incorrect format) perror won't work and we have to use ft_putstr_fd. 
 	I can explain more in person
