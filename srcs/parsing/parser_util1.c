@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 23:21:26 by yioffe            #+#    #+#             */
-/*   Updated: 2024/11/16 23:32:41 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/11/19 19:47:32 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	resize_array(void **array, int *capacity, int count, size_t form_size)
 
 void	skip_whitespace(char **line)
 {
-	while (**line == ' ')
+	while (**line == ' ' || **line == '\t')
 		(*line)++;
 }
 
