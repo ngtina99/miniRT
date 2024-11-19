@@ -41,6 +41,7 @@ is misconfigured or if the filename doesn't end with the `.rt` extension.
 ***NEW*** -  19 Nov
 13. norminette line too long fix you have to do enter and use \ this sign before the enter for norminette to accept when you split a too long line
 14. check the cleanup/error.c (main.c and open.rt error messages) (STDERR?)
+15. check parser corner cases especially with valgrind https://42-cursus.gitbook.io/guide/rank-04/minirt/building-the-thing
 ***new branch name: commented_miniRT - Tina
 
 
