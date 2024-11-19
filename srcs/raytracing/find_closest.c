@@ -104,5 +104,22 @@ bool	find_closest_object(t_data *data, t_vec3d origin, t_vec3d direction, t_obje
 		}
 		i++;
 	}
+	i = 0;
+	while (i < data->paraboloid_count)
+	{
+		if (ray_paraboloid_intersection(data->paraboloids[i], origin, direction, &hit_point))
+		{
+			inter.distance = calculate_distance(origin, hit_point);
+			if (inter.distance < inter.min_distance)
+			{
+				inter.min_distance = inter.distance;
+				obj.color = convert_rgb_to_int(data->paraboloids[i].color);
+				obj.type = PARABOLOID;
+				inter.hit = true;
+				save_hit_values(closest_hit, hit_point, obj, i);
+			}
+		}
+		i++;
+	}
 	return (inter.hit);
 }

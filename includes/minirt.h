@@ -102,6 +102,7 @@ enum e_object_type
 	SPHERE,
 	PLANE,
 	CYLINDER,
+	PARABOLOID,
 };
 
 enum e_error_type
@@ -127,19 +128,22 @@ typedef struct s_graphic
 
 typedef struct s_data
 {
-	t_ambient	ambient;// Single ambient light
-	t_camera	camera;// Single camera
-	t_light		light;// Single light
-	t_sphere	*spheres;// Dynamic array of spheres
-	int			sphere_count;// Number of spheres
-	int			sphere_capacity;
-	t_plane		*planes;// Dynamic array of planes
-	int			plane_count;// Number of planes
-	int			plane_capacity;
-	t_cylinder	*cylinders;// Dynamic array of cylinders
-	int			cylinder_count;// Number of cylinders
-	int			cylinder_capacity;
-	t_graphic	*img;
+	t_ambient		ambient;
+	t_camera		camera;
+	t_light			light;
+	t_sphere		*spheres;
+	int				sphere_count;
+	int				sphere_capacity;
+	t_plane			*planes;
+	int				plane_count;
+	int				plane_capacity;
+	t_cylinder		*cylinders;
+	int				cylinder_count;
+	int				cylinder_capacity;
+	t_paraboloid	*paraboloids;
+	int				paraboloid_count;
+	int				paraboloid_capacity;
+	t_graphic		*img;
 }	t_data;
 
 typedef struct s_ray
@@ -181,6 +185,17 @@ typedef struct s_cy_intersection_util
 	float	oc_parallel;
 }	t_cy_intersection_util;
 
+typedef struct s_cone_util
+{
+    float	cos_theta_sq;    // Square of the cosine of the cone's angle
+    float	sin_theta_sq;    // Square of the sine of the cone's angle
+    float	m;               // Projection of the ray direction on the cone's axis
+    float	n;               // Projection of the vector from apex to ray origin on the cone's axis
+    float	a;               // Quadratic coefficient 'a' for the intersection equation
+    float	b;               // Quadratic coefficient 'b' for the intersection equation
+    float	c;               // Quadratic coefficient 'c' for the intersection equation
+}	t_cone_util;
+
 typedef struct s_cy_norm
 {
 	t_vec3d	axis;
@@ -203,7 +218,7 @@ typedef struct s_inter_info
 
 int		open_rt(int argc, char **argv);
 void	init_mlx(t_data *data);
-int		convert_rgb_to_int(t__color_rgb color);
+int		convert_rgb_to_int(t_color_rgb color);
 void	set_pixel_color(t_graphic *data, int x, int y, int color);
 void	init_scene_img(t_data *data);
 void	initialize_scene(t_data *scene);
@@ -257,13 +272,19 @@ void	parse_number(char **line, float *result, float *fraction,
 			bool *is_fractional);
 float	parse_float(char **line);
 int		parse_vector(char **line, t_vec3d *vector);
-int		parse_rgb(char **line, t__color_rgb *color);
+int		parse_rgb(char **line, t_color_rgb *color);
 int		parse_sphere(t_data *scene, char *line);
 int		parse_plane(t_data *scene, char *line);
 int		parse_cylinder(t_data *scene, char *line);
 int		parse_camera(t_data *scene, char *line);
 int		parse_light(t_data *scene, char *line);
 void	error_message(int fd, int err_sign);
+
+int parse_paraboloid(t_data *scene, char *line);
+bool ray_paraboloid_intersection(t_paraboloid paraboloid, t_vec3d ray_origin, t_vec3d ray_direction, t_vec3d *hit_point);
+bool check_paraboloid_height(t_vec3d intersection, t_paraboloid paraboloid);
+t_vec3d paraboloid_normal(t_paraboloid paraboloid, t_vec3d hit_point);
+t_vec3d get_object_normal(t_data *data, t_object_hit *closest_hit);
 
 # ifdef __APPLE__
 

@@ -96,6 +96,8 @@ int	parse_scene(t_data *scene, int fd)
 			curr_result = parse_plane(scene, ptr);
 		else if (ft_strncmp(ptr, "cy", 2) == 0)
 			curr_result = parse_cylinder(scene, ptr);
+		else if (ft_strncmp(line, "pb", 2) == 0)
+    		parse_paraboloid(scene, line);
 		free(line);
 		line = get_next_line(fd);
 		// if (curr_result == EXIT_FAILURE)

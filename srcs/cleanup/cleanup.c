@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cleanup.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ngtina1999 <ngtina1999@student.42.fr>      +#+  +:+       +#+        */
+/*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/09 01:23:56 by ngtina1999        #+#    #+#             */
-/*   Updated: 2024/11/09 01:24:39 by ngtina1999       ###   ########.fr       */
+/*   Updated: 2024/11/19 17:07:41 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ void	free_scene(t_data **scene)
 		free((*scene)->planes);
 	if ((*scene)->cylinders)
 		free((*scene)->cylinders);
+	if ((*scene)->paraboloids)
+		free((*scene)->paraboloids);
 	free(*scene);
 	*scene = NULL;
 }

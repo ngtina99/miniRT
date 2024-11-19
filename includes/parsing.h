@@ -35,12 +35,12 @@ typedef struct s_color_rgb
 	int	red;
 	int	green;
 	int	blue;
-}	t__color_rgb;
+}	t_color_rgb;
 
 typedef struct s_ambient
 {
 	float			ratio;
-	t__color_rgb	color;
+	t_color_rgb	color;
 }	t_ambient;
 
 typedef struct s_camera
@@ -66,14 +66,14 @@ typedef struct s_light
 {
 	t_vec3d			position;
 	float			brightness;
-	t__color_rgb	color;
+	t_color_rgb	color;
 }	t_light;
 
 typedef struct s_sphere
 {
 	t_vec3d			center;
 	float			diameter;
-	t__color_rgb	color;
+	t_color_rgb	color;
 }	t_sphere;
 
 typedef struct s_cylinder
@@ -82,14 +82,26 @@ typedef struct s_cylinder
 	t_vec3d			axis;
 	float			diameter;
 	float			height;
-	t__color_rgb	color;
+	t_color_rgb	color;
 }	t_cylinder;
 
 typedef struct s_plane
 {
 	t_vec3d			point;
 	t_vec3d			normal;
-	t__color_rgb	color;
+	t_color_rgb	color;
 }	t_plane;
+
+
+typedef struct s_paraboloid
+{
+    t_vec3d		vertex;      // The apex (vertex) of the paraboloid
+    t_vec3d		axis;        // Direction of the paraboloid's axis
+    float		curvature;   // Curvature factor 'a'
+    float		height;      // Maximum height of the paraboloid
+    t_color_rgb	color;       // Color of the paraboloid
+}	t_paraboloid;
+
+
 
 #endif

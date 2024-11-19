@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 23:25:14 by yioffe            #+#    #+#             */
-/*   Updated: 2024/11/16 23:32:44 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/11/19 17:05:47 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int	parse_vector(char **line, t_vec3d *vector)
 	return (EXIT_SUCCESS);
 }
 
-int	parse_rgb(char **line, t__color_rgb *color)
+int	parse_rgb(char **line, t_color_rgb *color)
 {
 	color->red = ft_atoi(*line);
 	while (**line != ',' && **line != '\0')

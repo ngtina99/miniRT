@@ -61,7 +61,7 @@ void	calculate_background_color(t_data *data, int x, int y)
 	set_pixel_color(data->img, x, y, color_code);
 }
 
-static t_vec3d	get_object_normal(t_data *data, t_object_hit *closest_hit)
+t_vec3d	get_object_normal(t_data *data, t_object_hit *closest_hit)
 {
 	if (closest_hit->object_type == SPHERE)
 		return (sphere_normal(data->spheres[closest_hit->object_index],
@@ -70,6 +70,9 @@ static t_vec3d	get_object_normal(t_data *data, t_object_hit *closest_hit)
 		return (data->planes[closest_hit->object_index].normal);
 	else if (closest_hit->object_type == CYLINDER)
 		return (cylinder_normal(data->cylinders[closest_hit->object_index],
+				closest_hit->hit_point));
+	else if (closest_hit->object_type == PARABOLOID)
+		return (paraboloid_normal(data->paraboloids[closest_hit->object_index],
 				closest_hit->hit_point));
 	return ((t_vec3d){0, 0, 0});
 }

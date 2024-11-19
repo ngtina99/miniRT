@@ -12,7 +12,7 @@
 
 #include "../../includes/minirt.h"
 
-int	convert_rgb_to_int(t__color_rgb color)
+int	convert_rgb_to_int(t_color_rgb color)
 {
 	int	color_code;
 
