@@ -139,6 +139,9 @@ typedef struct s_data
 	t_cylinder	*cylinders;// Dynamic array of cylinders
 	int			cylinder_count;// Number of cylinders
 	int			cylinder_capacity;
+	bool		camera_set;
+	bool		light_set;
+	bool		ambient_set;
 	t_graphic	*img;
 }	t_data;
 

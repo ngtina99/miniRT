@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 23:22:29 by yioffe            #+#    #+#             */
-/*   Updated: 2024/11/17 00:25:31 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/11/19 19:22:33 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ int	parse_camera(t_data *scene, char *line)
 	parse_vector(&line, &camera.orientation);
 	camera.fov = (int)parse_float(&line);
 	scene->camera = camera;
+	scene->camera_set = true;
 	return (EXIT_SUCCESS);
 }
 
@@ -83,5 +84,6 @@ int	parse_light(t_data *scene, char *line)
 	light.brightness = parse_float(&line);
 	parse_rgb(&line, &light.color);
 	scene->light = light;
+	scene->light_set = true;
 	return (EXIT_SUCCESS);
 }

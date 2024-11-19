@@ -58,6 +58,9 @@ void	initialize_scene(t_data *scene)
 	scene->cylinders = NULL;
 	scene->cylinder_count = 0;
 	scene->cylinder_capacity = 0;
+	scene->ambient_set = false;
+	scene->camera_set = false;
+	scene->light_set = false;
 }
 
 int	parse_ambient(t_data *scene, char *line)
@@ -68,6 +71,7 @@ int	parse_ambient(t_data *scene, char *line)
 	ambient.ratio = parse_float(&line);
 	parse_rgb(&line, &ambient.color);
 	scene->ambient = ambient;
+	scene->ambient_set = true;
 	return (EXIT_SUCCESS);
 }
 
@@ -103,5 +107,7 @@ int	parse_scene(t_data *scene, int fd)
 		//	free_scene(scene);
 		//	return (EXIT_FAILURE);
 	}
+	if (!scene->ambient_set || !scene->camera_set || !scene->light_set)
+		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }
