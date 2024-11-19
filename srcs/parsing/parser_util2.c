@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 23:25:14 by yioffe            #+#    #+#             */
-/*   Updated: 2024/11/16 23:32:44 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/11/19 20:26:19 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,30 +69,61 @@ float	parse_float(char **line)
 
 int	parse_vector(char **line, t_vec3d *vector)
 {
+	// Parse X component
 	vector->x = parse_float(line);
+	while (**line == ' ' || **line == '\t') // Skip spaces or tabs
+		(*line)++;
 	if (**line == ',')
 		(*line)++;
+	else
+		return (EXIT_FAILURE); // Expecting a comma
+
+	// Parse Y component
 	vector->y = parse_float(line);
+	while (**line == ' ' || **line == '\t') // Skip spaces or tabs
+		(*line)++;
 	if (**line == ',')
 		(*line)++;
+	else
+		return (EXIT_FAILURE); // Expecting a comma
+
+	// Parse Z component
 	vector->z = parse_float(line);
+	while (**line == ' ' || **line == '\t') // Skip spaces or tabs
+		(*line)++;
+	if (**line != '\0' && **line != ' ' && **line != '\t') // Must end properly
+		return (EXIT_FAILURE);
+
 	return (EXIT_SUCCESS);
 }
 
 int	parse_rgb(char **line, t__color_rgb *color)
 {
+	// Parse red component
 	color->red = ft_atoi(*line);
-	while (**line != ',' && **line != '\0')
+	while (**line >= '0' && **line <= '9') // Skip digits
 		(*line)++;
+	if (**line != ',' && **line != '\0')
+		return (EXIT_FAILURE);
 	if (**line == ',')
-		(*line)++;
+		(*line)++; // Move past the comma
+
+	// Parse green component
 	color->green = ft_atoi(*line);
-	while (**line != ',' && **line != '\0')
+	while (**line >= '0' && **line <= '9') // Skip digits
 		(*line)++;
+	if (**line != ',' && **line != '\0')
+		return (EXIT_FAILURE);
 	if (**line == ',')
-		(*line)++;
+		(*line)++; // Move past the comma
+
+	// Parse blue component
 	color->blue = ft_atoi(*line);
-	while (**line != ' ' && **line != '\0')
+	while (**line >= '0' && **line <= '9') // Skip digits
 		(*line)++;
+	if (**line != ' ' && **line != '\0')
+		return (EXIT_FAILURE);
+
 	return (EXIT_SUCCESS);
 }
+

@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 23:22:29 by yioffe            #+#    #+#             */
-/*   Updated: 2024/11/19 19:22:33 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/11/19 20:25:11 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,15 @@ int	parse_sphere(t_data *scene, char *line)
 	t_add_form_params	params;
 
 	line += 2;
-	parse_vector(&line, &sphere.center);
+	if (parse_vector(&line, &sphere.center) == EXIT_FAILURE)
+		return (EXIT_FAILURE);
 	sphere.diameter = parse_float(&line);
-	parse_rgb(&line, &sphere.color);
+	if (*line != '\0' && *line != ' ' && *line != '\t')
+		return (EXIT_FAILURE);
+	if (parse_rgb(&line, &sphere.color) == EXIT_FAILURE)
+		return (EXIT_FAILURE);
+	if (*line != '\0')
+		return (EXIT_FAILURE);
 	params.array = (void **)&scene->spheres;
 	params.count = &scene->sphere_count;
 	params.capacity = &scene->sphere_capacity;
@@ -34,9 +40,14 @@ int	parse_plane(t_data *scene, char *line)
 	t_add_form_params	params;
 
 	line += 2;
-	parse_vector(&line, &plane.point);
-	parse_vector(&line, &plane.normal);
-	parse_rgb(&line, &plane.color);
+	if (parse_vector(&line, &plane.point) == EXIT_FAILURE)
+		return (EXIT_FAILURE);
+	if (parse_vector(&line, &plane.normal) == EXIT_FAILURE)
+		return (EXIT_FAILURE);
+	if (parse_rgb(&line, &plane.color) == EXIT_FAILURE)
+		return (EXIT_FAILURE);
+	if (*line != '\0')
+		return (EXIT_FAILURE);
 	params.array = (void **)&scene->planes;
 	params.count = &scene->plane_count;
 	params.capacity = &scene->plane_capacity;
@@ -50,11 +61,22 @@ int	parse_cylinder(t_data *scene, char *line)
 	t_add_form_params	params;
 
 	line += 2;
-	parse_vector(&line, &cylinder.center);
-	parse_vector(&line, &cylinder.axis);
+	if (parse_vector(&line, &cylinder.center) == EXIT_FAILURE)
+		return (EXIT_FAILURE);
+	if (parse_vector(&line, &cylinder.axis) == EXIT_FAILURE)
+		return (EXIT_FAILURE);
+	if (*line != ' ' && *line != '\t' && !ft_isdigit(*line))
+		return (EXIT_FAILURE);
 	cylinder.diameter = parse_float(&line);
+	if (*line != ' ' && *line != '\t' && !ft_isdigit(*line))
+		return (EXIT_FAILURE);
 	cylinder.height = parse_float(&line);
-	parse_rgb(&line, &cylinder.color);
+	if (*line != ' ' && *line != '\t' && !ft_isdigit(*line))
+		return (EXIT_FAILURE);
+	if (parse_rgb(&line, &cylinder.color) == EXIT_FAILURE)
+		return (EXIT_FAILURE);
+	if (*line != '\0')
+		return (EXIT_FAILURE);
 	params.array = (void **)&scene->cylinders;
 	params.count = &scene->cylinder_count;
 	params.capacity = &scene->cylinder_capacity;
@@ -67,14 +89,21 @@ int	parse_camera(t_data *scene, char *line)
 	t_camera	camera;
 
 	line++;
-	parse_vector(&line, &camera.position);
-	parse_vector(&line, &camera.orientation);
+	if (parse_vector(&line, &camera.position) == EXIT_FAILURE)
+		return (EXIT_FAILURE);
+	if (parse_vector(&line, &camera.orientation) == EXIT_FAILURE)
+		return (EXIT_FAILURE);
+	if (*line != ' ' && *line != '\t')
+		return (EXIT_FAILURE);
 	camera.fov = (int)parse_float(&line);
+	if (*line != '\0')
+		return (EXIT_FAILURE);
 	scene->camera = camera;
 	scene->camera_set = true;
 	return (EXIT_SUCCESS);
 }
 
+//TODO add checks
 int	parse_light(t_data *scene, char *line)
 {
 	t_light	light;
