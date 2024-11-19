@@ -28,8 +28,14 @@ int	main(int argc, char **argv)
 		error_message(fd, MALLOC_ERR);
 	initialize_scene(scene);
 	if (parse_scene(scene, fd) == EXIT_FAILURE)
-		error_message(fd, PARSE_ERR);
+	{
+		close(fd);
+		free_scene(&scene);
+		ft_putstr_fd("Not valid .rt", STDERR_FILENO);
+		return (EXIT_FAILURE);
+	}
 	close(fd);
 	init_mlx(scene);
 	free_scene(&scene);
+	return (EXIT_SUCCESS);
 }
