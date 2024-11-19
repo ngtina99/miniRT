@@ -75,6 +75,7 @@ int	parse_ambient(t_data *scene, char *line)
 	return (EXIT_SUCCESS);
 }
 
+// TODO: skip only empty lines 
 int	parse_scene(t_data *scene, int fd)
 {
 	char	*line;
@@ -85,29 +86,49 @@ int	parse_scene(t_data *scene, int fd)
 	while (line != NULL)
 	{
 		ptr = line;
-		while (*ptr == ' ' || *ptr == '\n')
+		while (*ptr == ' ' || *ptr == '\n' || *ptr == '\t')
 			ptr++;
 		// TODO: verify uniqueness
 		if (ft_strncmp(ptr, "A", 1) == 0)
+		{
 			curr_result = parse_ambient(scene, ptr);
+			printf("here A, res: %i\n", curr_result);
+		}
 		else if (ft_strncmp(ptr, "C", 1) == 0)
+		{
 			curr_result = parse_camera(scene, ptr);
+			printf("here C, res: %i\n", curr_result);
+		}
 		else if (ft_strncmp(ptr, "L", 1) == 0)
+		{
 			curr_result = parse_light(scene, ptr);
+			printf("here L, res: %i\n", curr_result);
+		}
 		else if (ft_strncmp(ptr, "sp", 2) == 0)
+		{
 			curr_result = parse_sphere(scene, ptr);
+			printf("here S, res: %i\n", curr_result);
+		}
 		else if (ft_strncmp(ptr, "pl", 2) == 0)
 			curr_result = parse_plane(scene, ptr);
 		else if (ft_strncmp(ptr, "cy", 2) == 0)
 			curr_result = parse_cylinder(scene, ptr);
 		free(line);
 		line = get_next_line(fd);
+		if (curr_result == EXIT_FAILURE)
+		{
+			printf("failed parsing");
+			return (EXIT_FAILURE);
+		}
 		// if (curr_result == EXIT_FAILURE)
 		// TODO: clean all and stop
 		//	free_scene(scene);
 		//	return (EXIT_FAILURE);
 	}
 	if (!scene->ambient_set || !scene->camera_set || !scene->light_set)
+	{
+		printf("no mandatory params");
 		return (EXIT_FAILURE);
+	}
 	return (EXIT_SUCCESS);
 }

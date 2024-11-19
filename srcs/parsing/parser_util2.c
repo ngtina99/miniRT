@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 23:25:14 by yioffe            #+#    #+#             */
-/*   Updated: 2024/11/19 20:26:19 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/11/19 21:50:47 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ float	parse_float(char **line)
 	skip_whitespace(line);
 	sign = parse_sign(line);
 	parse_number(line, &result, &fraction, &is_fractional);
-	skip_invalid_chars(line);
+	//skip_invalid_chars(line);
 	skip_whitespace(line);
 	return (result * sign);
 }
@@ -76,7 +76,9 @@ int	parse_vector(char **line, t_vec3d *vector)
 	if (**line == ',')
 		(*line)++;
 	else
+	{
 		return (EXIT_FAILURE); // Expecting a comma
+	}
 
 	// Parse Y component
 	vector->y = parse_float(line);
@@ -91,9 +93,6 @@ int	parse_vector(char **line, t_vec3d *vector)
 	vector->z = parse_float(line);
 	while (**line == ' ' || **line == '\t') // Skip spaces or tabs
 		(*line)++;
-	if (**line != '\0' && **line != ' ' && **line != '\t') // Must end properly
-		return (EXIT_FAILURE);
-
 	return (EXIT_SUCCESS);
 }
 
