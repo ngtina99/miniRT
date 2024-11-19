@@ -75,3 +75,7 @@ Error: input not an existing .rt file
 ==3585== For lists of detected and suppressed errors, rerun with: -s
 ==3585== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 ***********
+**********************
+ngtina1999@ngtina1999:/mnt/c/Users/ngtin/miniRT$ ./miniRT ./scenes/good_example3.rt
+Error: input is not an existing .rt                     file path or the file can't be opened
+*********************
