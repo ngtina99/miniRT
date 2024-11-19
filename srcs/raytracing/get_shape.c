@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_shape.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 17:28:19 by thuy-ngu          #+#    #+#             */
-/*   Updated: 2024/11/19 15:56:29 by marvin           ###   ########.fr       */
+/*   Updated: 2024/11/19 16:13:46 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,20 +31,19 @@ bool	ray_plane_intersection(t_plane plane, t_vec3d ray_origin,
 		t_vec3d ray_direction, t_vec3d *hit_point)
 {
 	float	parallel_factor;
-	t_vec3d	po;
-	float	t;
+	t_vec3d	plane_to_origin;
+	float	intersection_distance;
 
-	// po is from plane to origin
-	// TODO: let's rename it to be clear from the name with no comments
-	// TODO: also consider renaming t variable
 	parallel_factor = dot_product(ray_direction, plane.normal);
 	if (fabs(parallel_factor) > 1e-6)
 	{
-		po = subtract_vector(plane.point, ray_origin);
-		t = dot_product(po, plane.normal) / parallel_factor;
-		if (t >= 0)
+		plane_to_origin = subtract_vector(plane.point, ray_origin);
+		intersection_distance = dot_product(plane_to_origin, plane.normal)
+			/ parallel_factor;
+		if (intersection_distance >= 0)
 		{
-			*hit_point = add_vector(ray_origin, (scale_vector(ray_direction, t)));
+			*hit_point = add_vector(ray_origin, (scale_vector(ray_direction,
+							intersection_distance)));
 			return (true);
 		}
 	}

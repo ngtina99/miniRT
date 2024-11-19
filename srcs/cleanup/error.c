@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/19 16:10:00 by marvin            #+#    #+#             */
-/*   Updated: 2024/11/19 16:10:00 by marvin           ###   ########.fr       */
+/*   Created: 2024/11/19 16:30:04 by yioffe            #+#    #+#             */
+/*   Updated: 2024/11/19 16:30:04 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ void	error_message(int fd, int err_sign)
 {
 	if (err_sign == ARG_ERR)
 	{
-		printf(RED "Error: Please put a valid .rt file path as an argument\n" RESET);
+		printf(RED "Error: Please put a valid .rt file path as an argument\n" \
+			RESET);
 		exit (1);
 	}
 	if (err_sign == MALLOC_ERR)

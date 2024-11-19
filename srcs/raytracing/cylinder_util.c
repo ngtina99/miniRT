@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cylinder_util.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/10 20:23:35 by yioffe            #+#    #+#             */
-/*   Updated: 2024/11/19 15:59:26 by marvin           ###   ########.fr       */
+/*   Updated: 2024/11/19 16:35:57 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ t_vec3d	cylinder_normal(t_cylinder cylinder, t_vec3d hit_point)
 	t_vec3d		oc;
 	float		projection;
 	t_vec3d		closest_point;
-	t_vec3d		normal;
 
 	norm.axis = normalize(cylinder.axis);
 	norm.base_center = subtract_vector(cylinder.center, scale_vector(norm.axis,
@@ -37,8 +36,7 @@ t_vec3d	cylinder_normal(t_cylinder cylinder, t_vec3d hit_point)
 		projection = dot_product(oc, norm.axis);
 		closest_point = add_vector(cylinder.center, scale_vector(norm.axis,
 					projection));
-		normal = subtract_vector(hit_point, closest_point);
-		return (normalize(normal));
+		return (normalize(subtract_vector(hit_point, closest_point)));
 	}
 }
 

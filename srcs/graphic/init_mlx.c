@@ -16,7 +16,6 @@ int	close_window(t_graphic *img)
 {
 	mlx_destroy_image(img->mlx_ptr, img->img);
 	mlx_destroy_window(img->mlx_ptr, img->win_ptr);
-	// TODO: remove before submission
 	if (!IS_APPLE)
 		mlx_destroy_display(img->mlx_ptr);
 	free(img->mlx_ptr);
