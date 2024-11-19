@@ -5,7 +5,7 @@ FILES		= main parsing/init_file parsing/parser parsing/parser_objects parsing/pa
 			  raytracing/init_scene raytracing/ray_trace raytracing/vector_operations raytracing/vector_calculations raytracing/get_shape \
 			  raytracing/find_closest raytracing/cylinder_shape raytracing/cylinder_util raytracing/shading \
 			  raytracing/setup_camera graphic/init_mlx graphic/render_img \
-			  cleanup/cleanup 
+			  cleanup/cleanup cleanup/error
 
 CC			= cc 
 RM			= rm -f

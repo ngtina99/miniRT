@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   setup_camera.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 17:28:19 by thuy-ngu          #+#    #+#             */
-/*   Updated: 2024/11/17 10:33:28 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/11/19 15:52:06 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,12 @@ t_vec3d	setup_camera(t_data *data, int x, int y)
 	t_vec3d		result_dir;
 	t_setup_cam	cam;
 
-	// Camera forward vector and its normalization
 	cam.forward = normalize(data->camera.orientation);
-	// Calculate the right and up vectors for the camera's orientation
 	cam.world_up = (t_vec3d){0.0f, 1.0f, 0.0f};
 	cam.right = normalize(cross_product(cam.forward, cam.world_up));
 	cam.up = normalize(cross_product(cam.right, cam.forward));
-	// Field of view and aspect ratio scaling
 	cam.aspect_ratio = (float)WIDTH / HEIGHT;
 	cam.scale = tan(data->camera.fov * 0.5 * M_PI / 180.0f);
-    // Calculate the ray direction for each pixel
 	cam.px = (2.0f * x / WIDTH - 1.0f) * cam.aspect_ratio * cam.scale;
 	cam.py = (1.0f - 2.0f * y / HEIGHT) * cam.scale;
 	result_dir.x = cam.forward.x + cam.px * cam.right.x + cam.py * cam.up.x;

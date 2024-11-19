@@ -2,7 +2,7 @@
 1. check in libft and miniRT makfile CFLAGS (I comment out on my own PC, because it is not compatible)
 2. make sure to submit ALL libraries including minilibx
 
-5. I don't understand why the 0.0f set up to {0.0f, 0.0f, -1.0f}; - to discuss in person
+3. I don't understand why the 0.0f set up to {0.0f, 0.0f, -1.0f}; - to discuss in person
 Yulia: this was to make it return something if it's (0,0,0) vector (which is not really a vector), not to devide by 0 in the next steps.
 I chose this value as "default view", as if user is standing and looking right at the screen (-z axis)
 
@@ -19,20 +19,7 @@ t_vec3d	normalize(t_vec3d v)
 	return (v);
 }
 
-6. DISCUSSED
-    // Calculate the right and up vectors for the camera's orientation
-	t_vec3d world_up = {0.0f, 1.0f, 0.0f};
-	t_vec3d right = normalize(cross_product(forward, world_up));
-	t_vec3d up = normalize(cross_product(right, forward));
-
-Yulia: world_up - this is our Y axis (not relative, just one on the screen), we need that as a reference, to not loose screen orientation :) 
-right, up, forward - this is like camera coordinate system. based on it's orientation, we calculate it's own X, Y and Z.
-right = X_for_camera
-up = Y_for_camera
-forward = Z_for_camera
-we need that to build real view from camera point.
-
-7. 	t_vec3d closest_hit_point; // TODO is it needed later?
+4. 	t_vec3d closest_hit_point; // TODO is it needed later?
 we are using it in find_closest_object to write value that we got. I think we will need later, if not - can remove. 
 
 TODO:
@@ -50,14 +37,17 @@ is misconfigured or if the filename doesn't end with the `.rt` extension.
 	I can explain more in person
 10. add all flags to makefile -Wall -Werror -Wextra + maybe O3 flag?
 11. check EPSILON values (and some places in code with small values). Try different to have better picture (Yulia)
-12. try empty .rt with valgrind to make sure
+12. try empty .rt with valgrind to make 
+***NEW*** -  19 Nov
+13. norminette line too long fix you have to do enter and use \ this sign before the enter for norminette to accept when you split a too long line
+14. check the cleanup/error.c (main.c and open.rt error messages) (STDERR?)
+***new branch name: commented_miniRT - Tina
+
 
 NORMINETTE LEFT (except comments):
 1. init_file (too long lines, but maybe we can printout to STD_ERR instead. also text itself can go to .h file)
 2. find_closest.C (to do together)
 3. ray_trace.C (to do together)
-4. main.c (Tina?)
-
 
 **********
 SOLVED JUST TO CHECK THIS TYPE OF MISTAKES

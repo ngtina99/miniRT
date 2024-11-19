@@ -28,7 +28,6 @@ bool	is_in_shadow(t_data *data, t_vec3d hit_point, t_vec3d light_dir)
 {
 	t_object_hit	shadow_hit;
 
-	//  is used to reduce floating point errors. We can decide later if we need it, can remove
 	return (find_closest_object(data, hit_point, light_dir, &shadow_hit)
 		&& (calculate_distance(hit_point, shadow_hit.hit_point) + 0.001f)
 		< calculate_distance(hit_point, data->light.position));

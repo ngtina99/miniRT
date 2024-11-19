@@ -104,6 +104,13 @@ enum e_object_type
 	CYLINDER,
 };
 
+enum e_error_type
+{
+	ARG_ERR,
+	MALLOC_ERR,
+	PARSE_ERR,
+};
+
 typedef struct s_data	t_data;
 
 typedef struct s_graphic
@@ -256,6 +263,7 @@ int		parse_plane(t_data *scene, char *line);
 int		parse_cylinder(t_data *scene, char *line);
 int		parse_camera(t_data *scene, char *line);
 int		parse_light(t_data *scene, char *line);
+void	error_message(int fd, int err_sign);
 
 # ifdef __APPLE__
 

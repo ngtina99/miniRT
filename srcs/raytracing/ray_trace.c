@@ -12,13 +12,6 @@
 
 #include "../../includes/minirt.h"
 
-/*
-This function will check if there is an object between the hit point and the light 
-source.
-Calls find_closest_object with the light_dir to check if any objects intersect the path to the light.
-If an intersection is found, it checks if the hit point of this intersection is closer to the original hit 
-point than the light source, indicating the point is in shadow.
-*/
 t_light_info	calculate_object_lighting(t_data *data, t_light_info light, t_vec3d normal, t_object_hit closest_hit)
 {
 	float	ambient_intensity;
@@ -28,23 +21,17 @@ t_light_info	calculate_object_lighting(t_data *data, t_light_info light, t_vec3d
 	ambient_intensity = data->ambient.ratio;
 	diffuse_intensity = fmax(0.0f, dot_product(normal, light.light_dir)) * data->light.brightness;
 	offset_hit_point = add_vector(closest_hit.hit_point, scale_vector(normal, 0.001f));
-	// Combine ambient and diffuse components for the final intensity
-	//2 here we check if shadow should be applied or not
-	// if it's in the shadow, only ambient should be applied
 	if (is_in_shadow(data, offset_hit_point, light.light_dir))
-		light.light_intensity = ambient_intensity; // In shadow, apply only ambient lighting
+		light.light_intensity = ambient_intensity;
 	else
-		light.light_intensity = ambient_intensity + diffuse_intensity; // Not in shadow, apply both ambient and diffuse lighting
-	// Clamp the final intensity to [0, 1] to avoid over-brightening
+		light.light_intensity = ambient_intensity + diffuse_intensity;
 	light.light_intensity = fmin(light.light_intensity, 1.0f);
 	return (light);
 }
 
 void	calculate_object_color(t_data *data, t_object_hit closest_hit, t_light_info light)
 {
-	// calculating light intensity. are we allowed to use fmax()?
-	// adding darkening to base light
-	//calculate_object_color(data, closest_hit, x, y);
+	// TODO: calculating light intensity. are we allowed to use fmax()?
 	int	base_color;
 	int	color_code;
 
@@ -71,9 +58,8 @@ void	ray_trace(t_data *data, int x, int y)
 {
 	// TODO: maybe rename origin to camera_position?
 	// TODO: direction to ray_direction ? or maybe that one is clear
-	t_vec3d			origin; // Camera position
-	t_vec3d			direction; // Ray direction
-    // Find the closest intersection among all objects (spheres and planes)
+	t_vec3d			origin;
+	t_vec3d			direction;
 	t_object_hit	closest_hit;
 	t_vec3d			normal;
 	t_light_info	light;
@@ -91,7 +77,7 @@ void	ray_trace(t_data *data, int x, int y)
 		else if (closest_hit.object_type == CYLINDER)
 			normal = cylinder_normal(data->cylinders[closest_hit.object_index], closest_hit.hit_point);
 		light.light_dir = normalize(subtract_vector(data->light.position, closest_hit.hit_point));
-		light = calculate_object_lighting(data, light, normal, closest_hit); // get the light_intensity
+		light = calculate_object_lighting(data, light, normal, closest_hit);
 		calculate_object_color(data, closest_hit, light);
 	}
 	else
