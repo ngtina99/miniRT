@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 23:22:29 by yioffe            #+#    #+#             */
-/*   Updated: 2024/11/19 22:07:16 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/11/19 22:44:53 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,14 @@ int	parse_sphere(t_data *scene, char *line)
 	if (parse_vector(&line, &sphere.center) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	sphere.diameter = parse_float(&line);
-	if (*line != '\0' && *line != ' ' && *line != '\t')
+	if (!ft_isdigit(*line))
 	{
 		return (EXIT_FAILURE);
 	}
 	if (parse_rgb(&line, &sphere.color) == EXIT_FAILURE)
+	{
 		return (EXIT_FAILURE);
-	if (*line != '\0')
-		return (EXIT_FAILURE);
+	}
 	params.array = (void **)&scene->spheres;
 	params.count = &scene->sphere_count;
 	params.capacity = &scene->sphere_capacity;
@@ -47,8 +47,6 @@ int	parse_plane(t_data *scene, char *line)
 	if (parse_vector(&line, &plane.normal) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	if (parse_rgb(&line, &plane.color) == EXIT_FAILURE)
-		return (EXIT_FAILURE);
-	if (*line != '\0')
 		return (EXIT_FAILURE);
 	params.array = (void **)&scene->planes;
 	params.count = &scene->plane_count;
@@ -77,8 +75,6 @@ int	parse_cylinder(t_data *scene, char *line)
 		return (EXIT_FAILURE);
 	if (parse_rgb(&line, &cylinder.color) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
-	if (*line != '\0')
-		return (EXIT_FAILURE);
 	params.array = (void **)&scene->cylinders;
 	params.count = &scene->cylinder_count;
 	params.capacity = &scene->cylinder_capacity;
@@ -93,16 +89,20 @@ int	parse_camera(t_data *scene, char *line)
 	line++;
 	if (parse_vector(&line, &camera.position) == EXIT_FAILURE)
 	{
+		printf("cam\n");
 		return (EXIT_FAILURE);
 	}
 	if (parse_vector(&line, &camera.orientation) == EXIT_FAILURE)
-		return (EXIT_FAILURE);
-	camera.fov = (int)parse_float(&line);
-	if (*line != '\0')
 	{
-		printf("here");
+		printf("nonon\n");
 		return (EXIT_FAILURE);
 	}
+	camera.fov = (int)parse_float(&line);
+	// if (*line != '\0' && *line != '\n')
+	// {
+	// 	printf("line char: %c", line[0]);
+	// 	return (EXIT_FAILURE);
+	// }
 	scene->camera = camera;
 	scene->camera_set = true;
 	return (EXIT_SUCCESS);

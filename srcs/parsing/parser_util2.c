@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 23:25:14 by yioffe            #+#    #+#             */
-/*   Updated: 2024/11/19 21:50:47 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/11/19 22:43:03 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,27 +102,26 @@ int	parse_rgb(char **line, t__color_rgb *color)
 	color->red = ft_atoi(*line);
 	while (**line >= '0' && **line <= '9') // Skip digits
 		(*line)++;
-	if (**line != ',' && **line != '\0')
-		return (EXIT_FAILURE);
 	if (**line == ',')
-		(*line)++; // Move past the comma
+		(*line)++;
+	else
+		return (EXIT_FAILURE); 
+
+	// Move past the comma
 
 	// Parse green component
 	color->green = ft_atoi(*line);
 	while (**line >= '0' && **line <= '9') // Skip digits
 		(*line)++;
-	if (**line != ',' && **line != '\0')
+	if (**line != ',')
 		return (EXIT_FAILURE);
-	if (**line == ',')
+	else
 		(*line)++; // Move past the comma
 
 	// Parse blue component
 	color->blue = ft_atoi(*line);
 	while (**line >= '0' && **line <= '9') // Skip digits
 		(*line)++;
-	if (**line != ' ' && **line != '\0')
-		return (EXIT_FAILURE);
-
 	return (EXIT_SUCCESS);
 }
 

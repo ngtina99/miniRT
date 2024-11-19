@@ -110,9 +110,15 @@ int	parse_scene(t_data *scene, int fd)
 			printf("here S, res: %i\n", curr_result);
 		}
 		else if (ft_strncmp(ptr, "pl", 2) == 0)
+		{
 			curr_result = parse_plane(scene, ptr);
+			printf("here pl, res: %i\n", curr_result);
+		}
 		else if (ft_strncmp(ptr, "cy", 2) == 0)
+		{
 			curr_result = parse_cylinder(scene, ptr);
+			printf("here cyl, res: %i\n", curr_result);
+		}
 		free(line);
 		line = get_next_line(fd);
 		if (curr_result == EXIT_FAILURE)
