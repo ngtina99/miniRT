@@ -63,23 +63,6 @@ void	initialize_scene(t_data *scene)
 	scene->light_set = false;
 }
 
-int	parse_ambient(t_data *scene, char *line)
-{
-	t_ambient	ambient;
-
-	if (!validator_ambient(line))
-	{
-		ft_putstr_fd("Error\nAmbient format is wrong\n", STDERR_FILENO);
-		return (EXIT_FAILURE);
-	}
-	line++;
-	ambient.ratio = parse_float(&line);
-	parse_rgb(&line, &ambient.color);
-	scene->ambient = ambient;
-	scene->ambient_set = true;
-	return (EXIT_SUCCESS);
-}
-
 int	parse_scene(t_data *scene, int fd)
 {
 	char	*line;
