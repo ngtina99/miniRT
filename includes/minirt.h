@@ -23,6 +23,7 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
+# include <float.h>
 
 # ifdef __APPLE__
 #  include "../libs/minilibx-mac/mlx.h"
@@ -270,6 +271,7 @@ void	error_message(int fd, int err_sign);
 bool	validator_rgb_end(char *line);
 bool	validator_ratio_inline(char **line);
 bool	validator_ambient(char *line);
+bool	validator_camera(char *line);
 
 
 # ifdef __APPLE__

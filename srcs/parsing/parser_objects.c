@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 23:22:29 by yioffe            #+#    #+#             */
-/*   Updated: 2024/11/19 19:22:33 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/11/20 11:25:57 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,11 @@ int	parse_camera(t_data *scene, char *line)
 {
 	t_camera	camera;
 
+	if (!validator_camera(line))
+	{
+		ft_putstr_fd("Wrong camera params\n", STDERR_FILENO);
+		return (EXIT_FAILURE);
+	}
 	line++;
 	parse_vector(&line, &camera.position);
 	parse_vector(&line, &camera.orientation);
