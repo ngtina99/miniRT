@@ -67,6 +67,11 @@ int	parse_ambient(t_data *scene, char *line)
 {
 	t_ambient	ambient;
 
+	if (!validator_ambient(line))
+	{
+		ft_putstr_fd("Error\nAmbient format is wrong\n", STDERR_FILENO);
+		return (EXIT_FAILURE);
+	}
 	line++;
 	ambient.ratio = parse_float(&line);
 	parse_rgb(&line, &ambient.color);
@@ -101,11 +106,9 @@ int	parse_scene(t_data *scene, int fd)
 		else if (ft_strncmp(ptr, "cy", 2) == 0)
 			curr_result = parse_cylinder(scene, ptr);
 		free(line);
+		if (curr_result == EXIT_FAILURE)
+			return (EXIT_FAILURE);
 		line = get_next_line(fd);
-		// if (curr_result == EXIT_FAILURE)
-		// TODO: clean all and stop
-		//	free_scene(scene);
-		//	return (EXIT_FAILURE);
 	}
 	if (!scene->ambient_set || !scene->camera_set || !scene->light_set)
 		return (EXIT_FAILURE);
