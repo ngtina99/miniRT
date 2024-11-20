@@ -92,11 +92,11 @@ typedef struct s_plane
 	t__color_rgb	color;
 }	t_plane;
 
-typedef struct s_count
-{
-	int	a;
-	int	c;
-	int	l;
-}	t_count;
+// typedef struct s_count
+// {
+// 	int	a;
+// 	int	c;
+// 	int	l;
+// }	t_count;
 
 #endif
