@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 09:25:33 by yioffe            #+#    #+#             */
-/*   Updated: 2024/11/20 10:41:53 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/11/20 11:43:14 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,10 @@ bool	validator_rgb_end(char *line)
 	return (count == 3);
 }
 
-bool	validator_ratio_inline(char **line)
+
+bool	validator_float_with_range_inline(char **line, float min, float max)
 {
-	float	ratio;
+	float	result;
 	int		point_count;
 	char	*start;
 
@@ -78,9 +79,102 @@ bool	validator_ratio_inline(char **line)
 	}
 	if (*line == start)
 		return (false);
-	ratio = parse_float(&start);
-	if (ratio < 0.0 || ratio > 1.0)
+	result = parse_float(&start);
+	if (result < min || result > max)
 		return (false);
+
+	if (!is_valid_separator(**line) && **line != ',' && **line != '\0')
+	{
+		printf("Unexpected character after number: '%c'\n", **line);
+		return (false);
+	}
+	return (true);
+}
+
+bool	validator_ratio_inline(char **line)
+{
+	return (validator_float_with_range_inline(line, 0.0, 1.0));
+}
+
+bool	validator_float_inline(char **line)
+{
+	return (validator_float_with_range_inline(line, -FLT_MAX, FLT_MAX));
+}
+
+bool	validator_vector3d(char **line)
+{
+	if (!validator_float_inline(line))
+		return (false);
+	if (**line != ',')
+	{
+		printf("Expected ',' after x coordinate\n");
+		return (false);
+	}
+	(*line)++;
+	if (!validator_float_inline(line))
+		return (false);
+	if (**line != ',')
+	{
+		printf("Expected ',' after y coordinate\n");
+		return (false);
+	}
+	(*line)++;
+	if (!validator_float_inline(line))
+		return (false);
+	return (true);
+}
+
+bool	validator_vector3d_with_range(char **line, float min, float max)
+{
+	if (!validator_float_with_range_inline(line, min, max))
+	{
+		printf("X coordinate of vector is out of range [%f, %f]\n", min, max);
+		return (false);
+	}
+	if (**line != ',')
+	{
+		printf("Expected ',' after x coordinate in vector\n");
+		return (false);
+	}
+	(*line)++;
+	if (!validator_float_with_range_inline(line, min, max))
+	{
+		printf("Y coordinate of vector is out of range [%f, %f]\n", min, max);
+		return (false);
+	}
+	if (**line != ',')
+	{
+		printf("Expected ',' after y coordinate in vector\n");
+		return (false);
+	}
+	(*line)++;
+	if (!validator_float_with_range_inline(line, min, max))
+	{
+		printf("Z coordinate of vector is out of range [%f, %f]\n", min, max);
+		return (false);
+	}
+	return (true);
+}
+
+
+
+bool	validator_fov(char **line)
+{
+	if (!validator_float_with_range_inline(line, 0.0, 180.0))
+	{
+		printf("FOV is not valid or out of range.\n");
+		return (false);
+	}
+	while (ft_isdigit(**line) || **line == '.')
+		(*line)++;
+	while (is_valid_separator(**line))
+		(*line)++;
+	if (**line != '\0')
+	{
+		printf("Unexpected characters at the end of FOV: '%s'\n", *line);
+		return (false);
+	}
+
 	return (true);
 }
 
@@ -101,6 +195,36 @@ bool	validator_ambient(char *line)
 		line++;
 	return (validator_rgb_end(line));
 }
+
+bool	validator_camera(char *line)
+{
+	while (is_valid_separator(*line))
+		line++;
+	if (*line != 'C')
+		return (false);
+	line++;
+	while (is_valid_separator(*line))
+		line++;
+	if (!validator_vector3d_with_range(&line, -(WIDTH + HEIGHT) * 2, (WIDTH + HEIGHT) * 2))
+    	return (false);
+	while (is_valid_separator(*line))
+		line++;
+	if (!validator_vector3d_with_range(&line, -1.0, 1.0))
+		return (false);
+	while (is_valid_separator(*line))
+		line++;
+	if (!validator_fov(&line))
+		return (false);
+	while (is_valid_separator(*line))
+		line++;
+	if (*line != '\0')
+	{
+		printf("Unexpected characters at the end of line: '%s'\n", line);
+		return (false);
+	}
+	return (true);
+}
+
 
 
 
