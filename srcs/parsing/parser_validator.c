@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_validator.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 09:25:33 by yioffe            #+#    #+#             */
-/*   Updated: 2024/11/20 14:54:02 by marvin           ###   ########.fr       */
+/*   Updated: 2024/11/20 15:24:08 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,13 +58,13 @@ bool	validator_float_with_range_inline(char **line, float min, float max)
 {
 	float	result;
 	int		point_count;
-	int		is_negative; // Track if the number is negative
+	int		is_negative;
 	char	*start;
 
 	while (is_valid_separator(**line))
 		(*line)++;
 	is_negative = 0;
-	if (**line == '+' || **line == '-') //only new thing
+	if (**line == '+' || **line == '-')
 	{
 		if (**line == '-')
 			is_negative = 1;
@@ -79,12 +79,12 @@ bool	validator_float_with_range_inline(char **line, float min, float max)
 		if (**line == '.')
 		{
 			point_count++;
-			if (point_count > 1) // Multiple dots are invalid
+			if (point_count > 1)
 				return (false);
 		}
 		(*line)++;
 	}
-	if (*line == start) // Check if no valid number was found
+	if (*line == start)
 		return (false);
 	result = parse_float(&start);
 	if (is_negative)
@@ -99,46 +99,6 @@ bool	validator_float_with_range_inline(char **line, float min, float max)
 	return (true);
 }
 
-// bool	validator_float_with_range_inline(char **line, float min, float max)
-// {
-// 	float	result;
-// 	int		point_count;
-// 	char	*start;
-
-// 	while (is_valid_separator(**line))
-// 		(*line)++;
-// 	// if (**line == '+' || **line == '-') we have to use it if is the first camera vectors
-//     //     (*line)++;
-// 	start = *line;
-// 	if (!ft_isdigit(**line))
-// 		return (false);
-// 	point_count = 0;
-// 	while (ft_isdigit(**line) || **line == '.')
-// 	{
-// 		if (**line == '.')
-// 		{
-// 			point_count++;
-// 			if (point_count > 1)
-// 				return (false);
-// 		}
-// 		(*line)++;
-// 	}
-// 	if (*line == start)
-// 		return (false);
-// 	result = parse_float(&start);
-// 	if (result < min || result > max)
-// 	{
-// 		return (false);
-// 	}
-
-// 	if (!is_valid_separator(**line) && **line != ',' && **line != '\0')
-// 	{
-// 		printf("Unexpected character after number: '%c'\n", **line);
-// 		return (false);
-// 	}
-// 	return (true);
-// }
-
 bool	validator_ratio_inline(char **line)
 {
 	return (validator_float_with_range_inline(line, 0.0, 1.0));
@@ -148,29 +108,6 @@ bool	validator_float_inline(char **line)
 {
 	return (validator_float_with_range_inline(line, -FLT_MAX, FLT_MAX));
 }
-
-// bool	validator_vector3d(char **line)
-// {
-// 	if (!validator_float_inline(line))
-// 		return (false);
-// 	if (**line != ',')
-// 	{
-// 		printf("Expected ',' after x coordinate\n");
-// 		return (false);
-// 	}
-// 	(*line)++;
-// 	if (!validator_float_inline(line))
-// 		return (false);
-// 	if (**line != ',')
-// 	{
-// 		printf("Expected ',' after y coordinate\n");
-// 		return (false);
-// 	}
-// 	(*line)++;
-// 	if (!validator_float_inline(line))
-// 		return (false);
-// 	return (true);
-// }
 
 bool	validator_vector3d_with_range(char **line, float min, float max)
 {
