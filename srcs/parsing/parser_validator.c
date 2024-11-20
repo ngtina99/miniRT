@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_validator.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
+/*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 09:25:33 by yioffe            #+#    #+#             */
-/*   Updated: 2024/11/20 16:08:09 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/11/20 19:34:31 by thuy-ngu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,20 +88,17 @@ bool	validator_float_with_range_inline(char **line, float min, float max)
 bool	validator_vector3d_with_range(char **line, float min, float max)
 {
 	if (!validator_float_with_range_inline(line, min, max))
-		return (printf("X coordinate of vector is out of range [%f, %f]\n", min,
-				max), false);
+		return (false);
 	if (**line != ',')
 		return (printf("Expected ',' after x coordinate in vector\n"), false);
 	(*line)++;
 	if (!validator_float_with_range_inline(line, min, max))
-		return (printf("Y coordinate of vector is out of range [%f, %f]\n", min,
-				max), false);
+		return (false);
 	if (**line != ',')
 		return (printf("Expected ',' after y coordinate in vector\n"), false);
 	(*line)++;
 	if (!validator_float_with_range_inline(line, min, max))
-		return (printf("Z coordinate of vector is out of range [%f, %f]\n", min,
-				max), false);
+		return (false);
 	if (!is_valid_separator(**line) && **line != '\0')
 		return (printf("Unexpected character after vector: '%c'\n", **line),
 			false);
