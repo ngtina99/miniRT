@@ -1,15 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser_objects.c                                   :+:      :+:    :+:   */
-/*                                                    +:+ +:+        
-	+:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+      
-	+#+        */
-/*                                                +#+#+#+#+#+  
-	+#+           */
-/*   Created: 2024/11/16 23:22:29 by yioffe            #+#    #+#             */
-/*   Updated: 2024/11/20 14:39:30 by marvin           ###   ########.fr       */
+/*   parser_validator_scene.c                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/20 15:50:53 by yioffe            #+#    #+#             */
+/*   Updated: 2024/11/20 16:10:13 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +26,7 @@ bool	validator_sphere(char *line)
 		return (false);
 	while (is_valid_separator(*line))
 		line++;
-	if (!validator_float_with_range_inline(&line, -(WIDTH + HEIGHT) * 5, (WIDTH
-				+ HEIGHT) * 5))
+	if (!validator_float_with_range_inline(&line, 0, (WIDTH + HEIGHT) * 5))
 		return (false);
 	while (is_valid_separator(*line))
 		line++;
@@ -55,13 +51,11 @@ bool	validator_cylinder(char *line)
 		return (false);
 	while (is_valid_separator(*line))
 		line++;
-	if (!validator_float_with_range_inline(&line, -(WIDTH + HEIGHT) * 5, (WIDTH
-				+ HEIGHT) * 5))
+	if (!validator_float_with_range_inline(&line, 0, (WIDTH + HEIGHT) * 5))
 		return (false);
 	while (is_valid_separator(*line))
 		line++;
-	if (!validator_float_with_range_inline(&line, -(WIDTH + HEIGHT) * 5, (WIDTH
-				+ HEIGHT) * 5))
+	if (!validator_float_with_range_inline(&line, 0, (WIDTH + HEIGHT) * 5))
 		return (false);
 	return (validator_rgb_end(line));
 }
