@@ -62,6 +62,16 @@
 "files.associations": {
 	"queue": "c",
 	"stack": "c",
-	"minirt.h": "c"
+	"minirt.h": "c",
+	"__bit_reference": "c",
+	"__node_handle": "c",
+	"bitset": "c",
+	"deque": "c",
+	"limits": "c",
+	"locale": "c",
+	"optional": "c",
+	"ratio": "c",
+	"tuple": "c",
+	"vector": "c"
 }
 }

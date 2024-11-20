@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 23:21:26 by yioffe            #+#    #+#             */
-/*   Updated: 2024/11/16 23:32:41 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/11/20 16:10:03 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,15 +42,13 @@ int	resize_array(void **array, int *capacity, int count, size_t form_size)
 	return (EXIT_SUCCESS);
 }
 
-void	skip_whitespace(char **line)
+bool	is_valid_separator(char c)
 {
-	while (**line == ' ')
-		(*line)++;
+	return ((c >= 9 && c <= 13) || c == ' ');
 }
 
-void	skip_invalid_chars(char **line)
+void	skip_whitespace(char **line)
 {
-	while (**line && **line != ' ' && !ft_isdigit(**line) && **line != ','
-		&& **line != '.')
+	while (is_valid_separator(**line))
 		(*line)++;
 }

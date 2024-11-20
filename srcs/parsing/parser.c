@@ -2,30 +2,15 @@
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+
-	+:+     */
-/*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+
-	+#+        */
-/*                                                +#+#+#+#+#+
-	+#+           */
-/*   Created: 2024/11/16 13:22:45 by yioffe            #+#    #+#             */
-/*   Updated: 2024/11/16 13:22:45 by yioffe           ###   ########.fr       */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/20 15:46:24 by yioffe            #+#    #+#             */
+/*   Updated: 2024/11/20 15:46:24 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minirt.h"
-
-/* // TODO: check uniqueness of capital letter params
-// TODO: check whitespaces handling
-// TODO: check invalid cases (now we return EXIT_SUCCESS a lot
-with no other cases).
-	add validations that all params are present
-// TODO: think about the case when lines are duplicate.
-Not sure if needs validation
-// TODO: mandatory/not mandatory parameters
-// TODO: change initial size variable and try with valgrind
-*/
-/* Function to add any form (cylinder, plane, sphere) to the array */
 
 int	add_form(t_add_form_params *params, void *new_form)
 {
@@ -63,6 +48,43 @@ void	initialize_scene(t_data *scene)
 	scene->light_set = false;
 }
 
+int	handle_global_element(t_data *scene, char *ptr)
+{
+	if (ft_strncmp(ptr, "A", 1) == 0)
+	{
+		if (scene->ambient_set)
+			return (ft_putstr_fd("Error\n Duplicates in .rt\n", STDERR_FILENO),
+				EXIT_FAILURE);
+		return (parse_ambient(scene, ptr));
+	}
+	if (ft_strncmp(ptr, "C", 1) == 0)
+	{
+		if (scene->camera_set)
+			return (ft_putstr_fd("Error\n Duplicates in .rt\n", STDERR_FILENO),
+				EXIT_FAILURE);
+		return (parse_camera(scene, ptr));
+	}
+	if (ft_strncmp(ptr, "L", 1) == 0)
+	{
+		if (scene->light_set)
+			return (ft_putstr_fd("Error\n Duplicates in .rt\n", STDERR_FILENO),
+				EXIT_FAILURE);
+		return (parse_light(scene, ptr));
+	}
+	return (EXIT_SUCCESS);
+}
+
+int	handle_object_element(t_data *scene, char *ptr)
+{
+	if (ft_strncmp(ptr, "sp", 2) == 0)
+		return (parse_sphere(scene, ptr));
+	if (ft_strncmp(ptr, "pl", 2) == 0)
+		return (parse_plane(scene, ptr));
+	if (ft_strncmp(ptr, "cy", 2) == 0)
+		return (parse_cylinder(scene, ptr));
+	return (EXIT_SUCCESS);
+}
+
 int	parse_scene(t_data *scene, int fd)
 {
 	char	*line;
@@ -75,38 +97,16 @@ int	parse_scene(t_data *scene, int fd)
 		ptr = line;
 		while (is_valid_separator(*ptr) || *ptr == '\n')
 			ptr++;
-		if (ft_strncmp(ptr, "A", 1) == 0)
+		if (handle_global_element(scene, ptr) == EXIT_FAILURE
+			|| handle_object_element(scene, ptr) == EXIT_FAILURE)
 		{
-			if (scene->ambient_set)
-				return (ft_putstr_fd("Error\n Duplicates in .rt\n", STDERR_FILENO), EXIT_FAILURE);
-			curr_result = parse_ambient(scene, ptr);
-		}
-		else if (ft_strncmp(ptr, "C", 1) == 0)
-		{
-			if (scene->camera_set)
-				return (ft_putstr_fd("Error\n Duplicates in .rt\n", STDERR_FILENO), EXIT_FAILURE);
-			curr_result = parse_camera(scene, ptr);
-		}
-		else if (ft_strncmp(ptr, "L", 1) == 0)
-		{
-			if (scene->light_set)
-				return (ft_putstr_fd("Error\n Duplicates in .rt\n", STDERR_FILENO), EXIT_FAILURE);
-			curr_result = parse_light(scene, ptr);
-		}
-		else if (ft_strncmp(ptr, "sp", 2) == 0)
-			curr_result = parse_sphere(scene, ptr);
-		else if (ft_strncmp(ptr, "pl", 2) == 0)
-			curr_result = parse_plane(scene, ptr);
-		else if (ft_strncmp(ptr, "cy", 2) == 0)
-			curr_result = parse_cylinder(scene, ptr);
-		free(line);
-		if (curr_result == EXIT_FAILURE)
+			free(line);
 			return (EXIT_FAILURE);
+		}
+		free(line);
 		line = get_next_line(fd);
 	}
 	if (!scene->ambient_set || !scene->camera_set || !scene->light_set)
 		return (EXIT_FAILURE);
-	// if (count.a != 1 || count.c != 1 || count.l != 1 )
-	// 	return (EXIT_FAILURE); // it is the same as yours just it is check if there are more of A C or L
 	return (EXIT_SUCCESS);
 }
