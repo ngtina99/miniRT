@@ -34,6 +34,8 @@ TODO:
 11. check EPSILON values (and some places in code with small values). Try different to have better picture (Yulia)
 12. try empty .rt with valgrind to make 
 15. check parser corner cases especially with valgrind https://42-cursus.gitbook.io/guide/rank-04/minirt/building-the-thing
+16. If any misconfiguration of any kind is encountered in the file the program must exit
+properly and return "Error\n" followed by an explicit error message of your choice.
 
 
 **********

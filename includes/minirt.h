@@ -267,6 +267,10 @@ int		parse_cylinder(t_data *scene, char *line);
 int		parse_camera(t_data *scene, char *line);
 int		parse_light(t_data *scene, char *line);
 void	error_message(int fd, int err_sign);
+bool	validator_rgb_end(char *line);
+bool	validator_ratio_inline(char **line);
+bool	validator_ambient(char *line);
+
 
 # ifdef __APPLE__
 
