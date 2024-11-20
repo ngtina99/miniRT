@@ -6,26 +6,16 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 09:25:33 by yioffe            #+#    #+#             */
-/*   Updated: 2024/11/20 15:24:08 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/11/20 16:01:15 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minirt.h"
 
-bool	is_valid_end(char c)
-{
-	return ((c >= 9 && c <= 13) || c == ' ' || c == '\0');
-}
-
-bool	is_valid_separator(char c)
-{
-	return ((c >= 9 && c <= 13) || c == ' ');
-}
-
 bool	validator_rgb_end(char *line)
 {
-	int		value;
-	int		count;
+	int	value;
+	int	count;
 
 	count = 0;
 	while (*line)
@@ -33,7 +23,7 @@ bool	validator_rgb_end(char *line)
 		while (is_valid_separator(*line))
 			line++;
 		if (*line == '\0')
-			break;
+			break ;
 		if (!ft_isdigit(*line))
 			return (false);
 		value = ft_atoi(line);
@@ -48,7 +38,7 @@ bool	validator_rgb_end(char *line)
 			if (count == 3)
 				return (false);
 		}
-		else if (!is_valid_end(*line))
+		else if (!is_valid_separator(*line) && *line != '\0')
 			return (false);
 	}
 	return (count == 3);
@@ -99,50 +89,26 @@ bool	validator_float_with_range_inline(char **line, float min, float max)
 	return (true);
 }
 
-bool	validator_ratio_inline(char **line)
-{
-	return (validator_float_with_range_inline(line, 0.0, 1.0));
-}
-
-bool	validator_float_inline(char **line)
-{
-	return (validator_float_with_range_inline(line, -FLT_MAX, FLT_MAX));
-}
-
 bool	validator_vector3d_with_range(char **line, float min, float max)
 {
 	if (!validator_float_with_range_inline(line, min, max))
-	{
-		printf("X coordinate of vector is out of range [%f, %f]\n", min, max);
-		return (false);
-	}
+		return (printf("X coordinate of vector is out of range [%f, %f]\n", min,
+				max), false);
 	if (**line != ',')
-	{
-		printf("Expected ',' after x coordinate in vector\n");
-		return (false);
-	}
+		return (printf("Expected ',' after x coordinate in vector\n"), false);
 	(*line)++;
 	if (!validator_float_with_range_inline(line, min, max))
-	{
-		printf("Y coordinate of vector is out of range [%f, %f]\n", min, max);
-		return (false);
-	}
+		return (printf("Y coordinate of vector is out of range [%f, %f]\n", min,
+				max), false);
 	if (**line != ',')
-	{
-		printf("Expected ',' after y coordinate in vector\n");
-		return (false);
-	}
+		return (printf("Expected ',' after y coordinate in vector\n"), false);
 	(*line)++;
 	if (!validator_float_with_range_inline(line, min, max))
-	{
-		printf("Z coordinate of vector is out of range [%f, %f]\n", min, max);
-		return (false);
-	}
+		return (printf("Z coordinate of vector is out of range [%f, %f]\n", min,
+				max), false);
 	if (!is_valid_separator(**line) && **line != '\0')
-	{
-		printf("Unexpected character after vector: '%c'\n", **line);
-		return (false);
-	}
+		return (printf("Unexpected character after vector: '%c'\n", **line),
+			false);
 	return (true);
 }
 
@@ -162,75 +128,5 @@ bool	validator_fov(char **line)
 		printf("Unexpected characters at the end of FOV: '%s'\n", *line);
 		return (false);
 	}
-
 	return (true);
 }
-
-bool	validator_ambient(char *line)
-{
-	while (is_valid_separator(*line))
-		line++;
-	if (*line != 'A')
-		return (false);
-	line++;
-	while (is_valid_separator(*line))
-		line++;
-	if (!validator_float_with_range_inline(&line, 0.0, 1.0))
-		return (false);
-	while (is_valid_separator(*line))
-		line++;
-	return (validator_rgb_end(line));
-}
-
-bool	validator_camera(char *line)
-{
-	while (is_valid_separator(*line))
-		line++;
-	if (*line != 'C')
-		return (false);
-	line++;
-	while (is_valid_separator(*line))
-		line++;
-	if (!validator_vector3d_with_range(&line, -(WIDTH + HEIGHT) * 2, (WIDTH + HEIGHT) * 2))
-		return (false);
-	while (is_valid_separator(*line))
-		line++;
-	if (!validator_vector3d_with_range(&line, -1.0, 1.0))
-		return (false);
-	while (is_valid_separator(*line))
-		line++;
-	if (!validator_fov(&line))
-		return (false);
-	while (is_valid_separator(*line))
-		line++;
-	if (*line != '\0')
-	{
-		printf("Unexpected characters at the end of line: '%s'\n", line);
-		return (false);
-	}
-	return (true);
-}
-
-bool	validator_light(char *line)
-{
-	while (is_valid_separator(*line))
-		line++;
-	if (*line != 'L')
-		return (false);
-	line++;
-	while (is_valid_separator(*line))
-		line++;
-	if (!validator_vector3d_with_range(&line, -(WIDTH + HEIGHT) * 2, (WIDTH + HEIGHT) * 2))
-    	return (false);
-	while (is_valid_separator(*line))
-		line++;
-	if (!validator_float_with_range_inline(&line, 0.0, 1.0))
-		return (false);
-	while (is_valid_separator(*line))
-		line++;
-	return (validator_rgb_end(line));
-}
-
-
-
-
