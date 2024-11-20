@@ -85,7 +85,11 @@ int	parse_scene(t_data *scene, int fd)
 	char	*line;
 	char	*ptr;
 	int		curr_result;
+	t_count	count;
 
+	count.a = 0;
+	count.l = 0;
+	count.c = 0;
 	line = get_next_line(fd);
 	while (line != NULL)
 	{
@@ -94,11 +98,20 @@ int	parse_scene(t_data *scene, int fd)
 			ptr++;
 		// TODO: verify uniqueness
 		if (ft_strncmp(ptr, "A", 1) == 0)
+		{
+			count.a += 1;
 			curr_result = parse_ambient(scene, ptr);
+		}
 		else if (ft_strncmp(ptr, "C", 1) == 0)
+		{
+			count.c += 1;
 			curr_result = parse_camera(scene, ptr);
+		}
 		else if (ft_strncmp(ptr, "L", 1) == 0)
+		{
+			count.l += 1;
 			curr_result = parse_light(scene, ptr);
+		}
 		else if (ft_strncmp(ptr, "sp", 2) == 0)
 			curr_result = parse_sphere(scene, ptr);
 		else if (ft_strncmp(ptr, "pl", 2) == 0)
@@ -110,7 +123,9 @@ int	parse_scene(t_data *scene, int fd)
 			return (EXIT_FAILURE);
 		line = get_next_line(fd);
 	}
-	if (!scene->ambient_set || !scene->camera_set || !scene->light_set)
-		return (EXIT_FAILURE);
+	// if (!scene->ambient_set || !scene->camera_set || !scene->light_set)
+	// 	return (EXIT_FAILURE);
+	if (count.a != 1 || count.c != 1 || count.l != 1 )
+		return (EXIT_FAILURE); // it is the same as yours just it is check if there are more of A C or L
 	return (EXIT_SUCCESS);
 }
