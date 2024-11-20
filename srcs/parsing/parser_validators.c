@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 09:25:33 by yioffe            #+#    #+#             */
-/*   Updated: 2024/11/20 11:22:14 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/11/20 11:43:14 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,13 +124,11 @@ bool	validator_vector3d(char **line)
 	return (true);
 }
 
-bool	validator_vector3d_normalized(char **line)
+bool	validator_vector3d_with_range(char **line, float min, float max)
 {
-	float	x, y, z;
-
-	if (!validator_float_with_range_inline(line, -1.0, 1.0))
+	if (!validator_float_with_range_inline(line, min, max))
 	{
-		printf("X coordinate of vector is out of range [-1.0, 1.0]\n");
+		printf("X coordinate of vector is out of range [%f, %f]\n", min, max);
 		return (false);
 	}
 	if (**line != ',')
@@ -139,9 +137,9 @@ bool	validator_vector3d_normalized(char **line)
 		return (false);
 	}
 	(*line)++;
-	if (!validator_float_with_range_inline(line, -1.0, 1.0))
+	if (!validator_float_with_range_inline(line, min, max))
 	{
-		printf("Y coordinate of vector is out of range [-1.0, 1.0]\n");
+		printf("Y coordinate of vector is out of range [%f, %f]\n", min, max);
 		return (false);
 	}
 	if (**line != ',')
@@ -150,13 +148,14 @@ bool	validator_vector3d_normalized(char **line)
 		return (false);
 	}
 	(*line)++;
-	if (!validator_float_with_range_inline(line, -1.0, 1.0))
+	if (!validator_float_with_range_inline(line, min, max))
 	{
-		printf("Z coordinate of vector is out of range [-1.0, 1.0]\n");
+		printf("Z coordinate of vector is out of range [%f, %f]\n", min, max);
 		return (false);
 	}
 	return (true);
 }
+
 
 
 bool	validator_fov(char **line)
@@ -206,11 +205,11 @@ bool	validator_camera(char *line)
 	line++;
 	while (is_valid_separator(*line))
 		line++;
-	if (!validator_vector3d(&line))
-		return (false);
+	if (!validator_vector3d_with_range(&line, -(WIDTH + HEIGHT) * 2, (WIDTH + HEIGHT) * 2))
+    	return (false);
 	while (is_valid_separator(*line))
 		line++;
-	if (!validator_vector3d_normalized(&line))
+	if (!validator_vector3d_with_range(&line, -1.0, 1.0))
 		return (false);
 	while (is_valid_separator(*line))
 		line++;

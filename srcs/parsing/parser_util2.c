@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 23:25:14 by yioffe            #+#    #+#             */
-/*   Updated: 2024/11/16 23:32:44 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/11/20 11:31:19 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ float	parse_float(char **line)
 	skip_whitespace(line);
 	sign = parse_sign(line);
 	parse_number(line, &result, &fraction, &is_fractional);
-	skip_invalid_chars(line);
 	skip_whitespace(line);
 	return (result * sign);
 }
