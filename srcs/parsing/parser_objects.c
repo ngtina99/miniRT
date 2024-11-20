@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 23:22:29 by yioffe            #+#    #+#             */
-/*   Updated: 2024/11/20 14:39:30 by marvin           ###   ########.fr       */
+/*   Updated: 2024/11/20 14:48:11 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,11 @@ int	parse_sphere(t_data *scene, char *line)
 	t_sphere			sphere;
 	t_add_form_params	params;
 
+	if (!validator_sphere(line))
+	{
+		ft_putstr_fd("Error\nSphere format is wrong\n", STDERR_FILENO);
+		return (EXIT_FAILURE);
+	}
 	line += 2;
 	parse_vector(&line, &sphere.center);
 	sphere.diameter = parse_float(&line);
@@ -33,6 +38,11 @@ int	parse_plane(t_data *scene, char *line)
 	t_plane				plane;
 	t_add_form_params	params;
 
+	if (!validator_plane(line))
+	{
+		ft_putstr_fd("Error\nPlane format is wrong\n", STDERR_FILENO);
+		return (EXIT_FAILURE);
+	}
 	line += 2;
 	parse_vector(&line, &plane.point);
 	parse_vector(&line, &plane.normal);
@@ -49,6 +59,11 @@ int	parse_cylinder(t_data *scene, char *line)
 	t_cylinder			cylinder;
 	t_add_form_params	params;
 
+	if (!validator_cylinder(line))
+	{
+		ft_putstr_fd("Error\nCylinder format is wrong\n", STDERR_FILENO);
+		return (EXIT_FAILURE);
+	}
 	line += 2;
 	parse_vector(&line, &cylinder.center);
 	parse_vector(&line, &cylinder.axis);

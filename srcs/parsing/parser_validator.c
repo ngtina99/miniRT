@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser_validators.c                                :+:      :+:    :+:   */
+/*   parser_validator.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 09:25:33 by yioffe            #+#    #+#             */
-/*   Updated: 2024/11/20 14:30:31 by marvin           ###   ########.fr       */
+/*   Updated: 2024/11/20 14:54:02 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -255,7 +255,7 @@ bool	validator_camera(char *line)
 	while (is_valid_separator(*line))
 		line++;
 	if (!validator_vector3d_with_range(&line, -(WIDTH + HEIGHT) * 2, (WIDTH + HEIGHT) * 2))
-    	return (false);
+		return (false);
 	while (is_valid_separator(*line))
 		line++;
 	if (!validator_vector3d_with_range(&line, -1.0, 1.0))

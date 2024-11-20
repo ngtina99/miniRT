@@ -274,6 +274,12 @@ bool	validator_ratio_inline(char **line);
 bool	validator_ambient(char *line);
 bool	validator_camera(char *line);
 bool	validator_light(char *line);
+bool	validator_sphere(char *line);
+bool	validator_cylinder(char *line);
+bool	validator_plane(char *line);
+bool	validator_vector3d_with_range(char **line, float min, float max);
+bool	validator_float_with_range_inline(char **line, float min, float max);
+bool	is_valid_separator(char c);
 
 # ifdef __APPLE__
 
