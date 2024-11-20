@@ -12,8 +12,6 @@
 
 #include "../../includes/minirt.h"
 
-
-
 bool validator_shape_size(char **line, float min, float max)
 {
     float result;
@@ -61,7 +59,7 @@ bool	validator_sphere(char *line)
 {
 	while (is_valid_separator(*line))
 		line++;
-	// if (ft_strcmp(line, "sp") != 0)
+	// if (ft_strcmp(line, "sp") != 0) //TODO quit if it is more than sp for exmple spp
 	// 	return (false);
 	line += 2;
 	while (is_valid_separator(*line))
@@ -70,7 +68,7 @@ bool	validator_sphere(char *line)
 		return (false);
 	while (is_valid_separator(*line))
 		line++;
-	if (!validator_shape_size(&line, -(WIDTH + HEIGHT) * 2, (WIDTH + HEIGHT) * 2));
+	if (!validator_shape_size(&line, -(WIDTH + HEIGHT) * 2, (WIDTH + HEIGHT) * 2)); // TODO: function here the float inside max min 
 		return (false);
 	while (is_valid_separator(*line))
 		line++;
@@ -94,11 +92,11 @@ bool	validator_cylinder(char *line)
 		return (false);
 	while (is_valid_separator(*line))
 		line++;
-	if (!validator_float_with_range_inline(&line, -(WIDTH + HEIGHT) * 2, (WIDTH + HEIGHT) * 2));
+	if (!validator_float_with_range_inline(&line, -(WIDTH + HEIGHT) * 2, (WIDTH + HEIGHT) * 2)); // TODO: function here the float inside max min 
 		return (false);
 	while (is_valid_separator(*line))
 		line++;
-	if (!validator_float_with_range_inline(&line, -(WIDTH + HEIGHT) * 2, (WIDTH + HEIGHT) * 2));
+	if (!validator_float_with_range_inline(&line, -(WIDTH + HEIGHT) * 2, (WIDTH + HEIGHT) * 2)); // TODO: function here the float inside max min 
 		return (false);
 	return (validator_rgb_end(line));	
 }
@@ -112,7 +110,7 @@ bool	validator_plane(char *line)
 	line += 2;
 	while (is_valid_separator(*line))
 		line++;
-	if (!validator_vector3d_with_range(&line, -(WIDTH + HEIGHT) * 2, (WIDTH + HEIGHT) * 2))
+	if (!validator_vector3d_with_range(&line, -(WIDTH + HEIGHT) * 2, (WIDTH + HEIGHT) * 2)) 
 		return (false);
 	while (is_valid_separator(*line))
 		line++;
