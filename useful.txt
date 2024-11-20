@@ -1,3 +1,5 @@
+<3
+
 **********************************************************
 1. check in libft and miniRT makfile CFLAGS (I comment out on my own PC, because it is not compatible)
 2. make sure to submit ALL libraries including minilibx
