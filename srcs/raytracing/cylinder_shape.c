@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/09 01:32:47 by ngtina1999        #+#    #+#             */
-/*   Updated: 2024/11/19 16:43:29 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/11/20 16:34:49 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,4 +82,13 @@ bool	ray_cylinder_bottom(t_cylinder cylinder, t_vec3d ray_origin,
 			intersect_distance, hit_point))
 		return (false);
 	return (incap_radius(*hit_point, bottom_center, cylinder.diameter / 2.0f));
+}
+
+void	save_hit_values(t_object_hit *object_hit, t_vec3d hit_point,
+		t_obj_info obj, int index)
+{
+	object_hit->hit_point = hit_point;
+	object_hit->object_type = obj.type;
+	object_hit->object_color = obj.color;
+	object_hit->object_index = index;
 }

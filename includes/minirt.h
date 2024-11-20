@@ -205,6 +205,15 @@ typedef struct s_inter_info
 	float	distance;
 }	t_inter_info;
 
+typedef struct s_intersection_context
+{
+	t_data			*data;
+	t_vec3d			origin;
+	t_vec3d			direction;
+	t_inter_info	*inter;
+	t_object_hit	*closest_hit;
+}	t_intersection_context;
+
 int		open_rt(int argc, char **argv);
 void	init_mlx(t_data *data);
 int		convert_rgb_to_int(t__color_rgb color);
@@ -248,6 +257,8 @@ bool	calculate_intersection_point(t_vec3d ray_origin, t_vec3d ray_direction,
 bool	incap_radius(t_vec3d point, t_vec3d cap_center, float cap_radius);
 int		apply_shading(int base_color, float intensity);
 bool	is_in_shadow(t_data *data, t_vec3d hit_point, t_vec3d light_dir);
+void	save_hit_values(t_object_hit *object_hit, t_vec3d hit_point,
+		t_obj_info obj, int index);
 
 /* parser and helpers */
 int		parse_scene(t_data *scene, int fd);
