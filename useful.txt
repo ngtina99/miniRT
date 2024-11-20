@@ -23,6 +23,7 @@ t_vec3d	normalize(t_vec3d v)
 we are using it in find_closest_object to write value that we got. I think we will need later, if not - can remove. 
 
 TODO:
+1. putting something if it is just the end are not matching
 3. norminette: find_closest object (it would be better together - Tina, rest is DONE)
 5. IN PROGRESS: parsing corner cases (both of us)
 7. check for marvin in headers

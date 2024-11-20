@@ -1,6 +1,6 @@
 A 0.1                                       255,0,0
 C -5,0,0            0,0,1      90
-L -5,0,0           1         255,255,255 #protection Ll protection - can't be -1 it is only validated here
+L -5,0,0           1       255,255,255
 sp 0,0,30           10          255,0,0
 sp 0,10,40           20          0,255,0
 sp 10,10,40           10          255,141,161

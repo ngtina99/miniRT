@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 09:25:33 by yioffe            #+#    #+#             */
-/*   Updated: 2024/11/20 14:13:36 by marvin           ###   ########.fr       */
+/*   Updated: 2024/11/20 14:30:31 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -242,16 +242,7 @@ bool	validator_ambient(char *line)
 		return (false);
 	while (is_valid_separator(*line))
 		line++;
-	if (!validator_rgb_end(line))
-		return (false);
-	while (is_valid_separator(*line))
-		line++;
-	if (*line != '\0')
-	{
-		printf("Unexpected characters at the end of line: '%s'\n", line);
-		return (false);
-	}
-	return (true);	
+	return (validator_rgb_end(line));
 }
 
 bool	validator_camera(char *line)
@@ -300,16 +291,7 @@ bool	validator_light(char *line)
 		return (false);
 	while (is_valid_separator(*line))
 		line++;
-	if (!validator_rgb_end(line))
-		return (false);
-	while (is_valid_separator(*line))
-		line++;
-	if (*line != '\0')
-	{
-		printf("Unexpected characters at the end of line: '%s'\n", line);
-		return (false);
-	}
-	return (true);	
+	return (validator_rgb_end(line));
 }
 
 
