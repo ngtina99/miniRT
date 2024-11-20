@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_objects.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 23:22:29 by yioffe            #+#    #+#             */
-/*   Updated: 2024/11/20 11:25:57 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/11/20 14:08:10 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,11 @@ int	parse_light(t_data *scene, char *line)
 {
 	t_light	light;
 
+	if (!validator_light(line))
+	{
+		ft_putstr_fd("Wrong light params\n", STDERR_FILENO);
+		return (EXIT_FAILURE);
+	}
 	line++;
 	parse_vector(&line, &light.position);
 	light.brightness = parse_float(&line);

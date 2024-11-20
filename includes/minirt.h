@@ -272,7 +272,7 @@ bool	validator_rgb_end(char *line);
 bool	validator_ratio_inline(char **line);
 bool	validator_ambient(char *line);
 bool	validator_camera(char *line);
-
+bool	validator_light(char *line);
 
 # ifdef __APPLE__
 

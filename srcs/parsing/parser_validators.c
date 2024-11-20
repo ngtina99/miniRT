@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 09:25:33 by yioffe            #+#    #+#             */
-/*   Updated: 2024/11/20 14:03:01 by marvin           ###   ########.fr       */
+/*   Updated: 2024/11/20 14:13:36 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -237,14 +237,21 @@ bool	validator_ambient(char *line)
 		return (false);
 	line++;
 	while (is_valid_separator(*line))
-	{
 		line++;
-	}
 	if (!validator_float_with_range_inline(&line, 0.0, 1.0))
 		return (false);
 	while (is_valid_separator(*line))
 		line++;
-	return (validator_rgb_end(line));
+	if (!validator_rgb_end(line))
+		return (false);
+	while (is_valid_separator(*line))
+		line++;
+	if (*line != '\0')
+	{
+		printf("Unexpected characters at the end of line: '%s'\n", line);
+		return (false);
+	}
+	return (true);	
 }
 
 bool	validator_camera(char *line)
@@ -274,6 +281,35 @@ bool	validator_camera(char *line)
 		return (false);
 	}
 	return (true);
+}
+
+bool	validator_light(char *line)
+{
+	while (is_valid_separator(*line))
+		line++;
+	if (*line != 'L')
+		return (false);
+	line++;
+	while (is_valid_separator(*line))
+		line++;
+	if (!validator_vector3d_with_range(&line, -(WIDTH + HEIGHT) * 2, (WIDTH + HEIGHT) * 2))
+    	return (false);
+	while (is_valid_separator(*line))
+		line++;
+	if (!validator_float_with_range_inline(&line, 0.0, 1.0))
+		return (false);
+	while (is_valid_separator(*line))
+		line++;
+	if (!validator_rgb_end(line))
+		return (false);
+	while (is_valid_separator(*line))
+		line++;
+	if (*line != '\0')
+	{
+		printf("Unexpected characters at the end of line: '%s'\n", line);
+		return (false);
+	}
+	return (true);	
 }
 
 
