@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 23:21:26 by yioffe            #+#    #+#             */
-/*   Updated: 2024/11/20 16:02:30 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/11/20 16:10:03 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,3 @@ void	skip_whitespace(char **line)
 	while (is_valid_separator(**line))
 		(*line)++;
 }
-
-
-

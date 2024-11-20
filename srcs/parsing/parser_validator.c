@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 09:25:33 by yioffe            #+#    #+#             */
-/*   Updated: 2024/11/20 16:01:15 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/11/20 16:08:09 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 bool	validator_rgb_end(char *line)
 {
-	int	value;
 	int	count;
 
 	count = 0;
@@ -24,10 +23,7 @@ bool	validator_rgb_end(char *line)
 			line++;
 		if (*line == '\0')
 			break ;
-		if (!ft_isdigit(*line))
-			return (false);
-		value = ft_atoi(line);
-		if (value < 0 || value > 255)
+		if (!ft_isdigit(*line) || ft_atoi(line) < 0 || ft_atoi(line) > 255)
 			return (false);
 		count++;
 		while (ft_isdigit(*line))
