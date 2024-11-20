@@ -87,7 +87,6 @@ void	check_cylinder_intersections(t_intersection_context *ctx)
 {
 	int			i;
 	t_vec3d		hit_point;
-	t_obj_info	obj;
 	t_cylinder	cylinder;
 
 	i = 0;

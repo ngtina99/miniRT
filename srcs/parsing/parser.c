@@ -89,7 +89,6 @@ int	parse_scene(t_data *scene, int fd)
 {
 	char	*line;
 	char	*ptr;
-	int		curr_result;
 
 	line = get_next_line(fd);
 	while (line != NULL)

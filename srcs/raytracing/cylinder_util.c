@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cylinder_util.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
+/*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/10 20:23:35 by yioffe            #+#    #+#             */
-/*   Updated: 2024/11/19 16:35:57 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/11/20 19:59:19 by thuy-ngu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ t_vec3d	cylinder_normal(t_cylinder cylinder, t_vec3d hit_point)
 }
 
 bool	calculate_quadratic_coefficients(t_discr_util *discr,
-		t_cy_intersection_util *util, t_vec3d oc, t_cylinder cyl)
+		t_cy_intersection_util *util, t_cylinder cyl)
 {
 	discr->a = dot_product(util->ray_dir_perp, util->ray_dir_perp);
 	discr->b = 2.0f * dot_product(util->oc_perp, util->ray_dir_perp);

@@ -16,8 +16,6 @@ void	init_scene_img(t_data *data)
 {
 	double	x;
 	double	y;
-	int		color_code;
-	t_vec3d	direction;
 
 	y = -1;
 	while (++y < HEIGHT)

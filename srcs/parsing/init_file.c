@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   init_file.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 18:49:19 by thuy-ngu          #+#    #+#             */
-/*   Updated: 2024/11/20 13:22:54 by marvin           ###   ########.fr       */
+/*   Updated: 2024/11/20 19:55:49 by thuy-ngu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minirt.h"
 
-int	open_rt(int argc, char **argv)
+int	open_rt(char **argv)
 {
 	char	*file_name;
 	int		fd;

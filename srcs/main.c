@@ -12,20 +12,27 @@
 
 #include "../includes/minirt.h"
 
+static void	error_message(int fd)
+{
+	ft_putstr_fd("Error\nMemory allocation failed for scene\n", 
+	STDERR_FILENO);
+	close(fd);
+}
+
 int	main(int argc, char **argv)
 {
-	t_data		data;
 	int			fd;
 	t_data		*scene;
 
 	if (argc != 2)
-		error_message(fd, ARG_ERR);
-	fd = open_rt(argc, argv);
+		return (ft_putstr_fd("Error\n Provide .rt path", STDERR_FILENO),
+			EXIT_FAILURE);
+	fd = open_rt(argv);
 	if (fd == -1)
-		return (1);
+		return (EXIT_FAILURE);
 	scene = (t_data *)malloc(sizeof(t_data));
 	if (scene == NULL)
-		error_message(fd, MALLOC_ERR);
+		return(error_message(fd), EXIT_FAILURE);
 	initialize_scene(scene);
 	if (parse_scene(scene, fd) == EXIT_FAILURE)
 	{

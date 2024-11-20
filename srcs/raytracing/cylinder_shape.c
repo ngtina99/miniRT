@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cylinder_shape.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
+/*   By: thuy-ngu <thuy-ngu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/09 01:32:47 by ngtina1999        #+#    #+#             */
-/*   Updated: 2024/11/20 16:34:49 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/11/20 19:59:44 by thuy-ngu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,7 @@ bool	ray_cylinder_intersection(t_cylinder cylinder, t_vec3d ray_origin,
 	util.oc_parallel = dot_product(origin_to_cylinder, util.cylinder_axis);
 	util.oc_perp = subtract_vector(origin_to_cylinder,
 			scale_vector(util.cylinder_axis, util.oc_parallel));
-	if (!calculate_quadratic_coefficients(&discr, &util,
-			origin_to_cylinder, cylinder))
+	if (!calculate_quadratic_coefficients(&discr, &util, cylinder))
 		return (false);
 	intersect_distance = calculate_nearest_inters_p(discr.a, discr.b,
 			discr.discriminant);
