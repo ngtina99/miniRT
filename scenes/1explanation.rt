@@ -1,40 +1,61 @@
-#∗ identifier: A *** it is the light in the room with no direction, if we put to 0 and we don't send L it is going to be black
-#∗ ambient lighting ratio in range [0.0,1.0]: 0.2 *** 0 = nothing (darkest), 1.0 = max of the color
-#∗ R,G,B colors in range [0-255]: 255, 255, 255 *** if you put red on 1 it is going to be full red 0.8 darker red
-A 0.8                                       255,255, 255
-# ∗ identifier: C *** we put a camera somewhere
-# ∗ x,y,z coordinates of the view point: -50.0,0,20 *** that is where we put the camer on the coordinates
-# ∗ 3d normalized orientation vector. In range [-1,1] for each x,y,z axis ***  x set up to one it is looking 100% to ex you can understand better with cylinder
-# so if you set up the camera the same direction, you'll see the bottom of the cylinder, if you set up -1 you'll see the top, if you set up x, it is going to be horizontal, y vertical
-# and you can combinate to see how they turn out on the cylinder to visualize
-# ∗ FOV : Horizontal field of view in degrees in range [0,180]: 90 *** 0 is the "closest" 180 is the "farthest"
-C 0,0,0            0,0,1      90
-# ∗ identifier: L
-# ∗ x,y,z coordinates of the light point: -40.0,50.0,0.0 *** same as camera placement
-# ∗ the light brightness ratio in range [0.0,1.0]: 0.6 *** if you set up to 0 the light is not coming, if you set up to 1 it is the brightest
-# ∗ (unused in mandatory part)R,G,B colors in range [0-255]: 10, 0, 255 *** RGB will affect the color of the shapes
-L 5,0,0            1         255,255,255
+#Ambient Lighting (A)
+#Defines the overall light in the room with no direction.
+#Format: A <ratio> <R,G,B>
 
-# identifier: sp
-# ∗ x,y,z coordinates of the sphere center: 0.0,0.0,20.6
-# ∗ the sphere diameter: 12.6
-# ∗ R,G,B colors in range [0-255]: 10, 0, 255
-sp 0,0,30           10          255,0,0
-sp 0,10,40           20          0,255,0
-sp 10,10,40           10          255,141,161
+A 0.5                  200,200,200
+#0.5: 50% ambient light.
+#200,200,200: Gray color (all of red, green and blue).
 
-# ∗ identifier: pl
-# ∗ x,y,z coordinates of a point in the plane: 0.0,0.0,-10.0
-# ∗ 3d normalized normal vector. In range [-1,1] for each x,y,z axis: 0.0,1.0,0.0
-# ∗ R,G,B colors in range [0-255]: 0,0,225
-pl 0,-5,20            0,1,0       200,128,128
 
-# ∗ identifier: cy
-# ∗ x,y,z coordinates of the center of the cylinder: 50.0,0.0,20.6
-# ∗ 3d normalized vector of axis of cylinder. In range [-1,1] for each x,y,z axis:
-# 0.0,0.0,1.0
-# ∗ the cylinder diameter: 14.2
-# ∗ the cylinder height: 21.42
-# ∗ R,G,B colors in range [0,255]: 10, 0, 255
-cy 10.0,5.0,20.6    0,0,1       .0   40.0      255,255,0
-cy 5,0.0,20.6    0,0,1       5.0   20.0      0,255,200
+
+#Camera (C)
+#Place the camera in the scene.
+#Format: C <x,y,z> <x,y,z orientation> <FOV>
+
+C 0,0,0                0,1,0                90
+#0,0,0: Camera is at the origin.
+#0,1,0: Camera points upwards (positive Y-axis).
+#90: Horizontal field of view is 90°.
+
+
+
+#Light (L)
+#Adds a light source with direction.
+#Format: L <x,y,z> <brightness> <R,G,B>
+
+L 10,10,10          0.8               255,255,255
+#10,10,10: Light is coming from (10,10,10).
+#0.8: 80% brightness.
+#255,255,255: Only white light.
+
+
+
+#Sphere (sp)
+#Format: sp <x,y,z> <diameter> <R,G,B>
+
+sp 0,20,0               5             255,0,0
+#0,0,10: Sphere's center is at (0,0,10).
+#5: Diameter of the sphere is 5 units.
+#255,0,0: Sphere is red.
+
+
+
+#Plane (pl)
+#Format: pl <x,y,z> <normal x,y,z> <R,G,B>
+
+pl -10,-5,0              1,0,0           	0,255,0
+#0,-1,0: A point on the plane is at (0,-1,0).
+#0,1,0: Plane is oriented upwards (positive Y-axis).
+#0,255,0: Sphere is green.
+
+
+
+#Cylinder (cy)
+#Format: cy <x,y,z> <axis x,y,z> <diameter> <height> <R,G,B>
+
+cy 10,20,0            1,1,1    6    10         0,0,255
+#5,0,0: Cylinder center is at (5,0,0).
+#0,1,0: Cylinder is aligned with the Y-axis.
+#2: Diameter of the cylinder is 2 units.
+#10: Height of the cylinder is 10 units.
+#0,0,255: Cylinder is blue.
