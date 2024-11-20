@@ -18,8 +18,8 @@ OBJ_DIR		= objs
 LIBFT 			= ./libs/libft/libft.a
 INC				= -I./includes
 
-#CFLAGS			= -Wall -Wextra -Werror -g
-#MLXFLAGS		= -O3 -L libs/minilibx-linux/ -lmlx -L/usr/lib -Ilmlx -lXext -lX11 -lm -lz -lpthread #lpthread maybe we can
+CFLAGS			= -Wall -Wextra -Werror -g
+MLXFLAGS		= -O3 -L libs/minilibx-linux/ -lmlx -L/usr/lib -Ilmlx -lXext -lX11 -lm -lz -lpthread #lpthread maybe we can
 
 # Explicitly set MACOS_CONFIG if on macOS
 UNAME_S := $(shell uname -s)
@@ -55,13 +55,6 @@ all:		$(NAME)
 	@echo $(PURPLE)
 	@echo "Please put a .rt file path as an argument" $(EOC)
 
-# @echo "maybe instruct put cylinder" $(EOC) $(GREEN)
-# @echo "maybe instruct put cube" $(EOC) $(BLUE)
-# @echo "maybe instruct put cylinder etc" $(EOC) $(WHITE)
-# @echo "etc" $(EOC) $(YELLOW)
-# @echo "Z, X, I, O: changing image sharpness" $(EOC) $(ORANGE)
-# @echo "W, A, S, D: changing Julia set" $(EOC) $(PINK)
-
 $(LIBFT):
 	$(MAKE) -C ./libs/libft
 
@@ -89,10 +82,6 @@ fclean:		clean
 
 re:	fclean all
 
-# gdb:	all
-# 		gdb --args ./miniRT example.rt
-
-#SOMEHOW SURPESS THE ERRORS COMING FROM MLX
 valgrind: all
 		  valgrind --leak-check=full --verbose --suppressions=minilibx.supp ./miniRT example.rt
 
